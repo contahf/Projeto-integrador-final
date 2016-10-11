@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <title>Login</title>
+    <meta name="generator" content="Bootply" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style> 
+        .form-control{
+    
+           background-color: #F8F8FF;    
+      
+         }
+
+    </style>
+    <script type="text/javascript">
+ 
+    </script>
+  </head>
+  <body>
+
+<div id="loginModal" class="modal show" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog">
+  <div class="modal-content">
+      <div class="modal-header">
+          <h1 class="text-center">Login</h1>
+      
+
+      <div class="modal-body">
+          
+          <form name="form1" id="form1" class="form col-md-12 center-block" method="POST" action="login.php">
+            <div class="form-group">
+              <input type="text" class="form-control input-lg " id="login" name="login" placeholder="Login">
+               
+            </div>
+            <div class="form-group">
+              <input type="password" class="form-control input-lg" id="senha" name="senha" placeholder="Senha">
+            </div>
+            <div class="form-group">
+              <button type="submit" form="form1" id="e" class="btn btn-primary btn-lg btn-block" >Entrar</button>
+              <span class="pull-right"><button type="button" class="btn btn-link"><a href="#">Registrar</a></button></span>
+              
+            </div>
+            
+          </form>
+          
+      </div>
+        </div>
+      </div>
+  </div>
+  </div>
+</div>
+  
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+  </body>
+</html>
