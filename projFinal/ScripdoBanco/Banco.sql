@@ -66,7 +66,7 @@ primary key (num_proj, cod_disc)
 create table grupo(
 
 id integer primary key,
-nome varchar(60),
+nome varchar(60) not null,
 num_proj integer not null 
 
 );
