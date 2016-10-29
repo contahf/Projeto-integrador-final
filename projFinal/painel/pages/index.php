@@ -1,6 +1,18 @@
 <?php  
 
-  include 'logout.php';
+    session_start();
+
+    if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
+    {
+        unset($_SESSION['login']);
+        unset($_SESSION['senha']);
+        session_destroy();
+        header('location:../index.html');
+    }
+
+
+    
+    
 ?>
 
 <!DOCTYPE html>
@@ -56,7 +68,7 @@
                
                     
                     <li>
-                        <a href="../../Projeto-integrador-final/projFinal/out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                        <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </li>
                 <!-- /.dropdown -->
             </ul>
@@ -64,44 +76,85 @@
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
+                   
                     <ul class="nav" id="side-menu">
                       
                         <li>
                             <a href="#"><i class="fa fa-graduation-cap fa-fw"></i> <?php 
-    echo" Bem vindo $logado";
+    echo" Bem vindo " . $_SESSION['login'];
     ?></a>
                         </li>
-                       
-                        <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
-                        </li>
-                        <li>
-                            <a href="cadUser.php"><i class="fa fa-user fa-fw"></i> Cadastre-se</a>
-                        </li>
-                        <li>
-                            <a href="#"><i class="fa fa-navicon"></i> Menu<span class="fa arrow"></span></a>
+                          <li>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> Menu de cadastro<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="cadCurso.php">Novo curso</a>
+                                    <a href="conCadUser.php">Novo usuario</a>
                                 </li>
                                 <li>
-                                    <a href="cadAluno.php">Novo aluno</a>
+                                    <a href="cadAluno.php">Novo Aluno</a>
                                 </li>
-                                 <li>
-                                    <a href="dis.php">Nova Disciplina</a>
+                                <li>
+                                    <a href="#">Remover cadastro <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="removeUser.php">Usuario</a>
+                                        </li>
+                                        <li>
+                                            <a href="removeAluno.php">Aluno</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-third-level -->
                                 </li>
-                                
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+
+                        <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Menu de opções<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="cadCurso.php">Novo Curso</a>
+                                </li>
+                                <li>
+                                    <a href="dis.php">Nova Disciplina</a>
+                                </li>
+                                <li>
+                                    <a href="#">Remover cadastro <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="removeCurso.php">Curso</a>
+                                        </li>
+                                        <li>
+                                            <a href="removeDis.php">Disciplina</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-third-level -->
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                       
+
                         <li>
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="blank.html">Blank Page</a>
+                                    <a href="removeDis.php">Blank Page</a>
                                 </li>
                                 <li>
-                                    <a href="login.html">Login Page</a>
+                                    <a href="dis.php">Login Page</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -109,6 +162,8 @@
                         
                         
                     </ul>
+
+
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
@@ -118,28 +173,39 @@
         <div id="page-wrapper">
             <br>
             <div class="row">
+                
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-comments fa-5x"></i>
+                                    <i class="fa fa-user fa-5x"></i>
                                 </div>
+                                
                                 <div class="col-xs-9 text-right">
                                     <div class="huge">26</div>
-                                    <div>New Comments!</div>
+                                    
                                 </div>
+                        
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="finUser.php">
                             <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
+                                <span class="pull-left">Editar 
+                                    <?php
+                                        
+                                        echo $_SESSION['nome'];
+
+                                    ?>
+
+                                </span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
                         </a>
                     </div>
                 </div>
+
                 <div class="col-lg-3 col-md-6">
                     <div class="panel panel-green">
                         <div class="panel-heading">

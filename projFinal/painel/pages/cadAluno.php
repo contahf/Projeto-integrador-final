@@ -132,27 +132,74 @@
                         </li>
                         
                         <li>
-                            <a href="tables.html"><i class="fa fa-table fa-fw"></i> Tables</a>
-                        </li>
-                        
-                        <li>
-                            <a href="index.php"><i class="fa fa-navicon"></i> Menu<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> Menu de cadastro<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="cadCurso.php">Novo curso</a>
+                                    <a href="cadUser.php">Novo usuario</a>
                                 </li>
                                 <li>
                                     <a href="cadAluno.php">Novo Aluno</a>
                                 </li>
                                 <li>
-                                    <a href="dis.php">Nova Disciplina</a>
+                                    <a href="#">Remover cadastro <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="#">Usuario</a>
+                                        </li>
+                                        <li>
+                                            <a href="removeAluno.php">Aluno</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-third-level -->
                                 </li>
-                               
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                       
+
+                        <li>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Menu de opções<span class="fa arrow"></span></a>
+                           <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="cadCurso.php">Novo curso</a>
+                                </li>
+                                <li>
+                                    <a href="dis.php">Nova Disciplina</a>
+                                </li>
+                                <li>
+                                    <a href="grupo.php">Novo Grupo</a>
+                                </li>
+                                <li>
+                                    <a href="modulo.php">Novo Modulo</a>
+                                </li>
+                                 <li>
+                                    <a href="projeto.php">Novo Projeto</a>
+                                </li>
+                                
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                     
                       
+                        <li>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="blank.html">Blank Page</a>
+                                </li>
+                                <li>
+                                    <a href="login.html">Login Page</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        
+                        
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->

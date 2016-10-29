@@ -8,9 +8,22 @@
         unset($_SESSION['senha']);
         session_destroy();
         header('location:../index.html');
+    }
+
+    $id = $_SESSION['tipo'];
+
+    if($id == "C"){
+
+         header('location:finUser.php');
+
     }else{
 
-        header ("location:/Projeto-integrador-final/projFinal/painel/pages/index.php");
+        echo "Voce nao tem permissao!";
+        unset($_SESSION['login']);
+        unset($_SESSION['senha']);
+        unset($_SESSION['tipo']);
+
+
     }
 
     

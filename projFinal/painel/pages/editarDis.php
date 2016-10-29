@@ -1,21 +1,3 @@
-<?php  
-
-    session_start();
-
-    if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
-    {
-        unset($_SESSION['login']);
-        unset($_SESSION['senha']);
-        session_destroy();
-        header('location:../index.html');
-    }
-
-
-    
-    
-?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -41,6 +23,12 @@
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
 </head>
 
@@ -59,7 +47,8 @@
             <ul class="nav navbar-top-links navbar-right">
               
                 <li class="dropdown">
-                <li><a href="removeAluno.php"><i class="fa fa-times fa-fw"></i> Remover aluno(a)</a>
+                 <li><a href="editDis.php"><i class="fa fa-edit fa-fw"></i> Editar disciplina</a>
+                <li><a href="removeDis.php"><i class="fa fa-times fa-fw"></i> Remover disciplina</a>
                 <li><a href="../../Projeto-integrador-final/projFinal/out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
 
             </ul>
@@ -109,64 +98,64 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Dados do aluno(a)
+                            Dados da disciplina
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="">
-                                    <form name="fmrMat" action="removeAluno.php" method="post"  role="form">
-                                 
-                                        
-                                        <div class="form-group col-lg-3">
-                                            <label>Matricula</label>
-                                            <input type="text" name="txtMat" id="txtMat" class="form-control" required="">
-                                            
-                                        </div>
+                                    <?php 
 
-
-                                         <div class="clearfix"></div>
-                                         
-                                         <div class="container">
-                                            <button type="submit" class="btn btn-default">Remover</button>
-                                            <button type="reset" class="btn btn-default">Cancelar</button>
-                                            
-                                            <?php  
+                                    include 'logout.php';
     
-  
-    $mat = $_POST['txtMat'];
-    $strCon = "host=localhost dbname=projetointegrador user=senac password=senac123";
+    $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
+
     $con = pg_connect($strCon);
-
-    if($con){
     
-        $sql = "select matricula from aluno where matricula = '". $mat ."'";
-        $result = pg_query($con, $sql);
 
-        if(pg_affected_rows($result) > 0){
-            $sql = "";
-            $sql = "DELETE FROM aluno WHERE matricula = " . "'" . $mat ."'";
-            $result = "";
+    if ($con) {
+
+        $sql = "select * from disciplina";
+
+        $consulta = pg_query($con, $sql);
+        $sql = "SELECT * FROM cadalunos order by renda";
             $result = pg_query($con, $sql);
+            $linhas = pg_num_rows($result); 
+                                                                                
+                                        for($i=0; $i<$linhas; $i++){  
+                                            $dados = pg_fetch_row($result);   
+                                            echo "
+                                                    <meta name='viewport' content='width=device-width, initial-scale=1'>
+                                                    <link rel='stylesheet' href='css/bootstrap.min.css'>
+                                                    <script src='jquery.min.js'></script>
+                                                    <script src='js/bootstrap.min.js'></script>
+                                                    <style>
+                                                        
+                                                        td {
+                                                    
+                                                             
+                                                        }                       
+                                                    </style>
+                                                    <div class='table-responsive'>
+                                                    <table class='table table-striped' align='center'>  
+                                                        <tr><td width='101' height='40'>".$dados[0] . "</td>
+                                                            <td width='101' height='40'>".$dados[1] . "</td>
+                                                            <td width='101' height='40'>".$dados[2]."</td>
+                                                            <td width='101' height='40'>".$dados[3]."</td>
+                                                            <td width='101' height='40'>".$dados[4] . "</td>
+                                                        </tr>
+                                                    </table>
+                                                    </div> 
+                                                    ";
 
-                if(pg_affected_rows($result) > 0){
         
-                      echo "<script type='text/javascript'>
-                                                                        
-                         window.alert('Aluno(a) removido com sucesso!');
-                       window.location.href = 'removeAluno.php'; 
                 
-                         </script>";
-                }
-        }
-    }
 
-//pg_close($con);
+    } 
+
+                                        
 
 
-?>
-                                    
-                                         </div>                                  
-                                    </form>
+                                    ?>
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->
                            
@@ -185,7 +174,7 @@
         <!-- /#page-wrapper -->
 
     </div>
-   
+    <!-- /#wrapper -->
 
     <!-- jQuery -->
     <script src="../vendor/jquery/jquery.min.js"></script>
@@ -202,4 +191,6 @@
 </body>
 
 </html>
+
+
 

@@ -1,6 +1,24 @@
 <?php  
 
-  include 'logout.php';
+    session_start();
+
+    if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
+    {
+        unset($_SESSION['login']);
+        unset($_SESSION['senha']);
+        session_destroy();
+        header('location:../index.html');
+    }
+
+    if($_SESSION['tipo'] != 'C'){
+        
+        die("Entre em contato com o Cordenador");
+    }
+    
+
+
+    
+    
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +32,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>TI Resolve</title>
+    <title>Ti resolve</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -25,15 +43,22 @@
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
 
+    <!-- Morris Charts CSS -->
+    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
+
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <script type="text/javascript"> 
+
+        function validar (input){ 
+            if (input.value != document.getElementById('senha').value) {
+                input.setCustomValidity('Repita a senha corretamente');
+            } else {
+                input.setCustomValidity('');
+             }
+        }
+    </script>
 
 </head>
 
@@ -44,41 +69,114 @@
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">TI resolve</a>
+                
+                <a class="navbar-brand" href="index.html">T.I Resolve</a>
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-                <!-- /.dropdown -->
-                <li class="dropdown">
-                    
-                     <li><a href="removecad.html"><i class="fa fa-times fa-fw"></i> Remove Usuario</a>
-                      <li><a href="../../Projeto-integrador-final/projFinal/out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                    
-                </li>
+               
+                     <li><a href="conCad.php"><i class="fa fa-edit fa-fw"></i> Editar usuario</a>
+                    <li>
+
+                        <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    </li>
                 <!-- /.dropdown -->
             </ul>
-   
+            <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                       
+                     <li>
+                            <a href="#"><i class="fa fa-graduation-cap fa-fw"></i> <?php 
+    echo" Bem vindo " . $_SESSION['login'];
+    ?></a>
+                        </li>
+                           <li>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> Menu de cadastro<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="cadUser.php">Usuario</a>
+                                </li>
+                                <li>
+                                    <a href="cadAluno.php">Aluno</a>
+                                </li>
+                                <li>
+                                    <a href="#">Second Level Item</a>
+                                </li>
+                                <li>
+                                    <a href="#">Second Level Item</a>
+                                </li>
+                                <li>
+                                    <a href="#">Third Level <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-third-level -->
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+
                         <li>
-                            <a href="index.php"><i class="fa fa-home fa-fw"></i> Home</a>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Menu de opções<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="cadCurso.php">Novo Curso</a>
+                                </li>
+                                <li>
+                                    <a href="dis.php">Nova Disciplina</a>
+                                </li>
+                                <li>
+                                    <a href="#">Remover cadastro <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="removeCurso">Curso</a>
+                                        </li>
+                                        <li>
+                                            <a href="removeAluno.php">Disciplina</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-third-level -->
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                       
+
+                        <li>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="dis.php">Blank Page</a>
+                                </li>
+                                <li>
+                                    <a href="login.html">Login Page</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
                         </li>
                         
-                        <li>
-                            <a href="cadUser.php"><i class="fa fa-user fa-fw"></i> Cadastre-se</a>
-                        </li>
-                     
-                      
+                        
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
@@ -86,13 +184,9 @@
             <!-- /.navbar-static-side -->
         </nav>
 
+    
         <div id="page-wrapper">
-            <div class="row">
-                <div class="col-lg-12">
-                    <h1 class="page-header">Cadastre-se</h1>
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
+           </br>
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
@@ -138,8 +232,12 @@
                                         </div>
                                         <div class="form-group col-lg-2">
                                             <label>Senha</label>
-                                            <input type="password" name="senha" id="senha" class="form-control" placeholder="Senha"></div>
-
+                                            <input type="password" name="senha" id="senha" class="form-control" placeholder="Senha">
+                                        </div>
+                                        <div class="form-group col-lg-2">
+                                            <label>Confirmar senha</label>
+                                            <input type="password" name="novaSenha" id="novaSenha" class="form-control" placeholder="Senha" oninput="validar(this)" >
+                                        </div>
                                         </div>
                                          <div class="clearfix"></div>
 
@@ -149,10 +247,10 @@
                                                                             
                                     </form>
                                 </div>
-                                <!-- /.col-lg-6 (nested) -->
-                           
-                                <!-- /.col-lg-6 (nested) -->
+                              </div>  
                             </div>
+
+                        </div>
                             <!-- /.row (nested) -->
                         </div>
                         <!-- /.panel-body -->
@@ -162,10 +260,13 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
+       
+
+
         </div>
-        <!-- /#page-wrapper -->
 
     </div>
+
     <!-- /#wrapper -->
 
     <!-- jQuery -->
@@ -176,6 +277,11 @@
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="../vendor/raphael/raphael.min.js"></script>
+    <script src="../vendor/morrisjs/morris.min.js"></script>
+    <script src="../data/morris-data.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
