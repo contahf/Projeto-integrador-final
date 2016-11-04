@@ -97,7 +97,7 @@
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="removeUser.php">Usuario</a>
+                                            <a href="editUser.php">Usuario</a>
                                         </li>
                                         <li>
                                             <a href="removeAluno.php">Aluno</a>
@@ -137,7 +137,7 @@
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="removeUser.php">Usuario</a>
+                                            <a href="editUser.php">Usuario</a>
                                         </li>
                                         <li>
                                             <a href="removeAluno.php">Aluno</a>
