@@ -24,16 +24,36 @@
             $categoria = $arrayLista['categoria'];
             $situacao = $arrayLista['situacao'];
 
+            
+
             $_SESSION['login'] = $login;
 			$_SESSION['senha'] = $senha;
             $_SESSION['tipo']  = $categoria;
             $_SESSION['nome']  = $nome;
             $_SESSION['sit']  = $situacao;
 
+            if($_SESSION['sit'] == "I"){
+                echo "
+
+                    <script type='text/javascript'>                                          
+
+                        window.alert('Voce ainda não esta ativado!');
+                        window.location.href = '../index.html'; 
+
+                                                                        
+                        
+                    </script>
+
+
+               ";
+            }else{
+                header ("location:/Projeto-integrador-final/projFinal/painel/pages/index.php");
+            }
+
             
             
       
-                header ("location:/Projeto-integrador-final/projFinal/painel/pages/index.php");
+                
                //include 'teste.php';
          
          }else{

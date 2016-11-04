@@ -1,84 +1,19 @@
 <?php  
 
-    
-    $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
+    session_start();
 
-    $con = pg_connect($strCon);
-    
-
-    if ($con) {
-
-
-        $nomeCurso= $_POST["txtCurso"];
-        $siglaCurso = $_POST['txtSigla'];
-        $numeroCurso = $_POST['txtNumero'];
-        
-   
-        
-        $sql = "select * from curso where  numero = '". $numeroCurso ."'";
-
-        $consulta = pg_query($con, $sql);
- 
-        $linhas = pg_num_rows($consulta);
-
-        if($linhas > 0 ){
-     
-             echo "
-
-                    <script type='text/javascript'>                                          
-
-                        window.alert('Curso ja cadastrado!');
-                        window.location.href = 'cadCurso.php'; 
-
-                                                                        
-                        
-                    </script>
-
-
-               ";
-            
-         
-         }elseif ($linhas==0) {
-            
-            $sql = "INSERT INTO curso (numero, nome, sigla) VALUES ('".$numeroCurso."', '".$nomeCurso."', '".$siglaCurso."');";
-           
-            $res = pg_query($con, $sql);
-
-            $qtd_linhas = pg_affected_rows($res);
-
-            if ($qtd_linhas > 0){
-                 echo "
-
-                    <script type='text/javascript'>                                          
-
-                        window.alert('Cadastro de curso realizado!');
-                        window.location.href = 'cadCurso.php'; 
-
-                                                                        
-                        
-                    </script>
-
-
-               ";
-        
-            }
-
-        
-
-         }
-
-                
-
+    if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
+    {
+        unset($_SESSION['login']);
+        unset($_SESSION['senha']);
+        session_destroy();
+        header('location:../index.html');
     }
 
-    pg_close($con);
 
-
+    
+    
 ?>
-
-
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -91,7 +26,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>TI Resolve</title>
+    <title>Ti resolve</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -102,15 +37,23 @@
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
 
+    <!-- Morris Charts CSS -->
+    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
+
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <script type="text/javascript"> 
+
+        function validar (input){ 
+            if (input.value != document.getElementById('senha').value) {
+                input.setCustomValidity('Repita a senha corretamente');
+            } else {
+                input.setCustomValidity('');
+             }
+        }
+
+    </script>
 
 </head>
 
@@ -121,27 +64,21 @@
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.html">TI resolve</a>
+                
+                <a class="navbar-brand" href="index.html">T.I Resolve</a>
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-                <!-- /.dropdown -->
-                <li class="dropdown">
-                    <li><a href="confCurso.php"><i class="fa fa-edit fa-fw"></i> Editar Curso</a>
-                    <li><a href="removecad.html"><i class="fa fa-times fa-fw"></i> Remover Curso</a>
-                    <li><a href="../../index.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+               
                     
-                </li>
+                    <li>
+
+                        <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    </li>
                 <!-- /.dropdown -->
             </ul>
-   
+            <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
@@ -188,11 +125,20 @@
                          <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Menu de opções<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="conCadUser.php">Novo usuario</a>
+                               <li>
+                                    <a href="cadCurso.php">Novo curso</a>
                                 </li>
                                 <li>
-                                    <a href="cadAluno.php">Novo Aluno</a>
+                                    <a href="dis.php">Nova Disciplina</a>
+                                </li>
+                                <li>
+                                    <a href="grupo.php">Novo Grupo</a>
+                                </li>
+                                <li>
+                                    <a href="modulo.php">Novo Modulo</a>
+                                </li>
+                                 <li>
+                                    <a href="projeto.php">Novo Projeto</a>
                                 </li>
                                 <li>
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
@@ -232,59 +178,98 @@
                         
                         
                     </ul>
-
-
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
             <!-- /.navbar-static-side -->
         </nav>
 
+    
         <div id="page-wrapper">
-            <div class="row">
-             
-            </div>
-            <br>
+           </br>
+            <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Dados curso
+                            Dados Pessoais de :
+                            <?php echo $_SESSION['nome'];?>
+
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="">
-                                    <form method="POST" action="" role="form">
-                                        <div class="form-group col-lg-5">
-                                            <label>Nome curso</label>
-                                            <input class="form-control" placeholder="Seguraça da Informação" name="txtCurso" >
+                                    <form method="post" action="teste.php" id="frm1" name="frm1" >
+                                        <div class="form-group col-lg-4">
+                                            <label>Nome completo</label>
+                                            <input class="form-control" name="nome" id="nome" value="<?php echo $_SESSION['nome']; ?>" required="">
                                             
                                         </div>
-                
+                                        <div class="form-group col-lg-2" >
+                                            <label>Categoria</label>
+                                            <select class="form-control selectpicker" name="categoria" id="categoria" value="
                                             
-                                        </div>
 
-                                        <div class="form-group col-lg-3">
-                                            <label>Sigla</label>
-                                            <input class="form-control" placeholder="S.I" name="txtSigla">
+                                            "
+                                            >
+                                          
+                    <option
+
+
+
+
+                    >--</option>
+                                                <option>G</option>
+                                                <option>P</option>
+                                                <option>C</option>
+                                            </select>
                                         </div>
-                                        <div class="form-group col-lg-3">
-                                            <label>Numero</label>
-                                            <input type="number" class="form-control" placeholder="10" name="txtNumero"></div>
+                                        <div class="form-group col-lg-1" >
+                                            <label>Situação</label>
+                                            <select class="form-control selectpicker" name="situacao" id="situacao">
+                                                <option >--</option>
+                                                <option>A</option>
+                                                <option>I</option>
+                                                
+                                            </select>
+                                        </div>
+                                       
+                                            
+                                        </div>
+                                        <div class="clearfix"></div>
+
+                                        <div class="form-group col-lg-2">
+                                            <label>Senha</label>
+                                            <input type="password" name="senha" id="senha" class="form-control" placeholder="Senha">
+                                        </div>
+                                        <div class="form-group col-lg-2">
+                                            <label>Repita a senha</label>
+                                            <input type="password" name="novaSenha" id="novaSenha" class="form-control" placeholder="Senha" oninput="validar(this)">
+                                        </div>
+                                         <div class="form-group col-lg-2">
+                                            
+                                            <input type="hidden" name="login" id="login" value="<?php echo $_SESSION['login']; ?>">
+                                        </div>
 
                                         </div>
                                          <div class="clearfix"></div>
 
-                                        <button type="submit" class="btn btn-default">Gravar</button>
+                                        <button type="submit" name="" class="btn btn-default">Gravar</button>
                                         <button type="reset" class="btn btn-default">Cancelar</button>
 
                                                                             
                                     </form>
+                                    
+
                                 </div>
-                                <!-- /.col-lg-6 (nested) -->
-                           
-                                <!-- /.col-lg-6 (nested) -->
+
+
+
+
+                              </div>  
                             </div>
+
+                        </div>
                             <!-- /.row (nested) -->
                         </div>
                         <!-- /.panel-body -->
@@ -294,10 +279,13 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
+       
+
+
         </div>
-        <!-- /#page-wrapper -->
 
     </div>
+
     <!-- /#wrapper -->
 
     <!-- jQuery -->
@@ -309,9 +297,18 @@
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
+    <!-- Morris Charts JavaScript -->
+    <script src="../vendor/raphael/raphael.min.js"></script>
+    <script src="../vendor/morrisjs/morris.min.js"></script>
+    <script src="../data/morris-data.js"></script>
+
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
 
 </body>
 
 </html>
+
+
+
+

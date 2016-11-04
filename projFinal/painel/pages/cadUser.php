@@ -76,7 +76,7 @@
 
             <ul class="nav navbar-top-links navbar-right">
                
-                     <li><a href="conCad.php"><i class="fa fa-edit fa-fw"></i> Editar usuario</a>
+                     <li><a href="editUser.php"><i class="fa fa-edit fa-fw"></i> Editar usuario</a>
                     <li>
 
                         <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -87,36 +87,32 @@
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
+                    
+                     <ul class="nav" id="side-menu">
                       
-                     <li>
+                        <li>
                             <a href="#"><i class="fa fa-graduation-cap fa-fw"></i> <?php 
     echo" Bem vindo " . $_SESSION['login'];
     ?></a>
                         </li>
-                           <li>
+                          
+                          <li>
                             <a href="#"><i class="fa fa-user fa-fw"></i> Menu de cadastro<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="cadUser.php">Usuario</a>
+                                    <a href="conCadUser.php">Novo usuario</a>
                                 </li>
                                 <li>
-                                    <a href="cadAluno.php">Aluno</a>
+                                    <a href="cadAluno.php">Novo Aluno</a>
                                 </li>
                                 <li>
-                                    <a href="#">Second Level Item</a>
-                                </li>
-                                <li>
-                                    <a href="#">Second Level Item</a>
-                                </li>
-                                <li>
-                                    <a href="#">Third Level <span class="fa arrow"></span></a>
+                                    <a href="#">Remover cadastro <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="#">Third Level Item</a>
+                                            <a href="removeUser.php">Usuario</a>
                                         </li>
                                         <li>
-                                            <a href="#">Third Level Item</a>
+                                            <a href="removeAluno.php">Aluno</a>
                                         </li>
                                         <li>
                                             <a href="#">Third Level Item</a>
@@ -131,23 +127,32 @@
                             <!-- /.nav-second-level -->
                         </li>
 
-                        <li>
+                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Menu de opções<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="cadCurso.php">Novo Curso</a>
+                               <li>
+                                    <a href="cadCurso.php">Novo curso</a>
                                 </li>
                                 <li>
                                     <a href="dis.php">Nova Disciplina</a>
                                 </li>
                                 <li>
+                                    <a href="grupo.php">Novo Grupo</a>
+                                </li>
+                                <li>
+                                    <a href="modulo.php">Novo Modulo</a>
+                                </li>
+                                 <li>
+                                    <a href="projeto.php">Novo Projeto</a>
+                                </li>
+                                <li>
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="removeCurso">Curso</a>
+                                            <a href="removeUser.php">Usuario</a>
                                         </li>
                                         <li>
-                                            <a href="removeAluno.php">Disciplina</a>
+                                            <a href="removeAluno.php">Aluno</a>
                                         </li>
                                         <li>
                                             <a href="#">Third Level Item</a>
@@ -164,13 +169,13 @@
                        
 
                         <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Informações<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="dis.php">Blank Page</a>
+                                    <a href="removeDis.php">Sobre o projeto</a>
                                 </li>
                                 <li>
-                                    <a href="login.html">Login Page</a>
+                                    <a href="dis.php">Autores</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -178,6 +183,7 @@
                         
                         
                     </ul>
+               
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>

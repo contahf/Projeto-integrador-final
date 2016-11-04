@@ -11,14 +11,13 @@
         header('location:../index.html');
     }
 
-
+    $nomeCurso= $_POST["txtCurso"];
+    $siglaCurso = $_POST['txtSigla'];
+    
+    $numeroCurso = $_SESSION['id_numero'];
    
   
-    $nome= $_POST['nome'];
-    $categoria = $_POST['categoria'];
-    $situacao = $_POST['situacao'];
-    $senha = $_POST['senha'];
-    $LOGIN = $_POST['login'];
+    
   
     $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
 
@@ -27,8 +26,9 @@
 
     if ($con) {
                  
-    $sql = "UPDATE usuario SET senha = '". $senha ."', nome = '" . $nome . "', categoria = '". $categoria . "', situacao = '". $situacao . "' WHERE login = '" . $LOGIN . "';";
+    $sql = "UPDATE curso SET nome = '". $nomeCurso ."', sigla = '" . $siglaCurso . "' WHERE numero = '" . $numeroCurso . "';";
 
+    
     $resultado = pg_query($sql);
    
     $teste = pg_affected_rows($resultado); 
@@ -40,7 +40,7 @@
                     <script type='text/javascript'>                                          
 
                         window.alert('Update realisado!');
-                        window.location.href = 'editUser.php'; 
+                        window.location.href = 'confCurso.php'; 
 
                                                                         
                         

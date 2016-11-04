@@ -1,5 +1,7 @@
- <?php  
-   session_start();
+
+<?php 
+
+session_start();
 
     if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
     {
@@ -8,40 +10,17 @@
         session_destroy();
         header('location:../index.html');
     }
-    
-    $mat = $_POST['txtMat']; 
-    
-    $strCon = "host=localhost dbname=projetointegrador user=senac password=senac123";
-    $con = pg_connect($strCon);
-
-    if($con){
-    
-        $sql = "select * from aluno where matricula = '". $mat ."'";
-        $result = pg_query($con, $sql);
-       
-
-        if(pg_affected_rows($result) > 0){
-            $sql = "";
-            $sql = "DELETE FROM aluno WHERE matricula = " . "'" . $mat ."'";
-            $result = "";
-            $result = pg_query($con, $sql);
-
-                if(pg_affected_rows($result) > 0){
-        
-                      echo "<script type='text/javascript'>
-                                                                        
-                         window.alert('Aluno removido com sucesso!');
-                       window.location.href = 'removeAluno.php'; 
-                
-                         </script>";
-                }
-        }
+    if(empty($_SESSION['ID_MAT'])){
+        header('location:index.php');
     }
-
-//pg_close($con);
-
-
+    if ($_SESSION['tipo'] !='C') {
+         header('location:index.php');
+    }
+   
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -92,22 +71,20 @@
               
                 <li class="dropdown">
                 
-                <li><a href="../../Projeto-integrador-final/projFinal/out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                <li><a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
 
             </ul>
             <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
-                   
                     <ul class="nav" id="side-menu">
                       
                         <li>
                             <a href="index.php"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
-
-                        </li>
-                          <li>
+                        
+                        <li>
                             <a href="#"><i class="fa fa-user fa-fw"></i> Menu de cadastro<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -120,7 +97,7 @@
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="removeUser">Usuario</a>
+                                            <a href="#">Usuario</a>
                                         </li>
                                         <li>
                                             <a href="removeAluno.php">Aluno</a>
@@ -140,49 +117,42 @@
 
                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Menu de opções<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
+                           <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="cadCurso.php">Novo Curso</a>
+                                    <a href="cadCurso.php">Novo curso</a>
                                 </li>
                                 <li>
                                     <a href="dis.php">Nova Disciplina</a>
                                 </li>
                                 <li>
-                                    <a href="#">Remover cadastro <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="removeCurso">Curso</a>
-                                        </li>
-                                        <li>
-                                            <a href="removeDis.php">Disciplina</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-third-level -->
+                                    <a href="grupo.php">Novo Grupo</a>
                                 </li>
+                                <li>
+                                    <a href="modulo.php">Novo Modulo</a>
+                                </li>
+                                 <li>
+                                    <a href="projeto.php">Novo Projeto</a>
+                                </li>
+                                
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                       
-
+                     
+                      
                         <li>
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="dis.php">Blank Page</a>
+                                    <a href="blank.html">Blank Page</a>
                                 </li>
                                 <li>
-                                    <a href="dis.php">Login Page</a>
+                                    <a href="login.html">Login Page</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                      
+                        
+                        
                     </ul>
                 </div>
                 <!-- /.sidebar-collapse -->
@@ -197,16 +167,78 @@
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Remove aluno(a)
+                            Dados do aluno(a)
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="">
-                                    <form action="" method="post">
-                                        
+                                    <form action="confEditAluno.php" method="post">
+                                        <div class="form-group col-lg-5">
+                                            <label>Nome </label>
+                                            <input class="form-control" name="txtNome" value="<?php echo $_SESSION['ID'];?>">
+                                            
+                                        </div>
                                         <div class="form-group col-lg-3" >
-                                            <label>Informe a matricula do aluno</label>
-                                            <input type="text" class="form-control" name="txtMat" required="">
+                                            <label>Data de nasc.</label>
+                                            <input type="date" name="txtNasc" class="form-control" required="">
+                                            
+                                        </div>
+                                        <div class="form-group col-lg-2" >
+                                        <label>Sexo:</label><br>
+                                            <label class="radio-inline">
+                                            <input type="radio" name="txtSexo" value="m" checked>M
+                                            </label>
+                                            <label class="radio-inline">
+                                                <input type="radio" name="txtSexo" value="f" >F
+                                            </label>
+                                        </div>
+                                        <div class="clearfix"></div>
+                                         <div class="form-group col-lg-2" >
+                                            <label>Cidade</label>
+                                            <input type="numeric" class="form-control" name="txtCidade" required="" value="<?php echo $_SESSION['ID_CID'];?>" >
+                                            
+                                        </div>
+                                       
+                                        <div class="form-group col-lg-1" >
+                                            <label for="estado">UF:</label>
+                                            <select class="form-control selectpicker" name="estado" id="estado">
+                                                <option value="">--</option>
+                                                <option value="AC">AC</option>
+                                                <option value="AL">AL</option>
+                                                <option value="AP">AP</option>
+                                                <option value="AM">AM</option>
+                                                <option value="BA">BA</option>
+                                                <option value="CE">CE</option>
+                                                <option value="DF">DF</option>
+                                                <option value="ES">ES</option>
+                                                <option value="GO">GO</option>
+                                                <option value="MA">MA</option>
+                                                <option value="MT">MT</option>
+                                                <option value="MS">MS</option>
+                                                <option value="MG">MG</option>
+                                                <option value="PA">PA</option>
+                                                <option value="PB">PB</option>
+                                                <option value="PR">PR</option>
+                                                <option value="PE">PE</option>
+                                                <option value="PI">PI</option>
+                                                <option value="RN">RN</option>
+                                                <option value="RS">RS</option>
+                                                <option value="JR">RJ</option>
+                                                <option value="RO">RO</option>
+                                                <option value="RR">RR</option>
+                                                <option value="SC">SC</option>
+                                                <option value="SP">SP</option>
+                                                <option value="SE">SE</option>
+                                                <option value="TO">TO</option>
+                                            </select>
+                                            
+                                        </div>
+                                        <div class="clearfix"></div>
+                                        
+                    <!-- 3250-7600 -->                  <div class="form-group col-lg-3">
+                                            <label>Matricula</label>
+                                            <input type="text"  name="txtMat" class="form-control " 
+                                            value="<?php echo $_SESSION['ID_MAT'];?>" disabled >
                                             
                                         </div>
 
@@ -214,16 +246,15 @@
                                          <div class="clearfix"></div>
                                          
                                          <div class="container">
-                                            <button type="submit" class="btn btn-success">Confirmar</button>
+                                            <button type="submit" class="btn btn-default">Atualizar</button>
                                             <button type="reset" class="btn btn-default">Cancelar</button>
                                     
                                          </div>
                                                                             
                                     </form>
+
                                 </div>
-                                <!-- /.col-lg-6 (nested) -->
-                           
-                                <!-- /.col-lg-6 (nested) -->
+                               
                             </div>
                             <!-- /.row (nested) -->
                         </div>
@@ -255,3 +286,7 @@
 </body>
 
 </html>
+
+
+
+

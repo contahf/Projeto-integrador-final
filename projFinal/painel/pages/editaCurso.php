@@ -1,83 +1,17 @@
-<?php  
+<?php 
 
-    
-    $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
+    session_start();
 
-    $con = pg_connect($strCon);
-    
-
-    if ($con) {
-
-
-        $nomeCurso= $_POST["txtCurso"];
-        $siglaCurso = $_POST['txtSigla'];
-        $numeroCurso = $_POST['txtNumero'];
-        
-   
-        
-        $sql = "select * from curso where  numero = '". $numeroCurso ."'";
-
-        $consulta = pg_query($con, $sql);
- 
-        $linhas = pg_num_rows($consulta);
-
-        if($linhas > 0 ){
-     
-             echo "
-
-                    <script type='text/javascript'>                                          
-
-                        window.alert('Curso ja cadastrado!');
-                        window.location.href = 'cadCurso.php'; 
-
-                                                                        
-                        
-                    </script>
-
-
-               ";
-            
-         
-         }elseif ($linhas==0) {
-            
-            $sql = "INSERT INTO curso (numero, nome, sigla) VALUES ('".$numeroCurso."', '".$nomeCurso."', '".$siglaCurso."');";
-           
-            $res = pg_query($con, $sql);
-
-            $qtd_linhas = pg_affected_rows($res);
-
-            if ($qtd_linhas > 0){
-                 echo "
-
-                    <script type='text/javascript'>                                          
-
-                        window.alert('Cadastro de curso realizado!');
-                        window.location.href = 'cadCurso.php'; 
-
-                                                                        
-                        
-                    </script>
-
-
-               ";
-        
-            }
-
-        
-
-         }
-
-                
-
+    if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
+    {
+        unset($_SESSION['login']);
+        unset($_SESSION['senha']);
+        session_destroy();
+        header('location:../index.html');
     }
-
-    pg_close($con);
 
 
 ?>
-
-
-
 
 
 <!DOCTYPE html>
@@ -127,14 +61,13 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">TI resolve</a>
+                <a class="navbar-brand" href="index.php">TI resolve</a>
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
                 <!-- /.dropdown -->
                 <li class="dropdown">
-                    <li><a href="confCurso.php"><i class="fa fa-edit fa-fw"></i> Editar Curso</a>
                     <li><a href="removecad.html"><i class="fa fa-times fa-fw"></i> Remover Curso</a>
                     <li><a href="../../index.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     
@@ -254,10 +187,12 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="">
-                                    <form method="POST" action="" role="form">
+                                    <form method="POST" action="confEditCurso.php" role="form">
                                         <div class="form-group col-lg-5">
                                             <label>Nome curso</label>
-                                            <input class="form-control" placeholder="Seguraça da Informação" name="txtCurso" >
+                                            <input class="form-control" placeholder="Seguraça da Informação" name="txtCurso" value="<?php 
+    echo $_SESSION['id_nome'];
+    ?>" >
                                             
                                         </div>
                 
@@ -266,16 +201,20 @@
 
                                         <div class="form-group col-lg-3">
                                             <label>Sigla</label>
-                                            <input class="form-control" placeholder="S.I" name="txtSigla">
+                                            <input class="form-control" placeholder="S.I" name="txtSigla" value="<?php 
+    echo $_SESSION['id_sigla'];
+    ?>" >
                                         </div>
                                         <div class="form-group col-lg-3">
                                             <label>Numero</label>
-                                            <input type="number" class="form-control" placeholder="10" name="txtNumero"></div>
+                                            <input type="number" class="form-control" placeholder="10" name="txtNumero" value="<?php 
+    echo $_SESSION['id_numero'];
+    ?>" disabled ></div>
 
                                         </div>
                                          <div class="clearfix"></div>
 
-                                        <button type="submit" class="btn btn-default">Gravar</button>
+                                        <button type="submit" class="btn btn-default">Salvar</button>
                                         <button type="reset" class="btn btn-default">Cancelar</button>
 
                                                                             

@@ -1,85 +1,27 @@
 <?php  
+  session_start();
 
-    
-    $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
-
-    $con = pg_connect($strCon);
-    
-
-    if ($con) {
-
-
-        $nomeCurso= $_POST["txtCurso"];
-        $siglaCurso = $_POST['txtSigla'];
-        $numeroCurso = $_POST['txtNumero'];
-        
-   
-        
-        $sql = "select * from curso where  numero = '". $numeroCurso ."'";
-
-        $consulta = pg_query($con, $sql);
- 
-        $linhas = pg_num_rows($consulta);
-
-        if($linhas > 0 ){
-     
-             echo "
-
-                    <script type='text/javascript'>                                          
-
-                        window.alert('Curso ja cadastrado!');
-                        window.location.href = 'cadCurso.php'; 
-
-                                                                        
-                        
-                    </script>
-
-
-               ";
-            
-         
-         }elseif ($linhas==0) {
-            
-            $sql = "INSERT INTO curso (numero, nome, sigla) VALUES ('".$numeroCurso."', '".$nomeCurso."', '".$siglaCurso."');";
-           
-            $res = pg_query($con, $sql);
-
-            $qtd_linhas = pg_affected_rows($res);
-
-            if ($qtd_linhas > 0){
-                 echo "
-
-                    <script type='text/javascript'>                                          
-
-                        window.alert('Cadastro de curso realizado!');
-                        window.location.href = 'cadCurso.php'; 
-
-                                                                        
-                        
-                    </script>
-
-
-               ";
-        
-            }
-
-        
-
-         }
-
-                
-
+    if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
+    {
+        unset($_SESSION['login']);
+        unset($_SESSION['senha']);
+        session_destroy();
+        header('location:../index.html');
     }
 
-    pg_close($con);
+    if ($_SESSION['tipo'] !='C') {
+         header('location:index.php');
+    }
 
+    $n =  $_GET['nome'];
+    $c = $_GET['ch'];
+    $cod =  $_GET['codigo'];
+    
+
+
+ 
 
 ?>
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -121,44 +63,32 @@
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+                
                 <a class="navbar-brand" href="index.html">TI resolve</a>
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-                <!-- /.dropdown -->
+              
                 <li class="dropdown">
-                    <li><a href="confCurso.php"><i class="fa fa-edit fa-fw"></i> Editar Curso</a>
-                    <li><a href="removecad.html"><i class="fa fa-times fa-fw"></i> Remover Curso</a>
-                    <li><a href="../../index.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                    
-                </li>
-                <!-- /.dropdown -->
+                 
+                <li><a href="../../Projeto-integrador-final/projFinal/out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+
             </ul>
-   
+            <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
-                    
                     <ul class="nav" id="side-menu">
                       
                         <li>
-                            <a href="#"><i class="fa fa-graduation-cap fa-fw"></i> <?php 
-    echo" Bem vindo " . $_SESSION['login'];
-    ?></a>
+                            <a href="index.php"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
-                          
-                          <li>
+                              <li>
                             <a href="#"><i class="fa fa-user fa-fw"></i> Menu de cadastro<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="conCadUser.php">Novo usuario</a>
+                                    <a href="cadUser.php">Novo usuario</a>
                                 </li>
                                 <li>
                                     <a href="cadAluno.php">Novo Aluno</a>
@@ -167,7 +97,7 @@
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="removeUser.php">Usuario</a>
+                                            <a href="removeUser">Usuario</a>
                                         </li>
                                         <li>
                                             <a href="removeAluno.php">Aluno</a>
@@ -184,24 +114,23 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-
                          <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Menu de opções<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="conCadUser.php">Novo usuario</a>
+                                    <a href="cadCurso.php">Novo Curso</a>
                                 </li>
                                 <li>
-                                    <a href="cadAluno.php">Novo Aluno</a>
+                                    <a href="dis.php">Nova Disciplina</a>
                                 </li>
                                 <li>
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="removeUser.php">Usuario</a>
+                                            <a href="removeCurso">Curso</a>
                                         </li>
                                         <li>
-                                            <a href="removeAluno.php">Aluno</a>
+                                            <a href="removeDis.php">Disciplina</a>
                                         </li>
                                         <li>
                                             <a href="#">Third Level Item</a>
@@ -215,23 +144,11 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                       
 
-                        <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Informações<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="removeDis.php">Sobre o projeto</a>
-                                </li>
-                                <li>
-                                    <a href="dis.php">Autores</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                        
-                        
+                      
                     </ul>
+
+
 
 
                 </div>
@@ -241,42 +158,44 @@
         </nav>
 
         <div id="page-wrapper">
-            <div class="row">
-             
-            </div>
+           
             <br>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Dados curso
+                            Dados da disciplina
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="">
-                                    <form method="POST" action="" role="form">
+                                    <form action="updateDis.php" method="post">
                                         <div class="form-group col-lg-5">
-                                            <label>Nome curso</label>
-                                            <input class="form-control" placeholder="Seguraça da Informação" name="txtCurso" >
+                                            <label>Nome </label>
+                                            <input type="text" name="txtDis" id="txtDis" class="form-control" required="" placeholder="Bando de dados" value="<?php echo $n; ?>" >
                                             
                                         </div>
-                
+                                        <div class="form-group col-lg-3" >
+                                            <label>Ch</label>
+                                            <input type="numeric" placeholder="90" class="form-control" name="txtCh" required="" value="<?php echo $c; ?>" >
+                                            
+                                        </div>
+                                        <div class="form-group col-lg-3" >
+                                            <label>Codigo</label>
+                                            <input type="numeric" class="form-control" placeholder="1212" name="txtCod" value="<?php echo $cod; ?>" required="">
                                             
                                         </div>
 
-                                        <div class="form-group col-lg-3">
-                                            <label>Sigla</label>
-                                            <input class="form-control" placeholder="S.I" name="txtSigla">
-                                        </div>
-                                        <div class="form-group col-lg-3">
-                                            <label>Numero</label>
-                                            <input type="number" class="form-control" placeholder="10" name="txtNumero"></div>
 
-                                        </div>
                                          <div class="clearfix"></div>
+                                         
+                                         <div class="container">
+                                            <button type="submit" class="btn btn-default">Gravar</button>
+                                            <button type="reset" class="btn btn-default">Cancelar</button>
+                                    
+                                         </div>
 
-                                        <button type="submit" class="btn btn-default">Gravar</button>
-                                        <button type="reset" class="btn btn-default">Cancelar</button>
+                                        
 
                                                                             
                                     </form>

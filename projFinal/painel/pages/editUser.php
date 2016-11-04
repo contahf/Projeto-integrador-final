@@ -8,9 +8,7 @@ session_start();
         session_destroy();
         header('location:../index.html');
     }
-    if ($_SESSION['tipo'] !='C') {
-         header('location:index.php');;
-    }
+   
    
 ?>
 
@@ -389,10 +387,12 @@ session_start();
                                             <th>Login</th>
                                             <th>Nome</th>
                                             <th>Categoria</th>
+                                            <th>Sit.</th>
                                              <th>Editar</th>
+                                             <th>Excluir</th>
                                         </tr>
                                     </thead>
-                                    <form>
+                                 
                                     <?php 
                                   
 
@@ -406,7 +406,7 @@ session_start();
 
     if ($con) {
 
-        $sql = "SELECT  login, nome, categoria  from usuario";
+        $sql = "SELECT  login, nome, categoria, situacao  from usuario";
 
         $consulta = pg_query($con, $sql);
         
@@ -420,7 +420,9 @@ session_start();
                         <td>".$dados[0] . "</td>
                         <td>".$dados[1] . "</td>
                         <td >".$dados[2] . "</td>
-                        <td><a href='loginUser.php'><i class='fa fa-edit fa-fw'></i></a></td>
+                        <td >".$dados[3] . "</td>
+                        <td><a href='finUser.php?l=".$dados[0]."&n=".$dados[1]."&cat=".$dados[2]."&s=".$dados[3]."'><i class='fa fa-edit fa-fw'></i></a></td>
+                        <td><a href='removeUser.php?l=".$dados[0]."'><i class='fa fa-times fa-fw'></i></a></td>
                     </tr>";
                                                             
 

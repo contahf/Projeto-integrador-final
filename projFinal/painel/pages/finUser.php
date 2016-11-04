@@ -52,6 +52,7 @@
                 input.setCustomValidity('');
              }
         }
+
     </script>
 
 </head>
@@ -81,36 +82,32 @@
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
+                    
                     <ul class="nav" id="side-menu">
                       
                         <li>
                             <a href="#"><i class="fa fa-graduation-cap fa-fw"></i> <?php 
-    echo" Bem vindo $logado";
+    echo" Bem vindo " . $_SESSION['login'];
     ?></a>
                         </li>
-                           <li>
-                            <a href="#"><i class="fa fa-sitemap fa-fw"></i> Menu de cadastro<span class="fa arrow"></span></a>
+                          
+                          <li>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> Menu de cadastro<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="cadUser.php">Usuario</a>
+                                    <a href="conCadUser.php">Novo usuario</a>
                                 </li>
                                 <li>
-                                    <a href="cadAluno.php">Aluno</a>
+                                    <a href="cadAluno.php">Novo Aluno</a>
                                 </li>
                                 <li>
-                                    <a href="#">Second Level Item</a>
-                                </li>
-                                <li>
-                                    <a href="#">Second Level Item</a>
-                                </li>
-                                <li>
-                                    <a href="#">Third Level <span class="fa arrow"></span></a>
+                                    <a href="#">Remover cadastro <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="#">Third Level Item</a>
+                                            <a href="removeUser.php">Usuario</a>
                                         </li>
                                         <li>
-                                            <a href="#">Third Level Item</a>
+                                            <a href="removeAluno.php">Aluno</a>
                                         </li>
                                         <li>
                                             <a href="#">Third Level Item</a>
@@ -125,23 +122,32 @@
                             <!-- /.nav-second-level -->
                         </li>
 
-                        <li>
+                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Menu de opções<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="cadCurso.php">Novo Curso</a>
+                               <li>
+                                    <a href="cadCurso.php">Novo curso</a>
                                 </li>
                                 <li>
                                     <a href="dis.php">Nova Disciplina</a>
                                 </li>
                                 <li>
+                                    <a href="grupo.php">Novo Grupo</a>
+                                </li>
+                                <li>
+                                    <a href="modulo.php">Novo Modulo</a>
+                                </li>
+                                 <li>
+                                    <a href="projeto.php">Novo Projeto</a>
+                                </li>
+                                <li>
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="removeCurso">Curso</a>
+                                            <a href="removeUser.php">Usuario</a>
                                         </li>
                                         <li>
-                                            <a href="removeAluno.php">Disciplina</a>
+                                            <a href="removeAluno.php">Aluno</a>
                                         </li>
                                         <li>
                                             <a href="#">Third Level Item</a>
@@ -158,13 +164,13 @@
                        
 
                         <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Informações<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="dis.php">Blank Page</a>
+                                    <a href="removeDis.php">Sobre o projeto</a>
                                 </li>
                                 <li>
-                                    <a href="login.html">Login Page</a>
+                                    <a href="dis.php">Autores</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -187,7 +193,7 @@
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Dados Pessoais de :
-                            <?php echo $_SESSION['login'];?>
+                            <?php echo $_GET['l'];?>
 
                         </div>
                         <div class="panel-body">
@@ -196,22 +202,23 @@
                                     <form method="post" action="teste.php" id="frm1" name="frm1" >
                                         <div class="form-group col-lg-4">
                                             <label>Nome completo</label>
-                                            <input class="form-control" name="nome" id="nome" value="<?php echo $_SESSION['nome']; ?>" required="">
+                                            <input class="form-control" name="nome" id="nome" value="<?php echo $_GET['n']; ?>" required="">
                                             
                                         </div>
                                         <div class="form-group col-lg-2" >
                                             <label>Categoria</label>
                                             <select class="form-control selectpicker" name="categoria" id="categoria" value="
-                                            <?php echo $_SESSION['tipo']; ?>
-
-                                            " 
-
                                             
 
-
+                                            "
                                             >
                                           
-                                                <option>--</option>
+                    <option
+
+
+
+
+                    >--</option>
                                                 <option>G</option>
                                                 <option>P</option>
                                                 <option>C</option>
@@ -219,8 +226,8 @@
                                         </div>
                                         <div class="form-group col-lg-1" >
                                             <label>Situação</label>
-                                            <select class="form-control selectpicker" name="situacao" id="situacao" value="<?php echo $_SESSION['sit']; ?>">
-                                                <option>--</option>
+                                            <select class="form-control selectpicker" name="situacao" id="situacao" value="<?php echo $_GET['s']; ?>">
+                                                <option value="<?php echo $_GET['s']; ?>">--</option>
                                                 <option>A</option>
                                                 <option>I</option>
                                                 
@@ -238,6 +245,10 @@
                                         <div class="form-group col-lg-2">
                                             <label>Repita a senha</label>
                                             <input type="password" name="novaSenha" id="novaSenha" class="form-control" placeholder="Senha" oninput="validar(this)">
+                                        </div>
+                                         <div class="form-group col-lg-2">
+                                            
+                                            <input type="hidden" name="login" id="login" value="<?php echo $_GET['l']; ?>">
                                         </div>
 
                                         </div>

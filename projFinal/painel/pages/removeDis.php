@@ -1,18 +1,28 @@
  <?php  
+   session_start();
+
+    if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
+    {
+        unset($_SESSION['login']);
+        unset($_SESSION['senha']);
+        session_destroy();
+        header('location:../index.html');
+    }
     
-  
-    $cod = $_POST['txtCod'];
+    $codigo = $_POST['txtCod']; 
+    
     $strCon = "host=localhost dbname=projetointegrador user=senac password=senac123";
     $con = pg_connect($strCon);
 
     if($con){
     
-        $sql = "select nome from disciplina where codigo = '". $cod ."'";
+        $sql = "select * from disciplina where codigo = '". $codigo ."'";
         $result = pg_query($con, $sql);
+       
 
         if(pg_affected_rows($result) > 0){
             $sql = "";
-            $sql = "DELETE FROM disciplina WHERE codigo = " . "'" . $cod ."'";
+            $sql = "DELETE FROM disciplina WHERE codigo = " . "'" . $codigo ."'";
             $result = "";
             $result = pg_query($con, $sql);
 
@@ -28,7 +38,7 @@
         }
     }
 
-//pg_close($con);
+pg_close($con);
 
 
 ?>
@@ -63,6 +73,19 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+        #div {
+ 
+       
+        position:absolute; 
+        
+        margin-top:-100px; /* ou seja ele pega 50% da altura tela e sobe metade do valor da altura no caso 100 */
+        left:50%;
+        margin-left:-250px; /* ou seja ele pega 50% da largura tela e diminui  metade do valor da largura no caso 250 */
+        
+ 
+        }
+    </style>
 
 </head>
 
@@ -70,37 +93,37 @@
 
     <div id="wrapper">
 
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+       <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 
-                <a class="navbar-brand" href="index.html">TI resolve</a>
+                <a class="navbar-brand" href="index.html">T.I Resolve</a>
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-              
-                <li class="dropdown">
-                
-                <li><a href="../../Projeto-integrador-final/projFinal/out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-
+               
+                    
+                    <li>
+                        <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    </li>
+                <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
+                   
+                 <ul class="nav" id="side-menu">
                       
                         <li>
-                            <a href="index.php"><i class="fa fa-home fa-fw"></i> Home</a>
+                            <a href="index.php"><i class="fa fa-graduation-cap fa-fw"></i> Home</a>
                         </li>
-
-                        </li>
+                          
                           <li>
                             <a href="#"><i class="fa fa-user fa-fw"></i> Menu de cadastro<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="cadUser.php">Novo usuario</a>
+                                    <a href="conCadUser.php">Novo usuario</a>
                                 </li>
                                 <li>
                                     <a href="cadAluno.php">Novo Aluno</a>
@@ -109,7 +132,7 @@
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="removeUser">Usuario</a>
+                                            <a href="removeUser.php">Usuario</a>
                                         </li>
                                         <li>
                                             <a href="removeAluno.php">Aluno</a>
@@ -127,26 +150,35 @@
                             <!-- /.nav-second-level -->
                         </li>
 
-                        <li>
+                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Menu de opções<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="cadCurso.php">Novo Curso</a>
+                               <li>
+                                    <a href="cadCurso.php">Novo curso</a>
                                 </li>
                                 <li>
                                     <a href="dis.php">Nova Disciplina</a>
                                 </li>
                                 <li>
+                                    <a href="grupo.php">Novo Grupo</a>
+                                </li>
+                                <li>
+                                    <a href="modulo.php">Novo Modulo</a>
+                                </li>
+                                 <li>
+                                    <a href="projeto.php">Novo Projeto</a>
+                                </li>
+                                <li>
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="removeCurso">Curso</a>
+                                            <a href="removeUser.php">Usuario</a>
                                         </li>
                                         <li>
-                                            <a href="removeDis.php">Disciplina</a>
+                                            <a href="removeAluno.php">Aluno</a>
                                         </li>
                                         <li>
-                                            <a href="#">Third Level Item</a>
+                                            <a href="editarDis.php">Disciplina</a>
                                         </li>
                                         <li>
                                             <a href="#">Third Level Item</a>
@@ -160,47 +192,50 @@
                        
 
                         <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Informações<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="dis.php">Blank Page</a>
+                                    <a href="#">Sobre o projeto</a>
                                 </li>
                                 <li>
-                                    <a href="dis.php">Login Page</a>
+                                    <a href="#">Autores</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-
-                   
-                       
-                      
+                        
+                        
                     </ul>
+
+
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
             <!-- /.navbar-static-side -->
         </nav>
 
-        <div id="page-wrapper">
+        <div id="page-wrapper" >
            
             <br>
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="panel panel-default">
+                    <div class="panel panel-default" >
                         <div class="panel-heading">
                             Remoção da disciplina
                         </div>
                         <div class="panel-body">
                             <div class="row">
-                                <div class="">
+                                <div class="" >
                                     <form action="" method="post">
-                                        
-                                        <div class="form-group col-lg-3" >
-                                            <label>Codigo da disciplina</label>
-                                            <input type="numeric" class="form-control" name="txtCod" required="">
-                                            
+                                        <div >
+                                            <div class="form-group col-lg-3" >
+                                                <label>Confirme o codigo da disciplina</label>
+                                                <input type="numeric" class="form-control" name="txtCod" required="">
+                                                
+                                            </div>
+
                                         </div>
+                                       
 
 
                                          <div class="clearfix"></div>

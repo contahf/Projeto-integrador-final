@@ -11,14 +11,15 @@
         header('location:../index.html');
     }
 
-
+    $nome = $_POST['txtNome'];
+    $matricula = $_SESSION['ID_MAT'];
+    $nasc = $_POST['txtNasc'];
+    $sex = $_POST["txtSexo"];
+    $cidade = $_POST['txtCidade'];
+    $uf = $_POST['estado'];
    
   
-    $nome= $_POST['nome'];
-    $categoria = $_POST['categoria'];
-    $situacao = $_POST['situacao'];
-    $senha = $_POST['senha'];
-    $LOGIN = $_POST['login'];
+    
   
     $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
 
@@ -27,8 +28,9 @@
 
     if ($con) {
                  
-    $sql = "UPDATE usuario SET senha = '". $senha ."', nome = '" . $nome . "', categoria = '". $categoria . "', situacao = '". $situacao . "' WHERE login = '" . $LOGIN . "';";
+    $sql = "UPDATE aluno SET nome = '". $nome ."', sexo = '" . $sex . "', dtnasc = '". $nasc . "', cidade = '". $cidade . "' , uf = '". $uf . "' WHERE matricula = '" . $matricula . "';";
 
+    
     $resultado = pg_query($sql);
    
     $teste = pg_affected_rows($resultado); 
@@ -40,7 +42,7 @@
                     <script type='text/javascript'>                                          
 
                         window.alert('Update realisado!');
-                        window.location.href = 'editUser.php'; 
+                        window.location.href = 'confMatricula.php'; 
 
                                                                         
                         
@@ -48,6 +50,7 @@
 
 
                ";
+        unset($_SESSION['ID_MAT']);
                 pg_close($con);
                 
 

@@ -1,5 +1,5 @@
 <?php  
-include 'logout.php';
+
     
     $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
 
@@ -123,7 +123,7 @@ include 'logout.php';
               
                 <li class="dropdown">
                  <li><a href="editarDis.php"><i class="fa fa-edit fa-fw"></i> Editar disciplina</a>
-                <li><a href="removeDis.php"><i class="fa fa-times fa-fw"></i> Remover disciplina</a>
+                <li><a href="editarDis.php"><i class="fa fa-times fa-fw"></i> Remover disciplina</a>
                 <li><a href="../../Projeto-integrador-final/projFinal/out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
 
             </ul>
@@ -224,7 +224,7 @@ include 'logout.php';
                                     <form action="" method="post">
                                         <div class="form-group col-lg-5">
                                             <label>Nome </label>
-                                            <input type="text" name="txtDis" id="txtDis" class="form-control" required="" placeholder="Segurança da informação" >
+                                            <input type="text" name="txtDis" id="txtDis" class="form-control" required="" placeholder="Bando de dados" >
                                             
                                         </div>
                                         <div class="form-group col-lg-3" >

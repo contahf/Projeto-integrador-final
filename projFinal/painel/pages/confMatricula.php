@@ -1,83 +1,56 @@
 <?php  
 
-    
-    $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
+    session_start();
 
+    if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
+    {
+        unset($_SESSION['login']);
+        unset($_SESSION['senha']);
+        session_destroy();
+        header('location:../index.html');
+    }
+
+    if ($_SESSION['tipo'] !='C') {
+         header('location:index.php');;
+    }
+
+
+    $mat = $_POST['txtMat'];
+    $strCon = "host=localhost dbname=projetointegrador user=senac password=senac123";
     $con = pg_connect($strCon);
+
+    if($con){
     
+        $sql = "select * from aluno where matricula = '". $mat ."'";
+        $result = pg_query($con, $sql);
 
-    if ($con) {
-
-
-        $nomeCurso= $_POST["txtCurso"];
-        $siglaCurso = $_POST['txtSigla'];
-        $numeroCurso = $_POST['txtNumero'];
-        
-   
-        
-        $sql = "select * from curso where  numero = '". $numeroCurso ."'";
-
-        $consulta = pg_query($con, $sql);
- 
-        $linhas = pg_num_rows($consulta);
-
-        if($linhas > 0 ){
-     
-             echo "
-
-                    <script type='text/javascript'>                                          
-
-                        window.alert('Curso ja cadastrado!');
-                        window.location.href = 'cadCurso.php'; 
-
-                                                                        
-                        
-                    </script>
-
-
-               ";
+        if(pg_num_rows($result) > 0){
             
-         
-         }elseif ($linhas==0) {
-            
-            $sql = "INSERT INTO curso (numero, nome, sigla) VALUES ('".$numeroCurso."', '".$nomeCurso."', '".$siglaCurso."');";
-           
-            $res = pg_query($con, $sql);
+            $arrayLista = pg_fetch_array($result);
 
-            $qtd_linhas = pg_affected_rows($res);
+            $MATRICULA = $arrayLista['matricula'];
+            $NOME = $arrayLista['nome'];
+            $SEXO = $arrayLista['sexo'];
+            $NASC = $arrayLista['dtnasc'];
+            $CID = $arrayLista['cidade'];
+            $UF = $arrayLista['uf'];
 
-            if ($qtd_linhas > 0){
-                 echo "
+            $_SESSION['ID'] = $NOME;
+            $_SESSION['ID_MAT'] = $MATRICULA;
+            $_SESSION['ID_CID'] = $CID;
+            header('location:editAluno.php');
+            pg_close($con);
+              
+        }
 
-                    <script type='text/javascript'>                                          
-
-                        window.alert('Cadastro de curso realizado!');
-                        window.location.href = 'cadCurso.php'; 
-
-                                                                        
-                        
-                    </script>
-
-
-               ";
-        
-            }
-
-        
-
-         }
-
-                
+        pg_close($con);
 
     }
 
-    pg_close($con);
 
-
+    
+    
 ?>
-
-
-
 
 
 <!DOCTYPE html>
@@ -105,12 +78,6 @@
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 </head>
 
@@ -121,32 +88,23 @@
         <!-- Navigation -->
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
+                
                 <a class="navbar-brand" href="index.html">TI resolve</a>
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-                <!-- /.dropdown -->
+              
                 <li class="dropdown">
-                    <li><a href="confCurso.php"><i class="fa fa-edit fa-fw"></i> Editar Curso</a>
-                    <li><a href="removecad.html"><i class="fa fa-times fa-fw"></i> Remover Curso</a>
-                    <li><a href="../../index.html"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                    
-                </li>
-                <!-- /.dropdown -->
+                
+                <li><a href="../../Projeto-integrador-final/projFinal/out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+
             </ul>
-   
+            <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
-                    
-                    <ul class="nav" id="side-menu">
+                <ul class="nav" id="side-menu">
                       
                         <li>
                             <a href="#"><i class="fa fa-graduation-cap fa-fw"></i> <?php 
@@ -188,11 +146,20 @@
                          <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Menu de opções<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="conCadUser.php">Novo usuario</a>
+                               <li>
+                                    <a href="cadCurso.php">Novo curso</a>
                                 </li>
                                 <li>
-                                    <a href="cadAluno.php">Novo Aluno</a>
+                                    <a href="dis.php">Nova Disciplina</a>
+                                </li>
+                                <li>
+                                    <a href="grupo.php">Novo Grupo</a>
+                                </li>
+                                <li>
+                                    <a href="modulo.php">Novo Modulo</a>
+                                </li>
+                                 <li>
+                                    <a href="projeto.php">Novo Projeto</a>
                                 </li>
                                 <li>
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
@@ -232,8 +199,6 @@
                         
                         
                     </ul>
-
-
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
@@ -241,44 +206,36 @@
         </nav>
 
         <div id="page-wrapper">
-            <div class="row">
-             
-            </div>
+           
             <br>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Dados curso
+                            Dados do aluno(a)
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="">
-                                    <form method="POST" action="" role="form">
-                                        <div class="form-group col-lg-5">
-                                            <label>Nome curso</label>
-                                            <input class="form-control" placeholder="Seguraça da Informação" name="txtCurso" >
-                                            
-                                        </div>
-                
+                                    <form name="fmrMat" action="<?=$_SERVER['PHP_SELF']?>" method="post"  role="form">
+                                 
+                                        
+                                        <div class="form-group col-lg-3">
+                                            <label>Matricula</label>
+                                            <input type="text" name="txtMat" id="txtMat" class="form-control" required="">
                                             
                                         </div>
 
-                                        <div class="form-group col-lg-3">
-                                            <label>Sigla</label>
-                                            <input class="form-control" placeholder="S.I" name="txtSigla">
-                                        </div>
-                                        <div class="form-group col-lg-3">
-                                            <label>Numero</label>
-                                            <input type="number" class="form-control" placeholder="10" name="txtNumero"></div>
 
-                                        </div>
                                          <div class="clearfix"></div>
+                                         
+                                         <div class="container">
+                                            <button type="submit" class="btn btn-default">Confirmar</button>
+                                            <button type="reset" class="btn btn-default">Cancelar</button>
+                                            
 
-                                        <button type="submit" class="btn btn-default">Gravar</button>
-                                        <button type="reset" class="btn btn-default">Cancelar</button>
-
-                                                                            
+                                    
+                                         </div>                                  
                                     </form>
                                 </div>
                                 <!-- /.col-lg-6 (nested) -->
@@ -298,7 +255,7 @@
         <!-- /#page-wrapper -->
 
     </div>
-    <!-- /#wrapper -->
+   
 
     <!-- jQuery -->
     <script src="../vendor/jquery/jquery.min.js"></script>
@@ -315,3 +272,4 @@
 </body>
 
 </html>
+

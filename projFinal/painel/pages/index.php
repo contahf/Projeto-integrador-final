@@ -10,7 +10,6 @@
         header('location:../index.html');
     }
 
-
     
     
 ?>
@@ -77,13 +76,14 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                    
-                    <ul class="nav" id="side-menu">
+                 <ul class="nav" id="side-menu">
                       
                         <li>
                             <a href="#"><i class="fa fa-graduation-cap fa-fw"></i> <?php 
     echo" Bem vindo " . $_SESSION['login'];
     ?></a>
                         </li>
+                          
                           <li>
                             <a href="#"><i class="fa fa-user fa-fw"></i> Menu de cadastro<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -115,26 +115,35 @@
                             <!-- /.nav-second-level -->
                         </li>
 
-                        <li>
+                         <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Menu de opções<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="cadCurso.php">Novo Curso</a>
+                               <li>
+                                    <a href="cadCurso.php">Novo curso</a>
                                 </li>
                                 <li>
                                     <a href="dis.php">Nova Disciplina</a>
                                 </li>
                                 <li>
+                                    <a href="grupo.php">Novo Grupo</a>
+                                </li>
+                                <li>
+                                    <a href="modulo.php">Novo Modulo</a>
+                                </li>
+                                 <li>
+                                    <a href="projeto.php">Novo Projeto</a>
+                                </li>
+                                <li>
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="removeCurso.php">Curso</a>
+                                            <a href="removeUser.php">Usuario</a>
                                         </li>
                                         <li>
-                                            <a href="removeDis.php">Disciplina</a>
+                                            <a href="removeAluno.php">Aluno</a>
                                         </li>
                                         <li>
-                                            <a href="#">Third Level Item</a>
+                                            <a href="editarDis.php">Disciplina</a>
                                         </li>
                                         <li>
                                             <a href="#">Third Level Item</a>
@@ -148,13 +157,13 @@
                        
 
                         <li>
-                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Sample Pages<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Informações<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="removeDis.php">Blank Page</a>
+                                    <a href="removeDis.php">Sobre o projeto</a>
                                 </li>
                                 <li>
-                                    <a href="dis.php">Login Page</a>
+                                    <a href="dis.php">Autores</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -182,16 +191,16 @@
                                     <i class="fa fa-user fa-5x"></i>
                                 </div>
                                 
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">26</div>
-                                    
+                                  <div class="col-xs-9 text-right">
+                                    <div class="huge">1</div>
+                                    <div>Edite seus dados!</div>
                                 </div>
                         
                             </div>
                         </div>
-                        <a href="finUser.php">
+                        <a href="dados.php">
                             <div class="panel-footer">
-                                <span class="pull-left">Editar 
+                                <span class="pull-left">
                                     <?php
                                         
                                         echo $_SESSION['nome'];
@@ -214,14 +223,14 @@
                                     <i class="fa fa-tasks fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">12</div>
-                                    <div>New Tasks!</div>
+                                    <div class="huge">2</div>
+                                    <div>Opções!</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="editarDis.php">
                             <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
+                                <span class="pull-left">Listar opções </span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
@@ -233,17 +242,17 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-shopping-cart fa-5x"></i>
+                                    <i class="fa fa-users fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">124</div>
-                                    <div>New Orders!</div>
+                                    <div class="huge">3</div>
+                                    <div>Edite um aluno!</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="confMatricula.php">
                             <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
+                                <span class="pull-left">Editar Aluno</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
@@ -258,14 +267,14 @@
                                     <i class="fa fa-support fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">13</div>
-                                    <div>Support Tickets!</div>
+                                    <div class="huge">4</div>
+                                    <div>Exclua um usuario!</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="#">
+                        <a href="editUser.php">
                             <div class="panel-footer">
-                                <span class="pull-left">View Details</span>
+                                <span class="pull-left">Opções de usario</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
