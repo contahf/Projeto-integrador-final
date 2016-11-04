@@ -10,10 +10,7 @@
         header('location:../index.html');
     }
 
-    if ($_SESSION['tipo'] !='C') {
-         header('location:index.php');;
-    }
-
+  
 
     $mat = $_POST['txtMat'];
     $strCon = "host=localhost dbname=projetointegrador user=senac password=senac123";
@@ -38,6 +35,9 @@
             $_SESSION['ID'] = $NOME;
             $_SESSION['ID_MAT'] = $MATRICULA;
             $_SESSION['ID_CID'] = $CID;
+            $_SESSION['UF'] = $UF;
+            $_SESSION['nasc'] = $NASC;
+            $_SESSION['sexo'] = $SEXO;
             header('location:editAluno.php');
             pg_close($con);
               
