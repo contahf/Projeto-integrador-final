@@ -10,12 +10,8 @@ session_start();
         session_destroy();
         header('location:../index.html');
     }
-    if(empty($_SESSION['ID_MAT'])){
-        header('location:index.php');
-    }
-    if ($_SESSION['tipo'] !='C') {
-         header('location:index.php');
-    }
+
+
    
 ?>
 
@@ -52,6 +48,18 @@ session_start();
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script type="text/javascript"> 
+
+        function validar (input){ 
+            if (input.value != document.getElementById('senha').value) {
+                input.setCustomValidity('Repita a senha corretamente');
+            } else {
+                input.setCustomValidity('');
+             }
+        }
+
+        
+    </script>
 
 </head>
 
@@ -180,16 +188,17 @@ session_start();
                                         </div>
                                         <div class="form-group col-lg-3" >
                                             <label>Data de nasc.</label>
-                                            <input type="date" name="txtNasc" class="form-control" required="">
+                                            <input type="date" name="txtNasc" class="form-control" required="" value="<?php echo $_SESSION['nasc'];?>" >
                                             
                                         </div>
                                         <div class="form-group col-lg-2" >
+                                        
                                         <label>Sexo:</label><br>
                                             <label class="radio-inline">
-                                            <input type="radio" name="txtSexo" value="m" checked>M
+                                            <input type="radio" name="txtSexo" id="txtSexo" value="m" <?php if($_SESSION['sexo'] == "m") echo 'checked' ; ?>>M
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="txtSexo" value="f" >F
+                                                <input type="radio" id="txtSexo" name="txtSexo" value="f" <?php if($_SESSION['sexo'] == "f") echo 'checked' ; ?>>F
                                             </label>
                                         </div>
                                         <div class="clearfix"></div>
@@ -202,34 +211,34 @@ session_start();
                                         <div class="form-group col-lg-1" >
                                             <label for="estado">UF:</label>
                                             <select class="form-control selectpicker" name="estado" id="estado">
-                                                <option value="">--</option>
-                                                <option value="AC">AC</option>
-                                                <option value="AL">AL</option>
-                                                <option value="AP">AP</option>
-                                                <option value="AM">AM</option>
-                                                <option value="BA">BA</option>
-                                                <option value="CE">CE</option>
-                                                <option value="DF">DF</option>
-                                                <option value="ES">ES</option>
-                                                <option value="GO">GO</option>
-                                                <option value="MA">MA</option>
-                                                <option value="MT">MT</option>
-                                                <option value="MS">MS</option>
-                                                <option value="MG">MG</option>
-                                                <option value="PA">PA</option>
-                                                <option value="PB">PB</option>
-                                                <option value="PR">PR</option>
-                                                <option value="PE">PE</option>
-                                                <option value="PI">PI</option>
-                                                <option value="RN">RN</option>
-                                                <option value="RS">RS</option>
-                                                <option value="JR">RJ</option>
-                                                <option value="RO">RO</option>
-                                                <option value="RR">RR</option>
-                                                <option value="SC">SC</option>
-                                                <option value="SP">SP</option>
-                                                <option value="SE">SE</option>
-                                                <option value="TO">TO</option>
+                                                <option value=""> </option>
+                                                <option <?php if ($_SESSION['UF'] == 'AC' ) echo 'selected' ; ?> value="AC">AC</option>
+                                                <option <?php if ($_SESSION['UF'] == 'AL' ) echo 'selected' ; ?> value="AL">AL</option>
+                                                <option <?php if ($_SESSION['UF'] == 'AP' ) echo 'selected' ; ?> value="AP">AP</option>
+                                                <option <?php if ($_SESSION['UF'] == 'AM' ) echo 'selected' ; ?> value="AM">AM</option>
+                                                <option <?php if ($_SESSION['UF'] == 'BA' ) echo 'selected' ; ?> value="BA">BA</option>
+                                                <option <?php if ($_SESSION['UF'] == 'CE' ) echo 'selected' ; ?> value="CE">CE</option>
+                                                <option <?php if ($_SESSION['UF'] == 'DF' ) echo 'selected' ; ?> value="DF">DF</option>
+                                                <option <?php if ($_SESSION['UF'] == 'ES' ) echo 'selected' ; ?> value="ES">ES</option>
+                                                <option <?php if ($_SESSION['UF'] == 'GO' ) echo 'selected' ; ?> value="GO">GO</option>
+                                                <option <?php if ($_SESSION['UF'] == 'MA' ) echo 'selected' ; ?> value="MA">MA</option>
+                                                <option <?php if ($_SESSION['UF'] == 'MT' ) echo 'selected' ; ?> value="MT">MT</option>
+                                                <option <?php if ($_SESSION['UF'] == 'MS' ) echo 'selected' ; ?> value="MS">MS</option>
+                                                <option <?php if ($_SESSION['UF'] == 'MG' ) echo 'selected' ; ?> value="MG">MG</option>
+                                                <option <?php if ($_SESSION['UF'] == 'PA' ) echo 'selected' ; ?> value="PA">PA</option>
+                                                <option <?php if ($_SESSION['UF'] == 'PB' ) echo 'selected' ; ?> value="PB">PB</option>
+                                                <option <?php if ($_SESSION['UF'] == 'PR' ) echo 'selected' ; ?> value="PR">PR</option>
+                                                <option <?php if ($_SESSION['UF'] == 'PE' ) echo 'selected' ; ?> value="PE">PE</option>
+                                                <option <?php if ($_SESSION['UF'] == 'PI' ) echo 'selected' ; ?> value="PI">PI</option>
+                                                <option <?php if ($_SESSION['UF'] == 'RN' ) echo 'selected' ; ?> value="RN">RN</option>
+                                                <option <?php if ($_SESSION['UF'] == 'RS' ) echo 'selected' ; ?> value="RS">RS</option>
+                                                <option <?php if ($_SESSION['UF'] == 'RJ' ) echo 'selected' ; ?> value="RJ">RJ</option>
+                                                <option <?php if ($_SESSION['UF'] == 'RO' ) echo 'selected' ; ?> value="RO">RO</option>
+                                                <option <?php if ($_SESSION['UF'] == 'RR' ) echo 'selected' ; ?> value="RR">RR</option>
+                                                <option <?php if ($_SESSION['UF'] == 'SC' ) echo 'selected' ; ?> value="SC">SC</option>
+                                                <option <?php if ($_SESSION['UF'] == 'SP' ) echo 'selected' ; ?> value="SP">SP</option>
+                                                <option <?php if ($_SESSION['UF'] == 'SE' ) echo 'selected' ; ?> value="SE">SE</option>
+                                                <option <?php if ($_SESSION['UF'] == 'TO' ) echo 'selected' ; ?> value="TO">TO</option>
                                             </select>
                                             
                                         </div>
