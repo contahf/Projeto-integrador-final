@@ -50,11 +50,6 @@
                 header ("location:/Projeto-integrador-final/projFinal/painel/pages/index.php");
             }
 
-            
-            
-      
-                
-               //include 'teste.php';
          
          }else{
          	
