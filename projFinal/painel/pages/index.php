@@ -224,13 +224,13 @@
                                 </div>
                                 <div class="col-xs-9 text-right">
                                     <div class="huge">2</div>
-                                    <div>Opções!</div>
+                                    <div>Opções de disciplinas</div>
                                 </div>
                             </div>
                         </div>
                         <a href="editarDis.php">
                             <div class="panel-footer">
-                                <span class="pull-left">Listar opções </span>
+                                <span class="pull-left">Listar</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
@@ -274,7 +274,7 @@
                         </div>
                         <a href="editUser.php">
                             <div class="panel-footer">
-                                <span class="pull-left">Opções de usario</span>
+                                <span class="pull-left">Opções de usuario</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
