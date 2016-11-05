@@ -11,12 +11,10 @@
         header('location:../index.html');
     }
 
-    $nomeCurso= $_POST["txtCurso"];
+    $nomeCurso= $_POST['txtCurso'];
     $siglaCurso = $_POST['txtSigla'];
-    
-    $numeroCurso = $_SESSION['id_numero'];
-   
-  
+    $numeroCurso = $_POST['txtNumero'];
+
     
   
     $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
@@ -40,7 +38,7 @@
                     <script type='text/javascript'>                                          
 
                         window.alert('Update realisado!');
-                        window.location.href = 'confCurso.php'; 
+                        window.location.href = 'editarCurso.php'; 
 
                                                                         
                         
