@@ -86,30 +86,30 @@
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+       <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 
-                <a class="navbar-brand" href="index.html">TI resolve</a>
+                <a class="navbar-brand" href="#">T.I Resolve</a>
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-              
-                <li class="dropdown">
-                
-                <li><a href="../../Projeto-integrador-final/projFinal/out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-
+               
+                    
+                    <li>
+                        <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    </li>
+                <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
-                <ul class="nav" id="side-menu">
+                   
+                 <ul class="nav" id="side-menu">
                       
                         <li>
-                            <a href="#"><i class="fa fa-graduation-cap fa-fw"></i> <?php 
-    echo" Bem vindo " . $_SESSION['login'];
-    ?></a>
+                            <a href="index.php"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
                           
                           <li>
@@ -125,7 +125,7 @@
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="removeUser.php">Usuario</a>
+                                            <a href="editUser.php">Usuario</a>
                                         </li>
                                         <li>
                                             <a href="removeAluno.php">Aluno</a>
@@ -165,13 +165,13 @@
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="removeUser.php">Usuario</a>
+                                            <a href="editUser.php">Usuario</a>
                                         </li>
                                         <li>
                                             <a href="removeAluno.php">Aluno</a>
                                         </li>
                                         <li>
-                                            <a href="#">Third Level Item</a>
+                                            <a href="editarDis.php">Disciplina</a>
                                         </li>
                                         <li>
                                             <a href="#">Third Level Item</a>
@@ -199,6 +199,8 @@
                         
                         
                     </ul>
+
+
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>

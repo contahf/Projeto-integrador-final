@@ -86,9 +86,7 @@
                     <ul class="nav" id="side-menu">
                       
                         <li>
-                            <a href="#"><i class="fa fa-graduation-cap fa-fw"></i> <?php 
-    echo" Bem vindo " . $_SESSION['login'];
-    ?></a>
+                            <a href="index.php"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
                           
                           <li>
@@ -244,7 +242,7 @@
                                         </div>
                                          <div class="clearfix"></div>
 
-                                        <button type="submit" name="" class="btn btn-default">Gravar</button>
+                                        <button type="submit" name="" class="btn btn-default">Atualizar</button>
                                         <button type="reset" class="btn btn-default">Cancelar</button>
 
                                                                             

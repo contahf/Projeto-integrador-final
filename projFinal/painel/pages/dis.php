@@ -112,35 +112,37 @@
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+       <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 
-                <a class="navbar-brand" href="index.html">TI resolve</a>
+                <a class="navbar-brand" href="index.php">T.I Resolve</a>
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-              
-                <li class="dropdown">
-                 <li><a href="editarDis.php"><i class="fa fa-edit fa-fw"></i> Editar disciplina</a>
-                <li><a href="editarDis.php"><i class="fa fa-times fa-fw"></i> Remover disciplina</a>
-                <li><a href="../../Projeto-integrador-final/projFinal/out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-
+               
+                    
+                    <li>
+                        <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    </li>
+                <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
+                   
+                 <ul class="nav" id="side-menu">
                       
                         <li>
                             <a href="index.php"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
-                              <li>
+                          
+                          <li>
                             <a href="#"><i class="fa fa-user fa-fw"></i> Menu de cadastro<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="cadUser.php">Novo usuario</a>
+                                    <a href="conCadUser.php">Novo usuario</a>
                                 </li>
                                 <li>
                                     <a href="cadAluno.php">Novo Aluno</a>
@@ -149,7 +151,7 @@
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="removeUser">Usuario</a>
+                                            <a href="editUser.php">Usuario</a>
                                         </li>
                                         <li>
                                             <a href="removeAluno.php">Aluno</a>
@@ -166,26 +168,36 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+
                          <li>
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Menu de opções<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="cadCurso.php">Novo Curso</a>
+                               <li>
+                                    <a href="cadCurso.php">Novo curso</a>
                                 </li>
                                 <li>
                                     <a href="dis.php">Nova Disciplina</a>
                                 </li>
                                 <li>
+                                    <a href="grupo.php">Novo Grupo</a>
+                                </li>
+                                <li>
+                                    <a href="modulo.php">Novo Modulo</a>
+                                </li>
+                                 <li>
+                                    <a href="projeto.php">Novo Projeto</a>
+                                </li>
+                                <li>
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="removeCurso">Curso</a>
+                                            <a href="editUser.php">Usuario</a>
                                         </li>
                                         <li>
-                                            <a href="removeDis.php">Disciplina</a>
+                                            <a href="removeAluno.php">Aluno</a>
                                         </li>
                                         <li>
-                                            <a href="#">Third Level Item</a>
+                                            <a href="editarDis.php">Disciplina</a>
                                         </li>
                                         <li>
                                             <a href="#">Third Level Item</a>
@@ -196,11 +208,23 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+                       
 
-                      
+                        <li>
+                            <a href="#"><i class="fa fa-files-o fa-fw"></i> Informações<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                                <li>
+                                    <a href="removeDis.php">Sobre o projeto</a>
+                                </li>
+                                <li>
+                                    <a href="#">Autores</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                        
+                        
                     </ul>
-
-
 
 
                 </div>

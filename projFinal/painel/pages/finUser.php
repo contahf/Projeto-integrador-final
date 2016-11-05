@@ -11,6 +11,11 @@
     }
 
 
+    if(!isset($_GET['l']) || empty($_GET['l'])){
+        die("error");
+    }
+
+
     
     
 ?>
