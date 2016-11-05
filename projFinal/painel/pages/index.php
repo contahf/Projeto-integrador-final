@@ -131,7 +131,7 @@
                                     <a href="modulo.php">Novo Modulo</a>
                                 </li>
                                  <li>
-                                    <a href="projeto.php">Novo Projeto</a>
+                                    <a href="cadProjeto.php">Novo Projeto</a>
                                 </li>
                                 <li>
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
