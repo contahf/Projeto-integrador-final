@@ -207,29 +207,19 @@
                                         </div>
                                         <div class="form-group col-lg-2" >
                                             <label>Categoria</label>
-                                            <select class="form-control selectpicker" name="categoria" id="categoria" value="
-                                            
-
-                                            "
-                                            >
-                                          
-                    <option
-
-
-
-
-                    >--</option>
-                                                <option>G</option>
-                                                <option>P</option>
-                                                <option>C</option>
+                                            <select class="form-control selectpicker" name="categoria" id="categoria" value="">
+                                                <option>--</option>
+                                                <option <?php if($_SESSION['tipo'] == 'G') echo 'selected'?> value="G">G</option>
+                                                <option <?php if($_SESSION['tipo'] == 'P') echo 'selected'?> value="P">P</option>
+                                                <option <?php if($_SESSION['tipo'] == 'C') echo 'selected'?> value="C">C</option>
                                             </select>
                                         </div>
                                         <div class="form-group col-lg-1" >
                                             <label>Situação</label>
                                             <select class="form-control selectpicker" name="situacao" id="situacao">
                                                 <option >--</option>
-                                                <option>A</option>
-                                                <option>I</option>
+                                                <option <?php if($_SESSION['sit'] == 'A') echo 'selected'?> value="A" >A</option>
+                                                <option <?php if($_SESSION['sit'] == 'I') echo 'selected'?> value="I">I</option>
                                                 
                                             </select>
                                         </div>
