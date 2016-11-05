@@ -9,7 +9,7 @@
         header('location:../index.html');
     }
     
-    $codigo = $_POST['txtCod']; 
+    $codigo = $_GET['codDis']; 
     
     $strCon = "host=localhost dbname=projetointegrador user=senac password=senac123";
     $con = pg_connect($strCon);
@@ -31,7 +31,7 @@
                       echo "<script type='text/javascript'>
                                                                         
                          window.alert('Disciplina removida com sucesso!');
-                       window.location.href = 'removeDis.php'; 
+                       window.location.href = 'editarDis.php'; 
                 
                          </script>";
                 }
