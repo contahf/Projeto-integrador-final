@@ -15,7 +15,7 @@
         
    
         
-        $sql = "select * from disciplina where  nome = '". $Nome ."'";
+        $sql = "select * from disciplina where codigo = '". $codigo ."'";
 
         $consulta = pg_query($con, $sql);
  
@@ -115,16 +115,18 @@
        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 
-                <a class="navbar-brand" href="index.php">T.I Resolve</a>
+                <a class="navbar-brand" href="#">T.I Resolve</a>
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-               
+                <li>
+                    <a href="editarDis.php"><i class="fa fa-edit fa-fw"></i> Editar</a>
+                </li>
                     
-                    <li>
-                        <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                    </li>
+                <li>
+                    <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                </li>
                 <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
@@ -176,7 +178,7 @@
                                     <a href="cadCurso.php">Novo curso</a>
                                 </li>
                                 <li>
-                                    <a href="dis.php">Nova Disciplina</a>
+                                    <a href="#">Nova Disciplina</a>
                                 </li>
                                 <li>
                                     <a href="grupo.php">Novo Grupo</a>
