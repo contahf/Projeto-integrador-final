@@ -110,7 +110,7 @@
         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 
-                <a class="navbar-brand" href="index.html">TI resolve</a>
+                <a class="navbar-brand" href="#">TI resolve</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -128,9 +128,7 @@
                     <ul class="nav" id="side-menu">
                       
                                <li>
-                            <a href="#"><i class="fa fa-graduation-cap fa-fw"></i> <?php 
-    echo" Bem vindo " . $_SESSION['login'];
-    ?></a>
+                            <a href="index.php"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
                           
                           <li>
@@ -140,7 +138,7 @@
                                     <a href="conCadUser.php">Novo usuario</a>
                                 </li>
                                 <li>
-                                    <a href="cadAluno.php">Novo Aluno</a>
+                                    <a href="#">Novo Aluno</a>
                                 </li>
                                 <li>
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
