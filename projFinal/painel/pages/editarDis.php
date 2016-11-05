@@ -9,7 +9,7 @@ session_start();
         header('location:../index.html');
     }
     if ($_SESSION['tipo'] !='C') {
-         header('location:index.php');;
+         header('location:index.php');
     }
    
 ?>
