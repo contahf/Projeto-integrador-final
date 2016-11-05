@@ -11,6 +11,8 @@ session_start();
     if ($_SESSION['tipo'] !='C') {
          header('location:index.php');
     }
+
+
    
 ?>
 
@@ -217,7 +219,7 @@ session_start();
 
     if ($con) {
 
-        $sql = "SELECT * from disciplina";
+        $sql = "SELECT * from disciplina ORDER BY codigo ";
 
         $consulta = pg_query($con, $sql);
         
@@ -232,7 +234,7 @@ session_start();
                         <td>".$dados[1] . "</td>
                         <td >".$dados[2] . "</td>
                         <td><a href='disciplina.php?codigo=".$dados[0]."&nome=".$dados[1]."&ch=".$dados[2]."'><i class='fa fa-edit fa-fw'></i></a></td>
-                        <td><a href='removeDis.php'><i class='fa fa-times fa-fw'></i></a></td>
+                        <td><a href='removeDis.php?codDis=".$dados[0]."'><i class='fa fa-times fa-fw'></i></a></td>
                     </tr>";
                                                             
 
