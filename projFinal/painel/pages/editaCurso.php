@@ -11,6 +11,11 @@
     }
 
 
+    $nomeCurso= $_GET['nom'];
+    $siglaCurso = $_GET['sigla'];
+    $numeroCurso = $_GET['num'];
+
+
 ?>
 
 
@@ -190,9 +195,7 @@
                                     <form method="POST" action="confEditCurso.php" role="form">
                                         <div class="form-group col-lg-5">
                                             <label>Nome curso</label>
-                                            <input class="form-control" placeholder="Seguraça da Informação" name="txtCurso" value="<?php 
-    echo $_SESSION['id_nome'];
-    ?>" >
+                                            <input class="form-control" name="txtCurso" value="<?php echo $_GET['nom'];?>" >
                                             
                                         </div>
                 
@@ -201,15 +204,11 @@
 
                                         <div class="form-group col-lg-3">
                                             <label>Sigla</label>
-                                            <input class="form-control" placeholder="S.I" name="txtSigla" value="<?php 
-    echo $_SESSION['id_sigla'];
-    ?>" >
+                                            <input class="form-control" name="txtSigla" value="<?php echo $_GET['sigla'];?>" >
                                         </div>
                                         <div class="form-group col-lg-3">
                                             <label>Numero</label>
-                                            <input type="number" class="form-control" placeholder="10" name="txtNumero" value="<?php 
-    echo $_SESSION['id_numero'];
-    ?>" disabled ></div>
+                                            <input type="number" class="form-control" name="txtNumero" value="<?php echo $_GET['num'];?>"></div>
 
                                         </div>
                                          <div class="clearfix"></div>
