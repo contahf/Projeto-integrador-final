@@ -1,26 +1,78 @@
 <?php  
 
-    session_start();
+    
+    $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
 
-    if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
-    {
-        unset($_SESSION['login']);
-        unset($_SESSION['senha']);
-        session_destroy();
-        header('location:../index.html');
-    }
+    $con = pg_connect($strCon);
+    
 
-    if($_SESSION['tipo'] != 'C'){
+    if ($con) {
+
+
+        $Nome= $_POST["txtDis"];
+        $carga = $_POST['txtCh'];
+        $codigo = $_POST['txtCod'];
         
-        die("Entre em contato com o Cordenador");
+   
+        
+        $sql = "select * from disciplina where codigo = '". $codigo ."'";
+
+        $consulta = pg_query($con, $sql);
+ 
+        $linhas = pg_num_rows($consulta);
+
+        if($linhas > 0 ){
+     
+             echo "
+
+                    <script type='text/javascript'>                                          
+
+                        window.alert('Ja cadastrado!');
+                        window.location.href = 'dis.php'; 
+
+                                                                        
+                        
+                    </script>
+
+
+               ";
+            
+         
+         }elseif ($linhas==0) {
+            
+            $sql = "INSERT INTO disciplina (codigo, nome, ch) VALUES ('".$codigo."', '".$Nome."', '".$carga."');";
+           
+            $res = pg_query($con, $sql);
+
+            $qtd_linhas = pg_affected_rows($res);
+
+            if ($qtd_linhas > 0){
+                 echo "
+
+                    <script type='text/javascript'>                                          
+
+                        window.alert('Cadastro realizado!');
+                        window.location.href = 'dis.php'; 
+
+                                                                        
+                        
+                    </script>
+
+
+               ";
+        
+            }
+
+        
+
+         }
+
+                
+
     }
-    
 
 
-    
-    
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -32,7 +84,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Ti resolve</title>
+    <title>TI Resolve</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -43,22 +95,15 @@
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- Morris Charts CSS -->
-    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
-
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <script type="text/javascript"> 
-
-        function validar (input){ 
-            if (input.value != document.getElementById('senha').value) {
-                input.setCustomValidity('Repita a senha corretamente');
-            } else {
-                input.setCustomValidity('');
-             }
-        }
-    </script>
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
 
 </head>
 
@@ -67,7 +112,7 @@
     <div id="wrapper">
 
         <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+       <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 
                 <a class="navbar-brand" href="#">T.I Resolve</a>
@@ -75,20 +120,21 @@
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-               
-                     <li><a href="editUser.php"><i class="fa fa-edit fa-fw"></i> Editar usuario</a>
-                    <li>
-
-                        <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                    </li>
+                <li>
+                    <a href="editarDis.php"><i class="fa fa-edit fa-fw"></i> Editar</a>
+                </li>
+                    
+                <li>
+                    <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                </li>
                 <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
-                    
-                     <ul class="nav" id="side-menu">
+                   
+                 <ul class="nav" id="side-menu">
                       
                         <li>
                             <a href="index.php"><i class="fa fa-home fa-fw"></i> Home</a>
@@ -107,7 +153,7 @@
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="removeUser.php">Usuario</a>
+                                            <a href="editUser.php">Usuario</a>
                                         </li>
                                         <li>
                                             <a href="removeAluno.php">Aluno</a>
@@ -135,7 +181,7 @@
                                     <a href="dis.php">Nova Disciplina</a>
                                 </li>
                                 <li>
-                                    <a href="grupo.php">Novo Grupo</a>
+                                    <a href="#">Novo Grupo</a>
                                 </li>
                                 <li>
                                     <a href="modulo.php">Novo Modulo</a>
@@ -147,13 +193,13 @@
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
                                     <ul class="nav nav-third-level">
                                         <li>
-                                            <a href="removeUser.php">Usuario</a>
+                                            <a href="editUser.php">Usuario</a>
                                         </li>
                                         <li>
                                             <a href="removeAluno.php">Aluno</a>
                                         </li>
                                         <li>
-                                            <a href="#">Third Level Item</a>
+                                            <a href="editarDis.php">Disciplina</a>
                                         </li>
                                         <li>
                                             <a href="#">Third Level Item</a>
@@ -173,7 +219,7 @@
                                     <a href="removeDis.php">Sobre o projeto</a>
                                 </li>
                                 <li>
-                                    <a href="dis.php">Autores</a>
+                                    <a href="#">Autores</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -181,80 +227,61 @@
                         
                         
                     </ul>
-               
+
+
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
             <!-- /.navbar-static-side -->
         </nav>
 
-    
         <div id="page-wrapper">
-           </br>
-            <!-- /.row -->
+           
+            <br>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Dados Pessoais
+                            Novo grupo
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="">
-                                    <form method="post" action="super.php" name="frm2" role="form">
+                                    <form action="" method="post">
                                         <div class="form-group col-lg-5">
-                                            <label>Nome completo</label>
-                                            <input class="form-control" name="nome" id="nome" required="">
+                                            <label>Nome </label>
+                                            <input type="text" name="txtDis" id="txtDis" class="form-control" required="" placeholder="Bando de dados" >
                                             
                                         </div>
-                                        <div class="form-group col-lg-1" >
-                                            <label>Categoria</label>
-                                            <select class="form-control selectpicker" name="categoria" id="categoria">
-                                                <option>--</option>
-                                                <option>G</option>
-                                                <option>P</option>
-                                                <option>C</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-lg-1" >
-                                            <label>Situação</label>
-                                            <select class="form-control selectpicker" name="situacao" id="situacao">
-                                                <option>A</option>
-                                                <option>I</option>
-                                                
-                                            </select>
-                                        </div>
-                                       
+                                        <div class="form-group col-lg-3" >
+                                            <label>Ch</label>
+                                            <input type="numeric" placeholder="90" class="form-control" name="txtCh" required="">
                                             
                                         </div>
-                                        <div class="clearfix"></div>
+                                        <div class="form-group col-lg-3" >
+                                            <label>Codigo</label>
+                                            <input type="numeric" class="form-control" placeholder="1212" name="txtCod" required="">
+                                            
+                                        </div>
 
 
-                                        <div class="form-group col-lg-3">
-                                            <label>Login</label>
-                                            <input class="form-control" name="login" id="login" placeholder="Login">
-                                        </div>
-                                        <div class="form-group col-lg-2">
-                                            <label>Senha</label>
-                                            <input type="password" name="senha" id="senha" class="form-control" placeholder="Senha">
-                                        </div>
-                                        <div class="form-group col-lg-2">
-                                            <label>Confirmar senha</label>
-                                            <input type="password" name="novaSenha" id="novaSenha" class="form-control" placeholder="Senha" oninput="validar(this)" >
-                                        </div>
-                                        </div>
                                          <div class="clearfix"></div>
+                                         
+                                         <div class="container">
+                                            <button type="submit" class="btn btn-default">Gravar</button>
+                                            <button type="reset" class="btn btn-default">Cancelar</button>
+                                    
+                                         </div>
 
-                                        <button type="submit" id="frm2" name="" class="btn btn-default">Gravar</button>
-                                        <button type="reset" class="btn btn-default">Cancelar</button>
+                                        
 
                                                                             
                                     </form>
                                 </div>
-                              </div>  
+                                <!-- /.col-lg-6 (nested) -->
+                           
+                                <!-- /.col-lg-6 (nested) -->
                             </div>
-
-                        </div>
                             <!-- /.row (nested) -->
                         </div>
                         <!-- /.panel-body -->
@@ -264,13 +291,10 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-       
-
-
         </div>
+        <!-- /#page-wrapper -->
 
     </div>
-
     <!-- /#wrapper -->
 
     <!-- jQuery -->
@@ -281,11 +305,6 @@
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
-
-    <!-- Morris Charts JavaScript -->
-    <script src="../vendor/raphael/raphael.min.js"></script>
-    <script src="../vendor/morrisjs/morris.min.js"></script>
-    <script src="../data/morris-data.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
