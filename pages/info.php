@@ -1,18 +1,24 @@
 
 <?php
- session_start();
 	
-	$login = $_POST['login'];
-	$senha = $_POST['senha'];
+session_start();
 
-	$strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
+try {
+            
+        $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
+        $con = pg_connect($strCon);
 
-	$con = pg_connect($strCon);
-	
-
-	if ($con) {
+        if(!$con){
+                    
+            throw new Exception("Verifique a conexão com seu banco", 1);
+                    
+        }
+       
+        $login = $_POST['login'];
+        $senha = $_POST['senha'];                       
+        
         $user = "select * from usuario where login = '".$login."' and senha = '".$senha."'";
-        $userSim = pg_query($con,$user);
+        $userSim = pg_query($con, $user);
 
         if(pg_num_rows($userSim) > 0 ){
             
@@ -27,7 +33,7 @@
             
 
             $_SESSION['login'] = $login;
-			$_SESSION['senha'] = $senha;
+            $_SESSION['senha'] = $senha;
             $_SESSION['tipo']  = $categoria;
             $_SESSION['nome']  = $nome;
             $_SESSION['sit']  = $situacao;
@@ -47,22 +53,28 @@
 
                ";
             }else{
-                header ("location:/Projeto-integrador-final/projFinal/painel/pages/index.php");
+                header ("location:index.php");
             }
 
          
          }else{
-         	
-         	unset ($_SESSION['login']);
-	        unset ($_SESSION['senha']);
+            echo "usuario não cadastrado";
+         }
+                
+    } 
 
-	        session_destroy();
-         	header ("location:../index.html");
-         }      	
-
+    catch (Exception $e) {
+                
+        echo $e->getMessage(), "\n";
+        
     }
-
+        
+    
+        
+    	   
 ?>
+
+
 
 
 
