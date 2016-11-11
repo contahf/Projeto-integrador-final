@@ -8,7 +8,8 @@ session_start();
         session_destroy();
         header('location:../index.html');
     }
-   
+
+
    
 ?>
 
@@ -50,9 +51,45 @@ session_start();
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script type="text/javascript">
+    
+
+    function acaoExcluir(login){
+        if(window.confirm('Deseja excluir o Aluno?')){
+            dado = 'l=' + login;
+            $.get('removeUser.php', dado, tratarExclusao)
+            .fail( function(){
+                alert('falhou');
+            }
+            )
+            ;
+            return false;
+        }
+    }
+
+
+
+    function tratarExclusao(dado){
+        var t = dado.trim();
+        if(!t){
+            alert('conexão não pode ser estabelecida');
+        }else{
+            
+            $('#'+t).remove();
+
+            var teste = '<div class="alert alert-success fade in">' + 
+    '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+    '<strong>Success!</strong> Registro removido com sucesso.' + 
+  '</div>'
+            $('#container').empty().append(teste);      
+        }
+    }
+    </script>
+
 </head>
 
 <body>
+ 
 
     <div id="wrapper">
 
@@ -189,8 +226,8 @@ session_start();
             <br>
             <!-- /.row -->
             <div class="row">
-               
-                <!-- /.col-lg-6 -->
+               <div id="container" ></div>
+                
                <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -213,12 +250,21 @@ session_start();
                                  
 <?php 
                                   
-    $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
-
-    $con = pg_connect($strCon);
     
+    
+    try {
+        
+        $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
+        $con = pg_connect($strCon);
 
-    if ($con) {
+        if($_SESSION['tipo'] != 'C'){
+            pg_close($con);
+         }
+
+         if (!$con) {
+             throw new Exception("Error ao resgatar Informações", 1);
+             
+         }
 
         $sql = "SELECT  login, nome, categoria, situacao  from usuario";
 
@@ -230,13 +276,13 @@ session_start();
             for($i=0; $i<$linhas; $i++){  
                 $dados = pg_fetch_array($consulta);       
                 echo "
-                    <tr>
-                        <td>".$dados[0] . "</td>
+                    <tr id='$dados[0]'>
+                        <td >".$dados[0] . "</td>
                         <td>".$dados[1] . "</td>
                         <td >".$dados[2] . "</td>
                         <td >".$dados[3] . "</td>
                         <td><a href='finUser.php?l=".$dados[0]."&n=".$dados[1]."&cat=".$dados[2]."&s=".$dados[3]."'><i class='fa fa-edit fa-fw'></i></a></td>
-                        <td><a href='removeUser.php?l=".$dados[0]."'><i class='fa fa-times fa-fw'></i></a></td>
+                        <td><a href='#' onclick='return acaoExcluir(\"".$dados[0] . "\")'> <i class='fa fa-trash fa-fw'></i></a></td>
                     </tr>";
                                                             
 
@@ -244,9 +290,16 @@ session_start();
                 
 
             } 
-                                        
-                                     
+
+
+
+
+
+    } catch (Exception $e) {
+
+        echo $e->getMessage(), "\n";
     }
+
                                         
 
 

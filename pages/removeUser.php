@@ -11,29 +11,25 @@
     
     $Login = $_GET['l']; 
     
-    $strCon = "host=localhost dbname=projetointegrador user=senac password=senac123";
-    $con = pg_connect($strCon);
+    include 'conect.php';
 
     if($con){
     
         $sql = "select * from usuario where login = '". $Login ."'";
         $result = pg_query($con, $sql);
        
-
         if(pg_affected_rows($result) > 0){
-            $sql = "";
+            
             $sql = "DELETE FROM usuario WHERE login = " . "'" . $Login ."'";
             $result = "";
             $result = pg_query($con, $sql);
 
                 if(pg_affected_rows($result) > 0){
-        
-                      echo "<script type='text/javascript'>
-                                                                        
-                         window.alert('Usuario removido com sucesso!');
-                       window.location.href = 'editUser.php'; 
-                
-                         </script>";
+                    
+                    echo (ltrim($Login));
+
+                } else {
+                    echo false;
                 }
         }
     }
