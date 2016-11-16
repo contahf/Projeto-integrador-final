@@ -252,6 +252,7 @@ session_start();
                                             <th>Sigla</th>
                                              <th>Editar</th>
                                              <th>Remover</th>
+                                             <th>Cad. Projeto</th>
                                         </tr>
                                     </thead>
                                  
