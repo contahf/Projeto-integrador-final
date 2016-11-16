@@ -45,12 +45,63 @@ session_start();
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
+
+    <script type="text/javascript">
+       
+        function acaoExcluir(numero){
+           
+            if(window.confirm('Deseja excluir esta disciplina?')){
+
+                dado = 'num=' + numero;
+                //$.post('removeCurso.php', dado, tratarExclusao)
+                $.ajax({
+                    
+                    type        : 'POST', 
+                    url         : 'removeCurso.php',  
+                    data        :  dado, 
+                    dataType    : 'json', 
+                    encode      : true
+                    
+                })
+
+                .done(function(data){
+
+                    
+                    tratarExclusao(data);
+
+                })
+
+                .fail( function(){
+                    alert('falhou');
+                }
+                )
+                ;
+                
+            }
+        }
+
+
+
+        function tratarExclusao(dado){
+            
+            if(dado < 0){
+                alert('Não conseguiu excluir');
+            }else{
+
+                $('#' + dado).remove();
+
+                var teste = '<div class="alert alert-info fade in">' + 
+        '<a href="?#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+        '<strong>Info!</strong> Registro removido com sucesso.' + 
+      '</div>'
+                $('#a').empty().append(teste);      
+            }
+        }
+
+
+    </script>
 
 </head>
 
@@ -206,9 +257,7 @@ session_start();
                                  
 <?php 
 
-    $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
-
-    $con = pg_connect($strCon);
+    require_once 'conect.php';
     
 
     if ($con) {
@@ -223,12 +272,13 @@ session_start();
                 $dados = pg_fetch_row($consulta);       
                 echo "
 
-                    <tr>
+                    <tr id='$dados[0]'>
                         <td>".$dados[0] . "</td>
                         <td>".$dados[1] . "</td>
                         <td >".$dados[2] . "</td>
                         <td><a href='editaCurso.php?num=".$dados[0]."&nom=".$dados[1]."&sigla=".$dados[2]."'><i class='fa fa-edit fa-fw'></i></a></td>
-                        <td><a href='removeCurso.php?num=".$dados[0]."'><i class='fa fa-times fa-fw'></i></a></td>
+                        <td><a href='#' onclick='acaoExcluir(\"".trim($dados[0])."\")'><i class='fa fa-times fa-fw'></i></a></td>
+                        <td><a href='cadProjeto.php'><i class='fa fa-plus fa-fw'></i></a></td>
                     </tr>";
             }                                  
     }
@@ -236,6 +286,7 @@ session_start();
 
 
 ?>
+
     
                                 </table>
                             </div>
