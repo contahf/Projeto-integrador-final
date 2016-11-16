@@ -1,85 +1,3 @@
-<?php  
-
-    
-    $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
-
-    $con = pg_connect($strCon);
-    
-
-    if ($con) {
-
-
-        $nomeCurso= $_POST["txtCurso"];
-        $siglaCurso = $_POST['txtSigla'];
-        $numeroCurso = $_POST['txtNumero'];
-        
-   
-        
-        $sql = "select * from curso where  numero = '". $numeroCurso ."'";
-
-        $consulta = pg_query($con, $sql);
- 
-        $linhas = pg_num_rows($consulta);
-
-        if($linhas > 0 ){
-     
-             echo "
-
-                    <script type='text/javascript'>                                          
-
-                        window.alert('Curso ja cadastrado!');
-                        window.location.href = 'cadCurso.php'; 
-
-                                                                        
-                        
-                    </script>
-
-
-               ";
-            
-         
-         }elseif ($linhas==0) {
-            
-            $sql = "INSERT INTO curso (numero, nome, sigla) VALUES ('".$numeroCurso."', '".$nomeCurso."', '".$siglaCurso."');";
-           
-            $res = pg_query($con, $sql);
-
-            $qtd_linhas = pg_affected_rows($res);
-
-            if ($qtd_linhas > 0){
-                 echo "
-
-                    <script type='text/javascript'>                                          
-
-                        window.alert('Cadastro de curso realizado!');
-                        window.location.href = 'cadCurso.php'; 
-
-                                                                        
-                        
-                    </script>
-
-
-               ";
-        
-            }
-
-        
-
-         }
-
-                
-
-    }
-
-    pg_close($con);
-
-
-?>
-
-
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -104,13 +22,93 @@
 
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  <script type="text/javascript">
+      
+
+        $(document).ready(function() {
+    
+             $('form').submit(function(event) {
+
+                event.preventDefault();
+               
+                var curso = $("#txtCurso").val();
+                var numero = $("#txtNumero").val();
+                var sigla = $("#txtSigla").val();
+       
+                $.ajax({
+                    type        : 'POST', 
+                    url         : 'cc.php',  
+                    data        :  $('form').serialize(), 
+                    dataType    : 'json', 
+                    encode      : true
+                    
+                })
+
+                
+       
+                .done(function(data) {
+            
+                    if (data != $("#txtNumero").val()) {
+                            
+                        if(data == "-1"){
+                            
+                            $('#frmCurso').each (function(){
+                                this.reset();
+                            });
+                            
+                            var alerta = '<div class="alert alert-warning fade in">' + 
+                                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                                '<strong>Warning!</strong> Já cadastrado!' + 
+                              '</div>'
+                            $('#container').empty().append(alerta);
+
+                          
+
+                            
+                        
+                        }
+                        
+                        if(data == "-2"){
+                            
+                            var alerta = '<div class="alert alert-danger fade in">' + 
+                                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                                '<strong>Warning!</strong> Error desconhecido!' + 
+                              '</div>'
+                            $('#container').empty().append(alerta);  
+                        }
+                                                
+                    } else {
+                        
+                        $('#frmCurso').each (function(){
+                            this.reset();
+                        });
+ 
+                        var alerta = '<div class="alert alert-success fade in">' + 
+                            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                            '<strong>Success!</strong> Cadastrado com sucesso!' + 
+                            '</div>'
+                          $('#container').empty().append(alerta); 
+                        }
+
+                        $("#txtCurso").val("");
+                        $("#txtNumero").val("");
+                        $("#txtSigla").val("");
+                })
+
+                .fail(function(){
+                    alert('Ajax Submit Failed ...'); 
+                });
+   
+    });
+
+});
+
+
+
+
+  </script>
 
 </head>
 
@@ -244,11 +242,13 @@
 
         <div id="page-wrapper">
             <div class="row">
+            <div id="id" name="container" ></div>
              
             </div>
             <br>
             <div class="row">
                 <div class="col-lg-12">
+                <div id="container" ></div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Dados curso
@@ -256,10 +256,10 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="">
-                                    <form method="POST" action="" role="form">
+                                    <form action="cc.php" method="POST" id="frmCurso">
                                         <div class="form-group col-lg-5">
                                             <label>Nome curso</label>
-                                            <input class="form-control" placeholder="Seguraça da Informação" name="txtCurso" >
+                                            <input class="form-control" placeholder="Seguraça da Informação" name="txtCurso" id="txtCurso" data-error="NEW ERROR MESSAGE">
                                             
                                         </div>
                 
@@ -268,11 +268,11 @@
 
                                         <div class="form-group col-lg-3">
                                             <label>Sigla</label>
-                                            <input class="form-control" placeholder="S.I" name="txtSigla">
+                                            <input class="form-control" placeholder="S.I" name="txtSigla" id="txtSigla">
                                         </div>
                                         <div class="form-group col-lg-3">
                                             <label>Numero</label>
-                                            <input type="number" class="form-control" placeholder="10" name="txtNumero"></div>
+                                            <input type="number" class="form-control" placeholder="10" name="txtNumero" id="txtNumero"></div>
 
                                         </div>
                                          <div class="clearfix"></div>
