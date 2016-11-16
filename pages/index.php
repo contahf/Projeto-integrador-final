@@ -272,7 +272,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="confMatricula.php">
+                        <a href="listarAluno.php">
                             <div class="panel-footer">
                                 <span class="pull-left">Editar Aluno</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
