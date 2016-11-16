@@ -9,12 +9,12 @@
     if ($con) {
 
 
-        $nome= $_POST['txtNome'];
-        $matricula = $_POST['txtMat'];
-        $nasc = $_POST['txtNasc'];
-        $sex = $_POST["txtSexo"];
-        $cidade = $_POST['txtCidade'];
-        $uf = $_POST['estado'];
+        $nome= isset($_POST['txtNome']);
+        $matricula = isset($_POST['txtMat']);
+        $nasc = isset($_POST['txtNasc']);
+        $sex = isset($_POST["txtSexo"]);
+        $cidade = isset($_POST['txtCidade']);
+        $uf = isset($_POST['estado']);
 
    
         
@@ -131,77 +131,24 @@
                             <a href="index.php"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
                           
-                          <li>
-                            <a href="#"><i class="fa fa-user fa-fw"></i> Menu de cadastro<span class="fa arrow"></span></a>
+                         <li>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> Aluno<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="conCadUser.php">Novo usuario</a>
+								<li>
+                                    <a href="confMatricula.php">Alterar </a>
                                 </li>
-                                <li>
-                                    <a href="#">Novo Aluno</a>
+								<li>
+                                    <a href="confMatricula.php">Consultar </a>
                                 </li>
-                                <li>
-                                    <a href="#">Remover cadastro <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="removeUser.php">Usuario</a>
-                                        </li>
-                                        <li>
-                                            <a href="removeAluno.php">Aluno</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-third-level -->
+								<li>
+                                    <a href="removeAluno.php">Excluir </a>
                                 </li>
+								
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
 
-                         <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Menu de opções<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                               <li>
-                                    <a href="cadCurso.php">Novo curso</a>
-                                </li>
-                                <li>
-                                    <a href="dis.php">Nova Disciplina</a>
-                                </li>
-                                <li>
-                                    <a href="grupo.php">Novo Grupo</a>
-                                </li>
-                                <li>
-                                    <a href="modulo.php">Novo Modulo</a>
-                                </li>
-                                 <li>
-                                    <a href="projeto.php">Novo Projeto</a>
-                                </li>
-                                <li>
-                                    <a href="#">Remover cadastro <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="removeUser.php">Usuario</a>
-                                        </li>
-                                        <li>
-                                            <a href="removeAluno.php">Aluno</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-third-level -->
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-                       
+                        
 
                         <li>
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> Informações<span class="fa arrow"></span></a>
@@ -301,8 +248,7 @@
                                             
                                         </div>
                                         <div class="clearfix"></div>
-                                        
-                    <!-- 3250-7600 -->                  <div class="form-group col-lg-3">
+                                                    <div class="form-group col-lg-3">
                                             <label>Matricula</label>
                                             <input type="text" name="txtMat" class="form-control">
                                             

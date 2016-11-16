@@ -1,5 +1,5 @@
- <?php  
-   session_start();
+<?php
+session_start();
 
     if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
     {
@@ -8,40 +8,10 @@
         session_destroy();
         header('location:../index.html');
     }
-    
-    $mat = $_POST['txtMat']; 
-    
-    $strCon = "host=localhost dbname=projetointegrador user=senac password=senac123";
-    $con = pg_connect($strCon);
-
-    if($con){
-    
-        $sql = "select * from aluno where matricula = '". $mat ."'";
-        $result = pg_query($con, $sql);
-       
-
-        if(pg_affected_rows($result) > 0){
-            $sql = "";
-            $sql = "DELETE FROM aluno WHERE matricula = " . "'" . $mat ."'";
-            $result = "";
-            $result = pg_query($con, $sql);
-
-                if(pg_affected_rows($result) > 0){
-        
-                      echo "<script type='text/javascript'>
-                                                                        
-                         window.alert('Aluno removido com sucesso!');
-                       window.location.href = 'removeAluno.php'; 
-                
-                         </script>";
-                }
-        }
-    }
-
-//pg_close($con);
-
-
+   
+   
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,13 +23,19 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>TI Resolve</title>
+    <title>TI Resolve 2016</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
     <link href="../vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+
+    <!-- DataTables CSS -->
+    <link href="../vendor/datatables-plugins/dataTables.bootstrap.css" rel="stylesheet">
+
+    <!-- DataTables Responsive CSS -->
+    <link href="../vendor/datatables-responsive/dataTables.responsive.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
@@ -81,26 +57,34 @@
     <div id="wrapper">
 
         <!-- Navigation -->
-         <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
-                
-                <a class="navbar-brand" href="#">T.I Resolve</a>
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="">T.I Resolve</a>
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-               
-                    
+                <ul class="nav navbar-top-links navbar-right">
+            
                     <li>
                         <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </li>
-                <!-- /.dropdown -->
+                
+                </ul>
+           
             </ul>
             <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
-                   
+                  
+                     
                  <ul class="nav" id="side-menu">
                       
                         <li>
@@ -108,25 +92,20 @@
                         </li>
                           
                           <li>
-                            <a href="#"><i class="fa fa-user fa-fw"></i> Aluno<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> Usuário<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                                <li>
-                                    <a href="cadAluno.php">Incluir </a>
+								<li>
+                                    <a href="conCadUser.php">Incluir </a>
                                 </li>
 								<li>
-                                    <a href="confMatricula.php">Alterar </a>
+                                    <a href="editUser.php">Alterar </a>
                                 </li>
 								<li>
-                                    <a href="confMatricula.php">Consultar </a>
+                                    <a href="consultarUser.php">Consultar </a>
                                 </li>
-							
+				
+                               
                             </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-
-                         
-                       
-
                         <li>
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> Informações<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -142,57 +121,88 @@
                         
                         
                     </ul>
-
-
+                       
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-       
 
         <div id="page-wrapper">
-           
             <br>
+            <!-- /.row -->
             <div class="row">
-                <div class="col-lg-12">
+               
+                <!-- /.col-lg-6 -->
+               <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Remove aluno(a)
+                            Dados dos usuarios
                         </div>
+                        <!-- /.panel-heading -->
                         <div class="panel-body">
-                            <div class="row">
-                                <div class="">
-                                    <form action="" method="post">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Login</th>
+                                            <th>Nome</th>
+                                            <th>Categoria</th>
+                                            <th>Sit.</th>
+                                             <th>Excluir</th>
+                                        </tr>
+                                    </thead>
+                                 
+<?php 
+                                  
+    $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
+
+    $con = pg_connect($strCon);
+    
+
+    if ($con) {
+
+        $sql = "SELECT  login, nome, categoria, situacao  from usuario";
+
+        $consulta = pg_query($con, $sql);
+        
+        $linhas = pg_num_rows($consulta); 
+
+                                
+            for($i=0; $i<$linhas; $i++){  
+                $dados = pg_fetch_array($consulta);       
+                echo "
+                    <tr>
+                        <td>".$dados[0] . "</td>
+                        <td>".$dados[1] . "</td>
+                        <td >".$dados[2] . "</td>
+                        <td >".$dados[3] . "</td>
+                        
+                        <td><a href='removeUser.php?l=".$dados[0]."'><i class='fa fa-times fa-fw'></i></a></td>
+                    </tr>";
+                                                            
+
+                pg_close($con);
+                
+
+            } 
                                         
-                                        <div class="form-group col-lg-3" >
-                                            <label>Informe a matricula do aluno</label>
-                                            <input type="text" class="form-control" name="txtMat" required="">
-                                            
-                                        </div>
+                                     
+    }
+                                        
 
 
-                                         <div class="clearfix"></div>
-                                         
-                                         <div class="container">
-                                            <button type="submit" class="btn btn-success">Confirmar</button>
-                                            <button type="reset" class="btn btn-default">Cancelar</button>
-                                    
-                                         </div>
-                                                                            
-                                    </form>
-                                </div>
-                                <!-- /.col-lg-6 (nested) -->
-                           
-                                <!-- /.col-lg-6 (nested) -->
+?>
+                            
+                                </table>
                             </div>
-                            <!-- /.row (nested) -->
+                            <!-- /.table-responsive -->
                         </div>
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-12 -->
+   
             </div>
             <!-- /.row -->
         </div>
@@ -210,8 +220,22 @@
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
+    <!-- DataTables JavaScript -->
+    <script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
+
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+    </script>
 
 </body>
 

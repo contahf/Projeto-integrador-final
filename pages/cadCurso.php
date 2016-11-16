@@ -242,13 +242,11 @@
 
         <div id="page-wrapper">
             <div class="row">
-            <div id="id" name="container" ></div>
              
             </div>
             <br>
             <div class="row">
                 <div class="col-lg-12">
-                <div id="container" ></div>
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             Dados curso
@@ -256,10 +254,10 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="">
-                                    <form action="cc.php" method="POST" id="frmCurso">
+                                    <form method="POST" action="" role="form">
                                         <div class="form-group col-lg-5">
                                             <label>Nome curso</label>
-                                            <input class="form-control" placeholder="Seguraça da Informação" name="txtCurso" id="txtCurso" data-error="NEW ERROR MESSAGE">
+                                            <input class="form-control" placeholder="Seguraça da Informação" name="txtCurso" >
                                             
                                         </div>
                 
@@ -268,11 +266,11 @@
 
                                         <div class="form-group col-lg-3">
                                             <label>Sigla</label>
-                                            <input class="form-control" placeholder="S.I" name="txtSigla" id="txtSigla">
+                                            <input class="form-control" placeholder="S.I" name="txtSigla">
                                         </div>
                                         <div class="form-group col-lg-3">
                                             <label>Numero</label>
-                                            <input type="number" class="form-control" placeholder="10" name="txtNumero" id="txtNumero"></div>
+                                            <input type="number" class="form-control" placeholder="10" name="txtNumero"></div>
 
                                         </div>
                                          <div class="clearfix"></div>
