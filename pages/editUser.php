@@ -310,6 +310,7 @@ session_start();
                         </div>
                         <!-- /.panel-body -->
                     </div>
+                     <a href="cadUser.php"><button type="button" class="btn btn-link">Novo Usuário</button></a>
                     <!-- /.panel -->
                 </div>
    
