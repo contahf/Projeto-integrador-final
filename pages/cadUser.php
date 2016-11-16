@@ -201,7 +201,7 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="">
-                                    <form method="post" action="super.php" name="frm2" role="form">
+                                    <form method="post" action="inserirUsuario.php" name="frm2" role="form">
                                         <div class="form-group col-lg-5">
                                             <label>Nome completo</label>
                                             <input class="form-control" name="nome" id="nome" required="">
