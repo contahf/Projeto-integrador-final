@@ -176,8 +176,8 @@
                                     <i class="fa fa-user fa-5x"></i>
                                 </div>
                                 
-                                  <div class="col-xs-9 text-right">
-                                    <div class="huge">Aluno</div>
+                                  <div class="col-xs-9 text-center">
+                                    <div class="h3">Aluno</div>
                                 </div>
                         
                             </div>
@@ -185,13 +185,6 @@
                         <a href="listarAluno.php">
                             <div class="panel-footer">
                                 <span class="pull-left">Listar Alunos</span>
-                                    <?php
-                                        
-                                        echo $_SESSION['nome'];
-
-                                    ?>
-
-                                </span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
@@ -206,8 +199,8 @@
                                 <div class="col-xs-3">
                                     <i class="fa fa-edit fa-5x"></i>
                                 </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">Usuário</div>
+                                <div class="col-xs-9 text-center">
+                                    <div class="h3">Usuário</div>
                                 </div>
                             </div>
                         </div>
@@ -227,8 +220,8 @@
                                 <div class="col-xs-3">
                                     <i class="fa fa-users fa-5x"></i>
                                 </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">Curso</div>
+                                <div class="col-xs-9 text-center">
+                                    <div class="h3">Curso</div>
                                 </div>
                             </div>
                         </div>
@@ -248,8 +241,8 @@
                                 <div class="col-xs-3">
                                     <i class="fa fa-times fa-4x"></i>
                                 </div>
-                                <div class="col-xs-9 text-right">
-                                    <div class="huge">Disciplina</div>
+                                <div class="col-xs-9 text-center">
+                                    <div class="h3">Disciplina</div>
                                 </div>
                             </div>
                         </div>
