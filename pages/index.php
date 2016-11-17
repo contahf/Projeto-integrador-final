@@ -177,15 +177,14 @@
                                 </div>
                                 
                                   <div class="col-xs-9 text-right">
-                                    <div class="huge">1</div>
-                                    <div>Edite seus dados!</div>
+                                    <div class="huge">Aluno</div>
                                 </div>
                         
                             </div>
                         </div>
-                        <a href="dados.php">
+                        <a href="listarAluno.php">
                             <div class="panel-footer">
-                                <span class="pull-left">
+                                <span class="pull-left">Listar Alunos</span>
                                     <?php
                                         
                                         echo $_SESSION['nome'];
@@ -208,14 +207,13 @@
                                     <i class="fa fa-edit fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">2</div>
-                                    <div>Opções de disciplinas</div>
+                                    <div class="huge">Usuário</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="editarDis.php">
+                        <a href="editUser.php">
                             <div class="panel-footer">
-                                <span class="pull-left">Listar</span>
+                                <span class="pull-left">Listar Usuários</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
@@ -230,14 +228,13 @@
                                     <i class="fa fa-users fa-5x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">3</div>
-                                    <div>Edite um aluno!</div>
+                                    <div class="huge">Curso</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="confMatricula.php">
+                        <a href="editarCurso.php">
                             <div class="panel-footer">
-                                <span class="pull-left">Editar Aluno</span>
+                                <span class="pull-left">Listar Cursos</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
@@ -252,14 +249,13 @@
                                     <i class="fa fa-times fa-4x"></i>
                                 </div>
                                 <div class="col-xs-9 text-right">
-                                    <div class="huge">4</div>
-                                    <div>Exclua um usuario!</div>
+                                    <div class="huge">Disciplina</div>
                                 </div>
                             </div>
                         </div>
-                        <a href="editUser.php">
+                        <a href="editarDis.php">
                             <div class="panel-footer">
-                                <span class="pull-left">Opções de usuario</span>
+                                <span class="pull-left">Listar Disciplinas</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
                             </div>
