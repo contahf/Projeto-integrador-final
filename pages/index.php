@@ -88,18 +88,9 @@
                             <a href="#"><i class="fa fa-user fa-fw"></i> Aluno<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="cadAluno.php">Incluir </a>
+                                    <a href="listarAluno.php">Listar </a>
                                 </li>
-								<li>
-                                    <a href="confMatricula.php">Alterar </a>
-                                </li>
-								<li>
-                                    <a href="confMatricula.php">Consultar </a>
-                                </li>
-								<li>
-                                    <a href="removeAluno.php">Excluir </a>
-                                </li>
-								
+						
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -108,18 +99,8 @@
                             <a href="#"><i class="fa fa-user fa-fw"></i> Usuário<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
 								<li>
-                                    <a href="conCadUser.php">Incluir </a>
+                                    <a href="editUser.php">Listar </a>
                                 </li>
-								<li>
-                                    <a href="editUser.php">Alterar </a>
-                                </li>
-								<li>
-                                    <a href="consultarUser.php">Consultar </a>
-                                </li>
-								<li>
-                                    <a href="excluirUser.php">Excluir </a>
-                                </li>
-                               
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -127,17 +108,7 @@
                             <a href="#"><i class="fa fa-book fa-fw"></i>Curso<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                <li>
-                                    <a href="cadCurso.php">Incluir </a>
-                                </li>
-								<li>
-                                    <a href="falta">Alterar </a>
-                                </li>
-								<li>
-                                    <a href="falta">Consultar </a>
-                                </li>
-								<li>
-                                    <a href="falta">Excluir </a>
-                                </li>
+                                    <a href="listarCurso.php">Listar </a>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -145,17 +116,9 @@
                             <a href="#"><i class="fa fa-book fa-fw"></i>Disciplina<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                <li>
-                                    <a href="dis.php">Incluir </a>
+                                    <a href="listarDis.php">Listar </a>
                                 </li>
-								<li>
-                                    <a href="editarDis.php">Alterar </a>
-                                </li>
-								<li>
-                                    <a href="editarDis.php">Consultar </a>
-                                </li>
-								<li>
-                                    <a href="editarDis.php">Excluir </a>
-                                </li>
+				
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -272,7 +235,7 @@
                                 </div>
                             </div>
                         </div>
-                        <a href="listarAluno.php">
+                        <a href="confMatricula.php">
                             <div class="panel-footer">
                                 <span class="pull-left">Editar Aluno</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
