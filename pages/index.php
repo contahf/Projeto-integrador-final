@@ -108,7 +108,7 @@
                             <a href="#"><i class="fa fa-book fa-fw"></i>Curso<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                <li>
-                                    <a href="editarCurso.php">Listar </a>
+                                    <a href="listarCurso.php">Listar </a>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
