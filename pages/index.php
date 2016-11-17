@@ -83,7 +83,6 @@
     echo" Bem vindo " . $_SESSION['login'];
     ?></a>
                         </li>
-                          
                           <li>
                             <a href="#"><i class="fa fa-user fa-fw"></i> Aluno<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
