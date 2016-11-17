@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>TI Resolve</title>
+    <title>Ti resolve</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -20,115 +21,93 @@
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
 
+    <!-- Morris Charts CSS -->
+    <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
+
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
-  <script type="text/javascript">
-      
+    <script type="text/javascript">
 
-        $(document).ready(function() {
-    
-             $('form').submit(function(event) {
-
-                event.preventDefault();
-               
-                var curso = $("#txtCurso").val();
-                var numero = $("#txtNumero").val();
-                var sigla = $("#txtSigla").val();
-       
-                $.ajax({
-                    type        : 'POST', 
-                    url         : 'cc.php',  
-                    data        :  $('form').serialize(), 
-                    dataType    : 'json', 
-                    encode      : true
-                    
-                })
-
-                
-       
-                .done(function(data) {
+                                      
+        var ds = { <?php
             
-                    if (data != $("#txtNumero").val()) {
-                            
-                        if(data == "-1"){
-                            
-                            $('form').each (function(){
-                                this.reset();
-                            });
-                            
-                            var alerta = '<div class="alert alert-warning fade in">' + 
-                                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
-                                '<strong>Warning!</strong> Já cadastrado!' + 
-                              '</div>'
-                            $('#container').empty().append(alerta);
+            include 'conect.php';
 
-                          
+            if ($con) {
 
-                            
-                        
-                        }
-                        
-                        if(data == "-2"){
-                            
-                            var alerta = '<div class="alert alert-danger fade in">' + 
-                                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
-                                '<strong>Warning!</strong> Error desconhecido!' + 
-                              '</div>'
-                            $('#container').empty().append(alerta);  
-                        }
-                                                
-                    } else {
-                        
-                        $('#frmCurso').each (function(){
-                            this.reset();
-                        });
- 
-                        var alerta = '<div class="alert alert-success fade in">' + 
-                            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
-                            '<strong>Success!</strong> Cadastrado com sucesso!' + 
-                            '</div>'
-                          $('#container').empty().append(alerta); 
-                        }
+                $sql = "SELECT * from disciplina ORDER by codigo";
+                $consulta = pg_query($con, $sql);
+        
+                $linhas = pg_num_rows($consulta); 
+                                
+                for($i=0; $i<$linhas; $i++){  
+                    $dados = pg_fetch_row($consulta);       
+                    echo $i . ":'" . $dados[0] ."',";
 
-                        $("#txtCurso").val("");
-                        $("#txtNumero").val("");
-                        $("#txtSigla").val("");
-                })
-
-                .fail(function(){
-                    alert('Ajax Submit Failed ...'); 
-                });
-   
-    });
-
-});
+                }                                  
+            }
+            ?> null:'' }
 
 
+        var fillDisciplina = function(sel) {
+            if(sel.selectedIndex >= 0) {
+                document.getElementById('teste').value = ds[ sel.selectedIndex ]
+            }
 
 
-  </script>
+        }
 
+        var projeto = { <?php
+           
+            include 'conect.php';
+           
+            if ($con) {
+
+                $sql = "select * from curso c, projeto p where p.num_curso = c.numero";
+                $consulta = pg_query($con, $sql);
+        
+                $linhas = pg_num_rows($consulta); 
+                                
+                for($i=0; $i<$linhas; $i++){  
+                    $dados = pg_fetch_row($consulta);       
+                    echo $i . ":'" . $dados[3] ."',";
+
+                }                                  
+            }
+
+            ?> null:'' }
+
+            var fillProjeto = function(sel2) {
+                 if(sel2.selectedIndex >= 0) {
+                    document.getElementById('id_proj').value = projeto[ sel2.selectedIndex ]
+                    
+                    
+                }
+
+
+            }
+
+            
+
+
+    </script>
 </head>
 
 <body>
-
-    <div id="wrapper">
+ <div id="wrapper">
 
         <!-- Navigation -->
          <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 
-                <a class="navbar-brand" href="#">T.I Resolve</a>
+                <a class="navbar-brand" href="index.php">T.I Resolve</a>
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
                
-                    <li>
-                        <a href="editarCurso.php"><i class="fa fa-edit fa-fw"></i> Editar</a>
-                    </li>
+                    
                     <li>
                         <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </li>
@@ -180,7 +159,7 @@
                             <a href="#"><i class="fa fa-wrench fa-fw"></i> Menu de opções<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                <li>
-                                    <a href="#">Novo curso</a>
+                                    <a href="cadCurso.php">Novo curso</a>
                                 </li>
                                 <li>
                                     <a href="dis.php">Nova Disciplina</a>
@@ -192,7 +171,7 @@
                                     <a href="modulo.php">Novo Modulo</a>
                                 </li>
                                  <li>
-                                    <a href="projeto.php">Novo Projeto</a>
+                                    <a href="cadProjeto.php">Novo Projeto</a>
                                 </li>
                                 <li>
                                     <a href="#">Remover cadastro <span class="fa arrow"></span></a>
@@ -239,66 +218,136 @@
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-
+      
         <div id="page-wrapper">
-            <div class="row">
-            </div>
-            <br>
-            <div id="container"></div>
+        <br>
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Dados curso
+                            Descrição das atividades
+
+
                         </div>
-                        <div class="panel-body">
-                            <div class="row">
-                                <div class="">
-                                    <form method="POST" action="" role="form" id="frmCurso">
-                                        <div class="form-group col-lg-5">
-                                            <label>Nome curso</label>
-                                            <input class="form-control" placeholder="Seguraça da Informação" name="txtCurso" id="txtCurso">
-                                            
-                                        </div>
-                
-                                            
+                        <!-- /.panel-heading -->
+                        <form name="formProj" action="cadComposto.php" method="POST">
+                            <div class="panel-body">
+                                <!-- Nav tabs -->
+                               
+
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+
+                                    <div>
+                                        
+                                                   <div class="form-group col-lg-3" >
+                                            <label>Tema</label>
+                                            <select class="form-control selectpicker"  onchange="fillProjeto(this)" id="txtSel">
+<?php 
+
+    include 'conect.php';
+    
+
+        if ($con) {
+
+            $sql = "select * from curso c, projeto p where p.num_curso = c.numero";
+            $consulta = pg_query($con, $sql);
+        
+            $linhas = pg_num_rows($consulta); 
+
+                                
+            for($i=0; $i<$linhas; $i++){  
+                $dados = pg_fetch_row($consulta);       
+                echo "<option>".$dados[9]."</option>
+                        ";
+            }                                  
+        }
+?>
+       
+                                            </select>
+<div class="">    
+    <input type="hidden" class="form-control" id="id_proj" name="p">
+</div>
+
                                         </div>
 
-                                        <div class="form-group col-lg-3">
-                                            <label>Sigla</label>
-                                            <input class="form-control" placeholder="S.I" name="txtSigla" id="txtSigla">
-                                        </div>
-                                        <div class="form-group col-lg-3">
-                                            <label>Numero</label>
-                                            <input type="number" class="form-control" placeholder="10" name="txtNumero" id="txtNumero"></div>
+                                               <div class="form-group col-lg-3" >
+                                            <label>Disciplina</label>
+                                            <select class="form-control selectpicker" onchange="fillDisciplina(this)" >
+<?php 
+
+    include 'conect.php';
+    
+    if ($con) {
+
+        $sql = "SELECT * from disciplina ORDER by codigo";
+        $consulta = pg_query($con, $sql);
+        
+        $linhas = pg_num_rows($consulta); 
+                                
+            
+        for($i=0; $i<$linhas; $i++){  
+            $dados = pg_fetch_row($consulta);
+
+                echo "<option>".$dados[1]."</option>
+                        ";
+        }                                  
+    }
+?>
+                                            </select>
+
+<div class="clearfix"></div>   
+<div class="">    
+    <input type="hidden" class="form-control" id="teste" name="d">
+</div>
+  
 
                                         </div>
-                                         <div class="clearfix"></div>
+                                        <div class="clearfix"></div>
+                                        <div class="row">
+                                              <div class="col-lg-12">
+                                                    <h1 class="page-header"></h1>
+                                                </div>
+                                        </div>
+                                        <h4>Descrição</h4>
+                                        <div class="form-group col-lg-6">
+                                            <textarea class="form-control" rows="3" name="txtDesc" id="txtDesc" required=""></textarea>
 
-                                        <button type="submit" class="btn btn-default">Gravar</button>
-                                        <button type="reset" class="btn btn-default">Cancelar</button>
+                                        </div><br>
+                                        
 
-                                                                            
-                                    </form>
+                                    </div>
+                                
                                 </div>
-                                <!-- /.col-lg-6 (nested) -->
-                           
-                                <!-- /.col-lg-6 (nested) -->
+                                <div class="clearfix"></div>
+                                <div class="form-group col-lg-6">
+                                    <button type="submit" class="btn btn-default">Gravar</button>
+                                        <a href="index.php"><button type="button" class="btn btn-default">Cancelar</button></a> 
+                                </div>
+
                             </div>
-                            <!-- /.row (nested) -->
-                        </div>
+
+
+                        </form>
+
                         <!-- /.panel-body -->
                     </div>
                     <!-- /.panel -->
                 </div>
-                <!-- /.col-lg-12 -->
+                <!-- /.col-lg-6 -->
+             
+                <!-- /.col-lg-6 -->
             </div>
+
+
             <!-- /.row -->
         </div>
         <!-- /#page-wrapper -->
 
     </div>
     <!-- /#wrapper -->
+
+
 
     <!-- jQuery -->
     <script src="../vendor/jquery/jquery.min.js"></script>
@@ -308,6 +357,11 @@
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="../vendor/raphael/raphael.min.js"></script>
+    <script src="../vendor/morrisjs/morris.min.js"></script>
+    <script src="../data/morris-data.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>

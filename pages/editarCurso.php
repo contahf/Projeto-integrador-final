@@ -234,7 +234,7 @@ session_start();
             <br>
             <!-- /.row -->
             <div class="row">
-               
+               <div id="a"></div>
                 <!-- /.col-lg-6 -->
                <div class="col-lg-12">
                     <div class="panel panel-default">
@@ -278,7 +278,7 @@ session_start();
                         <td>".$dados[1] . "</td>
                         <td >".$dados[2] . "</td>
                         <td><a href='editaCurso.php?num=".$dados[0]."&nom=".$dados[1]."&sigla=".$dados[2]."'><i class='fa fa-edit fa-fw'></i></a></td>
-                        <td><a href='#' onclick='acaoExcluir(\"".trim($dados[0])."\")'><i class='fa fa-times fa-fw'></i></a></td>
+                        <td><a href='?#' onclick='acaoExcluir(\"".trim($dados[0])."\")'><i class='fa fa-times fa-fw'></i></a></td>
                         <td><a href='cadProjeto.php'><i class='fa fa-plus fa-fw'></i></a></td>
                     </tr>";
             }                                  
@@ -297,7 +297,7 @@ session_start();
                     </div>
                     <!-- /.panel -->
                 </div>
-   
+                     <a href="cadCurso.php"><button type="button" class="btn btn-link">Novo Curso</button></a>
             </div>
             <!-- /.row -->
         </div>
