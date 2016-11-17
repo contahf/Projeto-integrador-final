@@ -116,7 +116,7 @@
                             <a href="#"><i class="fa fa-book fa-fw"></i>Disciplina<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                <li>
-                                    <a href="listarDis.php">Listar </a>
+                                    <a href="editarDis.php">Listar </a>
                                 </li>
 				
                             </ul>
