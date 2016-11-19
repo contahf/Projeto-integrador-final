@@ -12,7 +12,6 @@ session_start();
          header('location:index.php');
     }
 
-
    
 ?>
 
@@ -46,6 +45,8 @@ session_start();
 
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
 
     <script type="text/javascript">
     
@@ -53,7 +54,7 @@ session_start();
         function acaoExcluir(matricula){
             var t = matricula.trim();
             matricula = t;
-            if(window.confirm('Deseja excluir esta disciplina?')){
+            if(window.confirm('Deseja mesmo excluir este aluno(a)?')){
                 dado = 'txtMat=' + matricula;
                 $.get('removeAluno.php', dado, tratarExclusao)
                 .fail( function(){
@@ -82,6 +83,95 @@ session_start();
                 $('#container').empty().append(teste);      
             }
         }
+
+
+        function acaoEditar(matricula){
+
+            dado = 'txtMat=' + matricula;
+            
+            $.ajax({
+                
+                type        : 'GET', 
+                url         : 'confEditAluno.php',  
+                data        :  dado, 
+                dataType    : 'json', 
+                encode      : true
+                    
+            })
+            
+            .done(function(dado){
+                
+                var inputNome = dado.nome
+                var inputNasc = dado.dtnasc
+                var inputSexo = dado.sexo
+                var inputCidade = dado.cidade
+                var inputUf = dado.uf
+                var inputMat = dado.matricula
+
+                document.getElementById('txtNome').value = inputNome
+                document.getElementById('txtNasc').value = inputNasc
+                document.getElementById('txtMat').value = inputMat
+                document.getElementById('txtEstado').value = inputUf
+                document.getElementById('txtCidade').value = inputCidade
+                $('input[name="txtSexo"][value="' + inputSexo + '"]').prop('checked', true)
+                
+                $('#exampleModal').modal('show')
+
+               
+      
+            })
+
+            .fail(function(){
+                console.log(); 
+            });
+
+        }
+
+
+
+        $(function() { 
+            $('#frm-Edit').on('submit', function(e) {
+                e.preventDefault(); 
+                $.ajax({
+                    type        : 'POST', 
+                    url         : 'e.aluno.php',  
+                    data        :  $("#frm-Edit :input").serialize(), 
+                    dataType    : 'json', 
+                    encode      : true
+                    
+                }) 
+
+            .done(function(data){
+                
+                if(data == true){
+                     
+
+                     var alerta = '<div class="alert alert-success fade in">' + 
+                            '<a href="listarAluno.php" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                            '<strong>Success!</strong> Cadastrado com sucesso!' + 
+                            '</div>'
+
+                          $('#fNome').addClass("has-success")
+                          $('#foot').before(alerta); 
+                    
+                }else{
+
+                    var alerta = '<div class="alert alert-danger fade in">' + 
+                            '<a href="listarAluno.php" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                            '<strong>Falhou!</strong> Falha ao atualizar o  cadastro!' + 
+                            '</div>'
+                          
+                          $('#foot').before(alerta);
+
+                }
+                
+
+
+            }) 
+            });
+        });
+
+      
     </script>
 </head>
 
@@ -98,10 +188,12 @@ session_start();
 
             <ul class="nav navbar-top-links navbar-right">
                
-                    
-                    <li>
-                        <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                    </li>
+                <li>
+                    <a href="cadAluno.php"><i class="fa fa-sign-out fa-fw"></i> Novo Aluno</a>
+                </li>
+                <li>
+                    <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                </li>
                 <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
@@ -204,11 +296,13 @@ session_start();
                     </ul>
 
 
+
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
             <!-- /.navbar-static-side -->
         </nav>
+
 
         <div id="page-wrapper">
             <br>
@@ -216,6 +310,7 @@ session_start();
             <div class="row">
                
                 <div id="container" ></div>
+                <div id="a"></div>
                <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -225,7 +320,7 @@ session_start();
                         <div class="panel-body">
                             <div class="table-responsive">
 
-                                <table class="table table-hover">
+                                <table class="table table-hover" id="tabela">
                                     <thead>
                                         <tr>
                                             <th>Matricula</th>
@@ -241,7 +336,7 @@ session_start();
                                  
 <?php 
  
- include 'conect.php';   
+ require_once 'conect.php';   
 
     if ($con) {
 
@@ -261,7 +356,7 @@ session_start();
                         <td>".$dados[3]."</td>
                         <td>".$dados[4]."</td>
                         <td>".$dados[5]."</td>
-                        <td><a href='editAluno.php?mat=".$dados[0]."&nome=".$dados[1]."&sx=".$dados[2]."&nas=".$dados[3]."&cid=".$dados[4]."&uf=".$dados[5]."'><i class='fa fa-edit fa-fw'></i></a></td>
+                        <td><a href='#?' onclick='acaoEditar(\"".trim($dados[0])."\")'><i class='fa fa-edit fa-fw'></i></a></td>
                         <td><a href='#?' onclick='acaoExcluir(\"".trim($dados[0])."\")'><i class='fa fa-trash fa-fw'></i></a></td>
                     </tr>";
             } 
@@ -278,7 +373,99 @@ session_start();
                     </div>
                     <!-- /.panel -->
                 </div>
-                     <a href="cadAluno.php"><button type="button" class="btn btn-link">Novo Aluno</button></a>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">Atualize seus dados</h4>
+      </div>
+      <div class="modal-body">
+       
+        <form id="frm-Edit" method="POST">
+            <div class="form-group col-lg-5" id="fNome">
+               <label>Nome </label>
+                
+                <input type="text" class="form-control has-success" name="txtNome" id="txtNome">
+                
+                                            
+            </div>
+            <div class="form-group col-lg-4" >
+                <label>Data de nasc.</label>
+                <input type="date" name="txtNasc" class="form-control" id="txtNasc" required="">
+                                            
+            </div>
+                                      
+            <div class="form-group col-lg-3" >
+                <label>Sexo:</label><br>
+                    <label class="radio-inline">
+                        <input type="radio" name="txtSexo" id="txtM" value="M">M
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="txtSexo" value="F" id="txtSexo" >F
+                    </label>
+            </div>
+            <div class="clearfix"></div>
+            <div class="form-group col-lg-3" >
+                <label>Cidade</label>
+                <input type="numeric" class="form-control" name="txtCidade" id="txtCidade" required="">
+                                            
+            </div>
+                                       
+            <div class="form-group col-lg-2" >
+            <label for="estado">UF:</label>
+                <select class="form-control selectpicker" name="txtEstado" id="txtEstado">
+                    <option value="">--</option>
+                    <option value="AC">AC</option>
+                    <option value="AL">AL</option>
+                    <option value="AP">AP</option>
+                    <option value="AM">AM</option>
+                    <option value="BA">BA</option>
+                    <option value="CE">CE</option>
+                    <option value="DF">DF</option>
+                    <option value="ES">ES</option>
+                    <option value="GO">GO</option>
+                    <option value="MA">MA</option>
+                    <option value="MT">MT</option>
+                    <option value="MS">MS</option>
+                    <option value="MG">MG</option>
+                    <option value="PA">PA</option>
+                    <option value="PB">PB</option>
+                    <option value="PR">PR</option>
+                    <option value="PE">PE</option>
+                    <option value="PI">PI</option>
+                    <option value="RN">RN</option>
+                    <option value="RS">RS</option>
+                    <option value="JR">RJ</option>
+                    <option value="RO">RO</option>
+                    <option value="RR">RR</option>
+                    <option value="SC">SC</option>
+                    <option value="SP">SP</option>
+                    <option value="SE">SE</option>
+                    <option value="TO">TO</option>
+                </select>
+                                            
+            </div>
+            <div class="clearfix"></div>
+                <div class="form-group col-lg-5">
+                
+                <input type="hidden" name="txtMat" id="txtMat" class="form-control">
+                                            
+            </div>
+            <div class="clearfix"></div>
+                <div id="foot" class="modal-footer">
+                    <a href="listarAluno.php"  ><button type="button" class="btn btn-default" data-dismiss="">Voltar</button></a>    
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+                                        
+        </form>  
+      </div>      
+  </div>
+</div>
+
+
             </div>
             <!-- /.row -->
 

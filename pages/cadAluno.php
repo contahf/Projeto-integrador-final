@@ -1,72 +1,21 @@
+ <?php
 
-<?php 
- 
-    $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
+     session_start();
 
-    $con = pg_connect($strCon);
-    
+        if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
+        {
+            unset($_SESSION['login']);
+            unset($_SESSION['senha']);
+            session_destroy();
+            header('location:../index.html');
+    }
 
-    if ($con) {
-
-
-        $nome= isset($_POST['txtNome']);
-        $matricula = isset($_POST['txtMat']);
-        $nasc = isset($_POST['txtNasc']);
-        $sex = isset($_POST["txtSexo"]);
-        $cidade = isset($_POST['txtCidade']);
-        $uf = isset($_POST['estado']);
-
-   
-        
-        $sql = "select * from aluno where  nome = '". $nome ."'";
-
-        $consulta = pg_query($con, $sql);
- 
-        $linhas = pg_num_rows($consulta);
-
-        if($linhas > 0 ){
-     
-            pg_close($con);
-            include 'message.js';
-
-            
-         
-         }elseif ($linhas==0) {
-            $sql = "INSERT INTO aluno (matricula, nome, sexo, dtnasc, cidade, uf) VALUES ('".$matricula."', '".$nome."', '".$sex."','".$nasc."','".$cidade."', '".$uf."');";
-            $res = pg_query($con, $sql);
-
-            $qtd_linhas = pg_affected_rows($res);
-
-            if ($qtd_linhas > 0){
-               echo "
-
-                    <script type='text/javascript'>                                          
-
-                        window.alert('Cadastro realizado!');
-                        window.location.href = 'cadAluno.php'; 
-
-                                                                        
-                        
-                    </script>
-
-
-               ";
-                pg_close($con);
-        
-            }
-
-        
-
-         }
-
-                
-
+    if ($_SESSION['tipo' == 'P'] || $_SESSION['tipo'] == 'p') {
+        die("error");
     }
 
 
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -92,13 +41,94 @@
 
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  <script type="text/javascript">
+      
+
+        $(document).ready(function() {
+    
+             $('form').submit(function(event) {
+
+                event.preventDefault();
+               
+                var n = $("#txtNome").val();
+                var nas = $("#txtNasc").val();
+                var sexo = $("#txtSexo").val();
+                var cidade = $("#txtCidade").val();
+                var uf = $("#txtEstado").val();
+                var matri = $("#txtMat").val();
+       
+                $.ajax({
+                    type        : 'POST', 
+                    url         : 'aluno.php',  
+                    data        :  $('form').serialize(), 
+                    dataType    : 'json', 
+                    encode      : true
+                    
+                })
+
+                
+       
+                .done(function(data) {
+            
+                    if (data != $("#txtMat").val()) {
+                            
+                        if(data == "-1"){
+                            
+                            $('form').each (function(){
+                                this.reset();
+                            });
+                            
+                            var alerta = '<div class="alert alert-warning fade in">' + 
+                                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                                '<strong>Warning!</strong> Já cadastrado!' + 
+                              '</div>'
+                            $('#container').empty().append(alerta);
+
+                          
+
+                            
+                        
+                        }
+                        
+                        if(data == "-2"){
+                            
+                            var alerta = '<div class="alert alert-danger fade in">' + 
+                                '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                                '<strong>Warning!</strong> Error desconhecido!' + 
+                              '</div>'
+                            $('#container').empty().append(alerta);  
+                        }
+                                                
+                    } else {
+                        
+                        $('form').each (function(){
+                            this.reset();
+                        });
+ 
+                        var alerta = '<div class="alert alert-success fade in">' + 
+                            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                            '<strong>Success!</strong> Cadastrado com sucesso!' + 
+                            '</div>'
+                          $('#container').empty().append(alerta); 
+                        }
+
+                })
+
+                .fail(function(){
+                    alert('Ajax Submit Failed ...'); 
+                });
+   
+    });
+
+});
+
+
+
+
+  </script>
+
 
 </head>
 
@@ -178,6 +208,7 @@
            
             <br>
             <div class="row">
+            <div id="container"></div>
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -186,36 +217,36 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="">
-                                    <form action="<?=$_SERVER['PHP_SELF']?>" method="post">
+                                    <form action="aluno.php" method="post">
                                         <div class="form-group col-lg-5">
                                             <label>Nome </label>
-                                            <input class="form-control" name="txtNome" >
+                                            <input class="form-control" name="txtNome" id="txtNome" >
                                             
                                         </div>
                                         <div class="form-group col-lg-3" >
                                             <label>Data de nasc.</label>
-                                            <input type="date" name="txtNasc" class="form-control" required="">
+                                            <input type="date" name="txtNasc" class="form-control" id="txtNasc" required="">
                                             
                                         </div>
                                         <div class="form-group col-lg-2" >
                                         <label>Sexo:</label><br>
                                             <label class="radio-inline">
-                                            <input type="radio" name="txtSexo" value="m" checked>M
+                                            <input type="radio" name="txtSexo" value="M" checked>M
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" name="txtSexo" value="f" >F
+                                                <input type="radio" name="txtSexo" value="F" id="txtSexo" >F
                                             </label>
                                         </div>
                                         <div class="clearfix"></div>
                                          <div class="form-group col-lg-2" >
                                             <label>Cidade</label>
-                                            <input type="numeric" class="form-control" name="txtCidade" required="">
+                                            <input type="numeric" class="form-control" name="txtCidade" id="txtCidade" required="">
                                             
                                         </div>
                                        
                                         <div class="form-group col-lg-1" >
                                             <label for="estado">UF:</label>
-                                            <select class="form-control selectpicker" name="estado" id="estado">
+                                            <select class="form-control selectpicker" name="estado" id="txtEstado" id="estado">
                                                 <option value="">--</option>
                                                 <option value="AC">AC</option>
                                                 <option value="AL">AL</option>
@@ -250,7 +281,7 @@
                                         <div class="clearfix"></div>
                                                     <div class="form-group col-lg-3">
                                             <label>Matricula</label>
-                                            <input type="text" name="txtMat" class="form-control">
+                                            <input type="text" name="txtMat" id="txtMat" class="form-control" minlength="15">
                                             
                                         </div>
 

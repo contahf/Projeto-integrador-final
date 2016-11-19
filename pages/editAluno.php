@@ -4,6 +4,7 @@
 session_start();
 
     if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
+   
     {
         unset($_SESSION['login']);
         unset($_SESSION['senha']);
@@ -183,28 +184,28 @@ session_start();
                                     <form action="confEditAluno.php" method="post">
                                         <div class="form-group col-lg-5">
                                             <label>Nome </label>
-                                            <input class="form-control" name="txtNome" value="<?php echo $_SESSION['ID'];?>">
+                                            <input class="form-control" name="txtNome" value="<?php echo $_GET['nome'];?>">
                                             
                                         </div>
                                         <div class="form-group col-lg-3" >
                                             <label>Data de nasc.</label>
-                                            <input type="date" name="txtNasc" class="form-control" required="" value="<?php echo $_SESSION['nasc'];?>" >
+                                            <input type="date" name="txtNasc" class="form-control" required="" value="<?php echo $_GET['nas'];?>" >
                                             
                                         </div>
                                         <div class="form-group col-lg-2" >
                                         
                                         <label>Sexo:</label><br>
                                             <label class="radio-inline">
-                                            <input type="radio" name="txtSexo" id="txtSexo" value="m" <?php if($_SESSION['sexo'] == "m") echo 'checked' ; ?>>M
+                                            <input type="radio" name="txtSexo" id="txtSexo" value="m" <?php if($_GET['sx'] == "M") echo 'checked' ; ?>>M
                                             </label>
                                             <label class="radio-inline">
-                                                <input type="radio" id="txtSexo" name="txtSexo" value="f" <?php if($_SESSION['sexo'] == "f") echo 'checked' ; ?>>F
+                                                <input type="radio" id="txtSexo" name="txtSexo" value="f" <?php if($_GET['sx'] == "F") echo 'checked' ; ?>>F
                                             </label>
                                         </div>
                                         <div class="clearfix"></div>
                                          <div class="form-group col-lg-2" >
                                             <label>Cidade</label>
-                                            <input type="numeric" class="form-control" name="txtCidade" required="" value="<?php echo $_SESSION['ID_CID'];?>" >
+                                            <input type="numeric" class="form-control" name="txtCidade" required="" value="<?php echo $_GET['cid'];?>" >
                                             
                                         </div>
                                        
@@ -212,42 +213,42 @@ session_start();
                                             <label for="estado">UF:</label>
                                             <select class="form-control selectpicker" name="estado" id="estado">
                                                 <option value=""> </option>
-                                                <option <?php if ($_SESSION['UF'] == 'AC' ) echo 'selected' ; ?> value="AC">AC</option>
-                                                <option <?php if ($_SESSION['UF'] == 'AL' ) echo 'selected' ; ?> value="AL">AL</option>
-                                                <option <?php if ($_SESSION['UF'] == 'AP' ) echo 'selected' ; ?> value="AP">AP</option>
-                                                <option <?php if ($_SESSION['UF'] == 'AM' ) echo 'selected' ; ?> value="AM">AM</option>
-                                                <option <?php if ($_SESSION['UF'] == 'BA' ) echo 'selected' ; ?> value="BA">BA</option>
-                                                <option <?php if ($_SESSION['UF'] == 'CE' ) echo 'selected' ; ?> value="CE">CE</option>
-                                                <option <?php if ($_SESSION['UF'] == 'DF' ) echo 'selected' ; ?> value="DF">DF</option>
-                                                <option <?php if ($_SESSION['UF'] == 'ES' ) echo 'selected' ; ?> value="ES">ES</option>
-                                                <option <?php if ($_SESSION['UF'] == 'GO' ) echo 'selected' ; ?> value="GO">GO</option>
-                                                <option <?php if ($_SESSION['UF'] == 'MA' ) echo 'selected' ; ?> value="MA">MA</option>
-                                                <option <?php if ($_SESSION['UF'] == 'MT' ) echo 'selected' ; ?> value="MT">MT</option>
-                                                <option <?php if ($_SESSION['UF'] == 'MS' ) echo 'selected' ; ?> value="MS">MS</option>
-                                                <option <?php if ($_SESSION['UF'] == 'MG' ) echo 'selected' ; ?> value="MG">MG</option>
-                                                <option <?php if ($_SESSION['UF'] == 'PA' ) echo 'selected' ; ?> value="PA">PA</option>
-                                                <option <?php if ($_SESSION['UF'] == 'PB' ) echo 'selected' ; ?> value="PB">PB</option>
-                                                <option <?php if ($_SESSION['UF'] == 'PR' ) echo 'selected' ; ?> value="PR">PR</option>
-                                                <option <?php if ($_SESSION['UF'] == 'PE' ) echo 'selected' ; ?> value="PE">PE</option>
-                                                <option <?php if ($_SESSION['UF'] == 'PI' ) echo 'selected' ; ?> value="PI">PI</option>
-                                                <option <?php if ($_SESSION['UF'] == 'RN' ) echo 'selected' ; ?> value="RN">RN</option>
-                                                <option <?php if ($_SESSION['UF'] == 'RS' ) echo 'selected' ; ?> value="RS">RS</option>
-                                                <option <?php if ($_SESSION['UF'] == 'RJ' ) echo 'selected' ; ?> value="RJ">RJ</option>
-                                                <option <?php if ($_SESSION['UF'] == 'RO' ) echo 'selected' ; ?> value="RO">RO</option>
-                                                <option <?php if ($_SESSION['UF'] == 'RR' ) echo 'selected' ; ?> value="RR">RR</option>
-                                                <option <?php if ($_SESSION['UF'] == 'SC' ) echo 'selected' ; ?> value="SC">SC</option>
-                                                <option <?php if ($_SESSION['UF'] == 'SP' ) echo 'selected' ; ?> value="SP">SP</option>
-                                                <option <?php if ($_SESSION['UF'] == 'SE' ) echo 'selected' ; ?> value="SE">SE</option>
-                                                <option <?php if ($_SESSION['UF'] == 'TO' ) echo 'selected' ; ?> value="TO">TO</option>
+                                                <option <?php if ($_GET['UF'] == 'AC' ) echo 'selected' ; ?> value="AC">AC</option>
+                                                <option <?php if ($_GET['UF'] == 'AL' ) echo 'selected' ; ?> value="AL">AL</option>
+                                                <option <?php if ($_GET['UF'] == 'AP' ) echo 'selected' ; ?> value="AP">AP</option>
+                                                <option <?php if ($_GET['UF'] == 'AM' ) echo 'selected' ; ?> value="AM">AM</option>
+                                                <option <?php if ($_GET['UF'] == 'BA' ) echo 'selected' ; ?> value="BA">BA</option>
+                                                <option <?php if ($_GET['UF'] == 'CE' ) echo 'selected' ; ?> value="CE">CE</option>
+                                                <option <?php if ($_GET['UF'] == 'DF' ) echo 'selected' ; ?> value="DF">DF</option>
+                                                <option <?php if ($_GET['UF'] == 'ES' ) echo 'selected' ; ?> value="ES">ES</option>
+                                                <option <?php if ($_GET['UF'] == 'GO' ) echo 'selected' ; ?> value="GO">GO</option>
+                                                <option <?php if ($_GET['UF'] == 'MA' ) echo 'selected' ; ?> value="MA">MA</option>
+                                                <option <?php if ($_GET['UF'] == 'MT' ) echo 'selected' ; ?> value="MT">MT</option>
+                                                <option <?php if ($_GET['UF'] == 'MS' ) echo 'selected' ; ?> value="MS">MS</option>
+                                                <option <?php if ($_GET['UF'] == 'MG' ) echo 'selected' ; ?> value="MG">MG</option>
+                                                <option <?php if ($_GET['UF'] == 'PA' ) echo 'selected' ; ?> value="PA">PA</option>
+                                                <option <?php if ($_GET['UF'] == 'PB' ) echo 'selected' ; ?> value="PB">PB</option>
+                                                <option <?php if ($_GET['UF'] == 'PR' ) echo 'selected' ; ?> value="PR">PR</option>
+                                                <option <?php if ($_GET['UF'] == 'PE' ) echo 'selected' ; ?> value="PE">PE</option>
+                                                <option <?php if ($_GET['UF'] == 'PI' ) echo 'selected' ; ?> value="PI">PI</option>
+                                                <option <?php if ($_GET['UF'] == 'RN' ) echo 'selected' ; ?> value="RN">RN</option>
+                                                <option <?php if ($_GET['UF'] == 'RS' ) echo 'selected' ; ?> value="RS">RS</option>
+                                                <option <?php if ($_GET['UF'] == 'RJ' ) echo 'selected' ; ?> value="RJ">RJ</option>
+                                                <option <?php if ($_GET['UF'] == 'RO' ) echo 'selected' ; ?> value="RO">RO</option>
+                                                <option <?php if ($_GET['UF'] == 'RR' ) echo 'selected' ; ?> value="RR">RR</option>
+                                                <option <?php if ($_GET['UF'] == 'SC' ) echo 'selected' ; ?> value="SC">SC</option>
+                                                <option <?php if ($_GET['UF'] == 'SP' ) echo 'selected' ; ?> value="SP">SP</option>
+                                                <option <?php if ($_GET['UF'] == 'SE' ) echo 'selected' ; ?> value="SE">SE</option>
+                                                <option <?php if ($_GET['UF'] == 'TO' ) echo 'selected' ; ?> value="TO">TO</option>
                                             </select>
                                             
                                         </div>
                                         <div class="clearfix"></div>
                                         
-                    <!-- 3250-7600 -->                  <div class="form-group col-lg-3">
+                                       <div class="form-group col-lg-3">
                                             <label>Matricula</label>
                                             <input type="text"  name="txtMat" class="form-control " 
-                                            value="<?php echo $_SESSION['ID_MAT'];?>" disabled >
+                                            value="<?php echo $_GET['mat'];?>" disabled >
                                             
                                         </div>
 
