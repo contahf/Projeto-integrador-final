@@ -1,75 +1,63 @@
 
 <?php
 	
-session_start();
+    session_start();
 
-try {
-        include 'conect.php';
+    $ret = "";
 
-        if(!$con){
-                    
-            throw new Exception("Verifique a conexão com seu banco", 1);
-                    
-        }
-       
-        $login = $_POST['login'];
-        $senha = $_POST['senha'];                       
+    $login = $_POST['login'];
+    $senha = $_POST['senha'];
+
+        if(isset($login) && !empty($login) && isset($senha) && !empty($senha)) {
+
+            require_once 'conect.php';
+
+            $sql = "select * from usuario where login = '".$login."' and senha = '".$senha."'";
+            $result = pg_query($con, $sql);
+
+            if(pg_num_rows($result) > 0 ){
+                
+
+                $arrayLista = pg_fetch_array($result);
+                
+                $login = $arrayLista['login'];
+                $senha = $arrayLista['senha'];
+                $nome = $arrayLista['nome'];
+                $categoria = $arrayLista['categoria'];
+                $situacao = $arrayLista['situacao'];
+
         
-        $user = "select * from usuario where login = '".$login."' and senha = '".$senha."'";
-        $userSim = pg_query($con, $user);
+                $_SESSION['login'] = $login;
+                $_SESSION['senha'] = $senha;
+                $_SESSION['tipo']  = $categoria;
+                $_SESSION['sit'] = $situacao;
+             
 
-        if(pg_num_rows($userSim) > 0 ){
-            
+                if($_SESSION['sit'] == "I"){
+                    
+                    $ret = "-1";
 
-            $arrayLista = pg_fetch_array($userSim);
-            $login = $arrayLista['login'];
-            $senha = $arrayLista['senha'];
-            $nome = $arrayLista['nome'];
-            $categoria = $arrayLista['categoria'];
-            $situacao = $arrayLista['situacao'];
+                }else{
+                    
+                    $ret = true;
 
-            
-
-            $_SESSION['login'] = $login;
-            $_SESSION['senha'] = $senha;
-            $_SESSION['tipo']  = $categoria;
-            $_SESSION['nome']  = $nome;
-            $_SESSION['sit']  = $situacao;
-
-            if($_SESSION['sit'] == "I"){
-                echo "
-
-                    <script type='text/javascript'>                                          
-
-                        window.alert('Voce ainda não esta ativado!');
-                        window.location.href = '../index.html'; 
-
-                                                                        
-                        
-                    </script>
+                }
 
 
-               ";
-            }else{
-                header ("location:index.php");
-            }
+             
+             }else{
+                
+                $ret = "-2";
+             
+             }
 
+        }else{
          
-         }else{
-            echo "usuario não cadastrado";
-         }
-                
-    } 
+            $ret = "-3";
+        }
 
-    catch (Exception $e) {
-                
-        echo $e->getMessage(), "\n";
+echo (json_encode($ret));                     
         
-    }
-        
-    
-        
-    	   
 ?>
 
 
