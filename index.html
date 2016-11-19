@@ -2,14 +2,79 @@
 <html lang="pt-br">
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=1,initial-scale=1,user-scalable=1" />
 	<title>Projeto Integrador 2016/2</title>
 
 	<link href="http://fonts.googleapis.com/css?family=Lato:100italic,100,300italic,300,400italic,400,700italic,700,900italic,900" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="assets/bootstrap/css/bootstrap.min.css" />
 	<link rel="stylesheet" type="text/css" href="assets/css/styles.css" />
-	
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
+    <script type="text/javascript">
+      
+
+        $(document).ready(function() {
+        
+                 $('form').submit(function(event) {
+
+                    event.preventDefault();
+            
+           
+                    $.ajax({
+                        type        : 'POST', 
+                        url         : '/pages/info.php',  
+                        data        :  $('form').serialize(), 
+                        dataType    : 'json', 
+                        encode      : true
+                        
+                    })
+                    
+                    .done(function(data) {
+                
+                        if (data != true) {
+                                
+                            if(data == "-1"){
+                                
+                    
+                                var alerta = '<div class="alert alert-warning fade in">' + 
+                                    '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                                    '<strong>Warning!</strong> Sem permissão!' + 
+                                  '</div>'
+                               $('#avi').before(alerta);
+
+                            
+                            }
+                            
+                            if(data == "-2"){
+                                
+                                var alerta = '<div class="alert alert-danger fade in">' + 
+                                    '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                                    '<strong>Warning!</strong> Não cadastrado!' + 
+                                  '</div>'
+                                $('#avi').before(alerta);  
+                            }
+
+                            if(data == "-3"){
+                                
+                               alert("Campos em branco")                    
+                            }
+                                                    
+                        } else {
+                            
+                           window.location.href = '/pages/index.php';
+                        }
+
+                    })
+
+                    .fail(function(){
+                        alert('Ajax Submit Failed ...'); 
+                    });
+       
+            });
+
+        });
+    </script>
 	
 </head>
 <body>
@@ -20,16 +85,17 @@
 		</section>
 	
 			<form method="post" name="frm1"  action="/pages/info.php" role="login">
-			    <div class="form-group">
-					<input type="text" name="login" id="login" placeholder="Usuario" required class="form-control" />
+			    
+                <div class="form-group" id="avi">
+					<input type="text" name="login" id="login" placeholder="Usuario"  class="form-control" />
 					<span class="glyphicon glyphicon-user"></span>
 				</div>
 				
 				<div class="form-group">
-					<input type="password" name="senha" id="senha" placeholder="Senha" required class="form-control" />
+					<input type="password" name="senha" id="senha" placeholder="Senha"  class="form-control" />
 					<span class="glyphicon glyphicon-lock"></span>
 				</div>
-				<button type="submit" id="frm1" name="" class="btn btn-block btn-primary" >Login</button>
+				<button type="submit" class="btn btn-block btn-primary" >Login</button>
 				
 			</form>
 
