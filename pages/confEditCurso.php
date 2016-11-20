@@ -1,9 +1,6 @@
 <?php 
-  
-session_start();
 
-$ret = "";
-
+    session_start();
 
     if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
     {
@@ -12,33 +9,36 @@ $ret = "";
         session_destroy();
         header('location:../index.html');
     }
+    
+    if ($_SESSION['tipo'] !='C') {
+         header('location:index.php');
+    }
+  
+    $ret = "";
 
-    $nomeCurso= $_POST['txtCurso'];
-    $siglaCurso = $_POST['txtSigla'];
-    $numeroCurso = $_POST['txtNumero'];
-
-    require_once 'conect.php';    
+    require_once 'conect.php';
 
     if ($con) {
-                 
-    $sql = "UPDATE curso SET nome = '". $nomeCurso ."', sigla = '" . $siglaCurso . "' WHERE numero = '" . $numeroCurso . "';";
 
-    
-    $resultado = pg_query($sql);
-   
-    $teste = pg_affected_rows($resultado); 
+        if ($_POST['txtNumero']) {
 
-    if( $teste > 0){    
+            $sql = "SELECT * FROM curso WHERE numero = '".$_POST['txtNumero']."'";
+             $result = pg_query($con, $sql);
+
+            if(pg_num_rows($result) > 0){
+
+                $array = pg_fetch_assoc($result); 
+                $arr = json_encode($array);
         
-        $ret = $numeroCurso;          
+            }else{
 
-    }else{
-
-        $ret = "-2";
+                $arr = json_encode("-1");
+            }
+    
+        }else{
+            $arr = json_encode("-2");
+        }
     }
-}
 
-echo json_encode($ret);
-
-
+    echo $arr;
 ?>
