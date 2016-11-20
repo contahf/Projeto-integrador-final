@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
     if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
@@ -52,7 +53,7 @@ session_start();
        
         function acaoExcluir(numero){
            
-            if(window.confirm('Deseja excluir esta disciplina?')){
+            if(window.confirm('Deseja mesmo excluir este curso?')){
 
                 dado = 'num=' + numero;
                 //$.post('removeCurso.php', dado, tratarExclusao)
@@ -101,6 +102,94 @@ session_start();
         }
 
 
+            function acaoEditar(numero){
+
+            dado = 'txtNumero=' + numero;
+            
+            $.ajax({
+                
+                type        : 'POST', 
+                url         : 'confEditCurso.php',  
+                data        :  dado, 
+                dataType    : 'json', 
+                encode      : true
+                    
+            })
+            
+            .done(function(dado){
+                
+                var inputNumero = dado.numero
+                var inputNome = dado.nome
+                var inputSigla = dado.sigla
+
+                document.getElementById('txtNumero').value = inputNumero
+                document.getElementById('txtNome').value = inputNome
+                document.getElementById('txtSigla').value = inputSigla
+                
+                $('#exampleModal').modal('show')
+
+               
+      
+            })
+
+            .fail(function(){
+                console.log(); 
+            });
+
+        }
+
+
+        $(function() { 
+            $('#frm-Modal').on('submit', function(e) {
+                e.preventDefault(); 
+                $.ajax({
+                    type        : 'POST', 
+                    url         : 'e.Curso.php',  
+                    data        :  $("#frm-Modal :input").serialize(), 
+                    dataType    : 'json', 
+                    encode      : true
+                    
+                }) 
+
+            .done(function(data){
+
+                
+                if(data.success == "1"){
+                     
+
+                     var alerta = '<div class="alert alert-success fade in">' + 
+                            '<a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                            '<strong>Success!</strong> Atualizado com sucesso!' + 
+                            '</div>'
+
+                          $('#foot').before(alerta); 
+                    
+                }
+
+                else if (data.n == "10" && data.s == "11") {
+
+                    $('#fNome').addClass("has-error")
+                    $('#fSigla').addClass("has-error")
+                
+                } else if(data.n == "10"){
+                    $(document).ready(function(){
+                        $("input#txtNome").focus();
+                        //$(":focus").css("background-color", "yellow");
+                    });
+                    $('#fNome').addClass("has-error")
+
+                }else if(data.s == "11"){
+
+                    $('#fSigla').addClass("has-error")
+
+                }
+                
+
+            }) 
+            });
+        });
+
+
     </script>
 
 </head>
@@ -117,11 +206,13 @@ session_start();
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-               
-                    
-                    <li>
-                        <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                    </li>
+                <li>
+                    <a href="cadCurso.php"><i class="fa fa-plus fa-fw"></i> Novo Curso</a>
+                </li>
+                     
+                <li>
+                    <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                </li>
                 <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
@@ -262,9 +353,9 @@ session_start();
                         <td>".$dados[0] . "</td>
                         <td>".$dados[1] . "</td>
                         <td >".$dados[2] . "</td>
-                        <td><a href='editaCurso.php?num=".$dados[0]."&nom=".$dados[1]."&sigla=".$dados[2]."'><i class='fa fa-edit fa-fw'></i></a></td>
-                        <td><a href='?#' onclick='acaoExcluir(\"".trim($dados[0])."\")'><i class='fa fa-times fa-fw'></i></a></td>
-                        <td><a href='cadProjeto.php'><i class='fa fa-plus fa-fw'></i></a></td>
+                        <td><a href='#?'onclick='acaoEditar(\"".trim($dados[0])."\")'><i class='fa fa-edit fa-fw'></i></a></td>
+                        <td><a href='#?' onclick='acaoExcluir(\"".trim($dados[0])."\")'><i class='fa fa-times fa-fw'></i></a></td>
+                        <td><a href='cadProjeto.php'><i class='fa fa-wrench   fa-fw'></i></a></td>
                     </tr>";
             }                                  
     }
@@ -282,16 +373,16 @@ session_start();
                     </div>
                     <!-- /.panel -->
                 </div>
-                     <a href="cadCurso.php"><button type="button" class="btn btn-link">Novo Curso</button></a>
+                    
             </div>
             <!-- /.row -->
         </div>
         <!-- /#page-wrapper -->
 
     </div>
-    <!-- /#wrapper -->
 
-    <!-- jQuery -->
+   
+  
     <script src="../vendor/jquery/jquery.min.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
@@ -320,3 +411,44 @@ session_start();
 </body>
 
 </html>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"   data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">Dados do curso</h4>
+      </div>
+      <div class="modal-body">
+       
+        <form id="frm-Modal" method="POST" name="frm-Modal">
+            
+            <div class="form-group col-lg-6" id="fNome">
+                <label>Nome</label>
+                <input type="text" class="form-control" name="txtNome" id="txtNome">
+                                            
+            </div>
+                                        
+            <div class="form-group col-lg-3" id="fSigla">
+                <label>Sigla</label>
+                <input type="text" name="txtSigla" id="txtSigla" class="form-control">
+
+            </div>
+            <div class="form-group col-lg-2" id="fNumero">
+                
+                <input type="hidden" class="form-control has-success" name="txtNumero" id="txtNumero">     
+
+            </div>
+                
+            <div class="clearfix"></div>
+                <div id="foot" class="modal-footer">
+                    <a href="editarCurso.php"  ><button type="button" class="btn btn-default" data-dismiss="">Voltar</button></a>    
+                    <button type="submit" name="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+                                        
+        </form>  
+      </div>      
+  </div>
+</div>
