@@ -43,47 +43,123 @@ session_start();
 
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
     <script type="text/javascript">
     
 
-    function acaoExcluir(login){
-        if(window.confirm('Deseja excluir o Usuário?')){
-            dado = 'l=' + login;
-            $.get('removeUser.php', dado, tratarExclusao)
-            .fail( function(){
-                alert('falhou');
+        function acaoExcluir(login){
+            if(window.confirm('Deseja mesmo excluir este usuário?')){
+                dado = 'l=' + login;
+                $.get('removeUser.php', dado, tratarExclusao)
+                .fail( function(){
+                    alert('falhou');
+                }
+                )
+                ;
+                return false;
             }
-            )
-            ;
-            return false;
         }
-    }
 
 
 
-    function tratarExclusao(dado){
-        var t = dado.trim();
-        if(!t){
-            alert('conexão não pode ser estabelecida');
-        }else{
+        function tratarExclusao(dado){
+            var t = dado.trim();
+            if(!t){
+                alert('conexão não pode ser estabelecida');
+            }else{
+                
+                $('#'+t).remove();
+
+                var teste = '<div class="alert alert-success fade in">' + 
+        '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+        '<strong>Success!</strong> Registro removido com sucesso.' + 
+      '</div>'
+                $('#container').empty().append(teste);      
+            }
+        }
+
+        function acaoEditar(l){
+
+            dado = 'txtLogin=' + l;
             
-            $('#'+t).remove();
+            $.ajax({
+                
+                type        : 'POST', 
+                url         : 'u.valida.php',  
+                data        :  dado, 
+                dataType    : 'json', 
+                encode      : true
+                    
+            })
+            
+            .done(function(dado){
+                
+                var inputLogin = dado.login
+                var inputNome = dado.nome
+                var inputPass = dado.senha
+                var inputCat = dado.categoria
+                var inputSit = dado.situacao
 
-            var teste = '<div class="alert alert-success fade in">' + 
-    '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
-    '<strong>Success!</strong> Registro removido com sucesso.' + 
-  '</div>'
-            $('#container').empty().append(teste);      
+                document.getElementById('nome').value = inputNome
+                document.getElementById('login').value = inputLogin
+                document.getElementById('senha').value = inputPass
+                document.getElementById('categoria').value = inputCat
+                document.getElementById('situacao').value = inputSit
+                
+                $('#exampleModal').modal('show')
+
+               
+      
+            })
+
+            .fail(function(){
+                console.log(); 
+            });
+
         }
-    }
+
+           $(function() { 
+           
+            $('#frm-Edit').on('submit', function(e) {
+                e.preventDefault(); 
+                
+                $.ajax({
+                    type        : 'POST', 
+                    url         : 'e.user.php',  
+                    data        :  $("#frm-Edit :input").serialize(), 
+                    dataType    : 'json', 
+                    encode      : true
+                    
+                }) 
+
+            .done(function(data){
+                
+                if(data.success == "1"){
+                     var alerta = '<div class="alert alert-success fade in">' + 
+                            '<a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                            '<strong>Success!</strong> Atualizado com sucesso!' + 
+                            '</div>'
+
+                          $('#foot').before(alerta); 
+                    
+                }else if (data.erros == "-2") {
+                    var alerta = '<div class="alert alert-danger fade in">' + 
+                            '<a href="" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                            '<strong>Warning!</strong> Falha ao tentar atualizar!' + 
+                            '</div>'
+
+                          $('#foot').before(alerta); 
+                } else if(data.n == "10"){
+                    
+                    $('#fNome').addClass("has-error")
+
+                }
+
+            }) 
+            });
+        });
+
     </script>
 
 </head>
@@ -108,8 +184,8 @@ session_start();
 
             <ul class="nav navbar-top-links navbar-right">
                 <ul class="nav navbar-top-links navbar-right">
-            	    <li>
-                    	<a href="cadUser.php"><i class="fa fa-plus fa-fw"></i> Novo Usuário</a>
+                    <li>
+                        <a href="cadUser.php"><i class="fa fa-plus fa-fw"></i> Novo usuário</a>
                     </li>
                     <li>
                         <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -266,7 +342,7 @@ session_start();
                         <td>".$dados[1] . "</td>
                         <td >".$dados[2] . "</td>
                         <td >".$dados[3] . "</td>
-                        <td><a href='finUser.php?l=".$dados[0]."&n=".$dados[1]."&cat=".$dados[2]."&s=".$dados[3]."'><i class='fa fa-edit fa-fw'></i></a></td>
+                        <td><a href='#?' onclick='return acaoEditar(\"".$dados[0] . "\")'><i class='fa fa-edit fa-fw'></i></a></td>
                         <td><a href='#' onclick='return acaoExcluir(\"".$dados[0] . "\")'> <i class='fa fa-trash fa-fw'></i></a></td>
                     </tr>";
                                                             
@@ -296,8 +372,65 @@ session_start();
                         </div>
                         <!-- /.panel-body -->
                     </div>
+                    
                     <!-- /.panel -->
                 </div>
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-backdrop="static">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">Atualize seus dados</h4>
+      </div>
+      <div class="modal-body">
+       
+        <form id="frm-Edit" method="POST">
+           <div class="form-group col-lg-5" id="fNome">
+                <label>Nome completo</label>
+                <input class="form-control" name="nome" id="nome">
+                                            
+            </div>
+            <div class="form-group col-lg-2" >
+                <label>Categoria</label>
+                <select class="form-control selectpicker" name="categoria" id="categoria" value="">
+                    <option>G</option>
+                    <option>P</option>
+                    <option>C</option>
+                </select>
+            </div>
+            <div class="form-group col-lg-2" >
+                <label>Situação</label>
+                <select class="form-control selectpicker" name="situacao" id="situacao">
+                    <option>A</option>
+                    <option>I</option>
+                </select>
+            </div>
+
+            <div class="clearfix"></div>
+
+            <div class="form-group col-lg-3">
+                <input type="hidden" name="senha" id="senha" class="form-control" placeholder="Senha">
+            </div>
+            
+            <div class="form-group col-lg-3">
+                <input type="hidden" class="form-control" name="login" id="login" value="">
+            </div>
+            
+            <div class="clearfix"></div>
+                <div id="foot" class="modal-footer">
+                    <a href=""  ><button type="button" class="btn btn-default" data-dismiss="">Voltar</button></a>    
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </div>
+                                        
+        </form>  
+      </div>      
+  </div>
+</div>
+
+
    
             </div>
             <!-- /.row -->
@@ -336,3 +469,5 @@ session_start();
 </body>
 
 </html>
+
+

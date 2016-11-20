@@ -48,8 +48,77 @@
 
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
-    <script type="text/javascript"> 
+  <script type="text/javascript">
+
+
+        $(document).ready(function() {
+    
+             $('form').submit(function(event) {
+
+                event.preventDefault();
+            
+       
+                $.ajax({
+                   
+                    type        : 'POST', 
+                    url         : 'inserirUsuario.php',  
+                    data        :  $('form').serialize(), 
+                    dataType    : 'json', 
+                    encode      : true
+                    
+                })
+
+                
+       
+                .done(function(data) {
+                                   
+                    if (data.success == "1") {
+
+                        $('form').each (function(){
+                            this.reset();
+                        });
+ 
+                        var alerta = '<div class="alert alert-success fade in">' + 
+                            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                            '<strong>Success!</strong> Cadastrado com sucesso!' + 
+                            '</div>'
+                          $('#container').empty().append(alerta);
+
+
+                    }
+                    if (data.outros == "-2") {
+ 
+                        var alerta = '<div class="alert alert-danger fade in">' + 
+                            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                            '<strong>Fatal!</strong> Erro fatal!' + 
+                            '</div>'
+                          $('#container').empty().append(alerta);
+
+                    }
+
+                    if (data.n == "10") {
+
+                        $('#dNome').addClass("has-error")
+                    }
+
+                    if (data.lo == "13") {
+
+                        $('#dLogin').addClass("has-error")
+                    }
+
+                })
+
+
+
+                .fail(function(){
+                    alert('Ajax Submit Failed ...'); 
+                });
+   
+    });
+
+});
 
         function validar (input){ 
             if (input.value != document.getElementById('senha').value) {
@@ -58,7 +127,13 @@
                 input.setCustomValidity('');
              }
         }
-    </script>
+
+
+
+
+  </script>
+
+
 
 </head>
 
@@ -95,62 +170,77 @@
                         </li>
                           
                           <li>
-                            <a href="#"><i class="fa fa-user fa-fw"></i> Aluno<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> Menu de cadastro<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="listarAluno.php">Listar </a>
+                                    <a href="conCadUser.php">Novo usuario</a>
                                 </li>
-						
+                                <li>
+                                    <a href="cadAluno.php">Novo Aluno</a>
+                                </li>
+                                <li>
+                                    <a href="#">Remover cadastro <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="removeUser.php">Usuario</a>
+                                        </li>
+                                        <li>
+                                            <a href="removeAluno.php">Aluno</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-third-level -->
+                                </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
 
                          <li>
-                            <a href="#"><i class="fa fa-user fa-fw"></i> Usuário<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-								<li>
-                                    <a href="editUser.php">Listar </a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-						<li>
-                            <a href="#"><i class="fa fa-book fa-fw"></i>Curso<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Menu de opções<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                <li>
-                                    <a href="editarCurso.php">Listar </a>
+                                    <a href="cadCurso.php">Novo curso</a>
+                                </li>
+                                <li>
+                                    <a href="dis.php">Nova Disciplina</a>
+                                </li>
+                                <li>
+                                    <a href="grupo.php">Novo Grupo</a>
+                                </li>
+                                <li>
+                                    <a href="modulo.php">Novo Modulo</a>
+                                </li>
+                                 <li>
+                                    <a href="projeto.php">Novo Projeto</a>
+                                </li>
+                                <li>
+                                    <a href="#">Remover cadastro <span class="fa arrow"></span></a>
+                                    <ul class="nav nav-third-level">
+                                        <li>
+                                            <a href="removeUser.php">Usuario</a>
+                                        </li>
+                                        <li>
+                                            <a href="removeAluno.php">Aluno</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">Third Level Item</a>
+                                        </li>
+                                    </ul>
+                                    <!-- /.nav-third-level -->
+                                </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                       <li>
-                            <a href="#"><i class="fa fa-book fa-fw"></i>Disciplina<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                               <li>
-                                    <a href="editarDis.php">Listar </a>
-                                </li>
-				
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-						<li>
-                            <a href="#"><i class="fa fa-table fa-fw"></i>Relatórios<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                               <li>
-                                    <a href="falta">Alunos e notas</a>
-                                </li>
-								<li>
-                                    <a href="falta.php">Projetos </a>
-                                </li>
-								<li>
-                                    <a href="falta.php">Grupos do projeto</a>
-                                </li>
-								<li>
-                                    <a href="falta.php">Histórico dos projetos do aluno</a>
-                                </li>
-                            </ul>
-                            <!-- /.nav-second-level -->
-                        </li>
-						
+                       
+
                         <li>
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> Informações<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -163,11 +253,10 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        </li>
                         
                         
                     </ul>
-                              
+               
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
@@ -179,6 +268,7 @@
            </br>
             <!-- /.row -->
             <div class="row">
+            <div id="container"></div>
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -187,16 +277,15 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="">
-                                    <form method="post" action="inserirUsuario.php" name="frm2" role="form">
-                                        <div class="form-group col-lg-5">
+                                    <form method="post">
+                                        <div class="form-group col-lg-5" id="dNome">
                                             <label>Nome completo</label>
-                                            <input class="form-control" name="nome" id="nome" required="">
+                                            <input class="form-control" name="nome" id="nome">
                                             
                                         </div>
                                         <div class="form-group col-lg-1" >
                                             <label>Categoria</label>
                                             <select class="form-control selectpicker" name="categoria" id="categoria">
-                                                <option>--</option>
                                                 <option>G</option>
                                                 <option>P</option>
                                                 <option>C</option>
@@ -216,25 +305,23 @@
                                         <div class="clearfix"></div>
 
 
-                                        <div class="form-group col-lg-3">
+                                        <div class="form-group col-lg-3" id="dLogin">
                                             <label>Login</label>
                                             <input class="form-control" name="login" id="login" placeholder="Login">
                                         </div>
-                                        <div class="form-group col-lg-2">
+                                        <div class="form-group col-lg-2" id="dPass">
                                             <label>Senha</label>
                                             <input type="password" name="senha" id="senha" class="form-control" placeholder="Senha">
                                         </div>
-                                        <div class="form-group col-lg-2">
+                                        <div class="form-group col-lg-2" id="dPass2">
                                             <label>Confirmar senha</label>
                                             <input type="password" name="novaSenha" id="novaSenha" class="form-control" placeholder="Senha" oninput="validar(this)" >
                                         </div>
                                         </div>
                                          <div class="clearfix"></div>
 
-                                        <button type="submit" id="frm2" name="" class="btn btn-default">Gravar</button>
-                                     	<button type="reset" class="btn btn-default">Limpar</button>
-					<a href="editUser.php"><button class="btn btn-default">Cancelar</button>
-                                    
+                                        <button type="submit" class="btn btn-default">Gravar</button>
+                                        <button type="reset" class="btn btn-default">Cancelar</button>
 
                                                                             
                                     </form>
