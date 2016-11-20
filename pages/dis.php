@@ -28,7 +28,7 @@
                     <script type='text/javascript'>                                          
 
                         window.alert('Ja cadastrado!');
-                        window.location.href = 'dis.php'; 
+                        window.location.href = 'editarDis.php'; 
 
                                                                         
                         
@@ -52,7 +52,7 @@
                     <script type='text/javascript'>                                          
 
                         window.alert('Cadastro realizado!');
-                        window.location.href = 'dis.php'; 
+                        window.location.href = 'editarDis.php'; 
 
                                                                         
                         
@@ -120,9 +120,6 @@
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
-                <li>
-                    <a href="editarDis.php"><i class="fa fa-edit fa-fw"></i> Editar</a>
-                </li>
                     
                 <li>
                     <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -141,77 +138,62 @@
                         </li>
                           
                           <li>
-                            <a href="#"><i class="fa fa-user fa-fw"></i> Menu de cadastro<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> Aluno<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="conCadUser.php">Novo usuario</a>
+                                    <a href="listarAluno.php">Listar </a>
                                 </li>
-                                <li>
-                                    <a href="cadAluno.php">Novo Aluno</a>
-                                </li>
-                                <li>
-                                    <a href="#">Remover cadastro <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="editUser.php">Usuario</a>
-                                        </li>
-                                        <li>
-                                            <a href="removeAluno.php">Aluno</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-third-level -->
-                                </li>
+						
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
 
                          <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Menu de opções<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> Usuário<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                               <li>
-                                    <a href="cadCurso.php">Novo curso</a>
-                                </li>
-                                <li>
-                                    <a href="#">Nova Disciplina</a>
-                                </li>
-                                <li>
-                                    <a href="grupo.php">Novo Grupo</a>
-                                </li>
-                                <li>
-                                    <a href="modulo.php">Novo Modulo</a>
-                                </li>
-                                 <li>
-                                    <a href="projeto.php">Novo Projeto</a>
-                                </li>
-                                <li>
-                                    <a href="#">Remover cadastro <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="editUser.php">Usuario</a>
-                                        </li>
-                                        <li>
-                                            <a href="removeAluno.php">Aluno</a>
-                                        </li>
-                                        <li>
-                                            <a href="editarDis.php">Disciplina</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-third-level -->
+								<li>
+                                    <a href="editUser.php">Listar </a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                       
-
+						<li>
+                            <a href="#"><i class="fa fa-book fa-fw"></i>Curso<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                               <li>
+                                    <a href="editarCurso.php">Listar </a>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                       <li>
+                            <a href="#"><i class="fa fa-book fa-fw"></i>Disciplina<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                               <li>
+                                    <a href="editarDis.php">Listar </a>
+                                </li>
+				
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+						<li>
+                            <a href="#"><i class="fa fa-table fa-fw"></i>Relatórios<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                               <li>
+                                    <a href="falta">Alunos e notas</a>
+                                </li>
+								<li>
+                                    <a href="falta.php">Projetos </a>
+                                </li>
+								<li>
+                                    <a href="falta.php">Grupos do projeto</a>
+                                </li>
+								<li>
+                                    <a href="falta.php">Histórico dos projetos do aluno</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+						
                         <li>
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> Informações<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -219,15 +201,15 @@
                                     <a href="removeDis.php">Sobre o projeto</a>
                                 </li>
                                 <li>
-                                    <a href="#">Autores</a>
+                                    <a href="disc.php">Autores</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+                        </li>
                         
                         
                     </ul>
-
 
                 </div>
                 <!-- /.sidebar-collapse -->
@@ -250,7 +232,7 @@
                                     <form action="" method="post">
                                         <div class="form-group col-lg-5">
                                             <label>Nome </label>
-                                            <input type="text" name="txtDis" id="txtDis" class="form-control" required="" placeholder="Bando de dados" >
+                                            <input type="text" name="txtDis" id="txtDis" class="form-control" required="" placeholder="Banco de dados" >
                                             
                                         </div>
                                         <div class="form-group col-lg-3" >
@@ -268,8 +250,9 @@
                                          <div class="clearfix"></div>
                                          
                                          <div class="container">
-                                            <button type="submit" class="btn btn-default">Gravar</button>
-                                            <button type="reset" class="btn btn-default">Cancelar</button>
+                                         	<button type="submit" class="btn btn-default">Gravar</button>
+                                        	<button type="reset" class="btn btn-default">Limpar</button>
+						<button type="reset" class="btn btn-default" onClick="history.go(-1)">Cancelar</button>  
                                     
                                          </div>
 

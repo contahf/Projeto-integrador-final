@@ -157,29 +157,67 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                       
-                               <li>
+                        <li>
                             <a href="index.php"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
                           
-                         <li>
+                          <li>
                             <a href="#"><i class="fa fa-user fa-fw"></i> Aluno<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-								<li>
-                                    <a href="confMatricula.php">Alterar </a>
+                                <li>
+                                    <a href="listarAluno.php">Listar </a>
                                 </li>
-								<li>
-                                    <a href="confMatricula.php">Consultar </a>
-                                </li>
-								<li>
-                                    <a href="removeAluno.php">Excluir </a>
-                                </li>
-								
+						
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
 
-                        
-
+                         <li>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> Usuário<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+								<li>
+                                    <a href="editUser.php">Listar </a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+						<li>
+                            <a href="#"><i class="fa fa-book fa-fw"></i>Curso<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                               <li>
+                                    <a href="editarCurso.php">Listar </a>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                       <li>
+                            <a href="#"><i class="fa fa-book fa-fw"></i>Disciplina<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                               <li>
+                                    <a href="editarDis.php">Listar </a>
+                                </li>
+				
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+						<li>
+                            <a href="#"><i class="fa fa-table fa-fw"></i>Relatórios<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                               <li>
+                                    <a href="falta">Alunos e notas</a>
+                                </li>
+								<li>
+                                    <a href="falta.php">Projetos </a>
+                                </li>
+								<li>
+                                    <a href="falta.php">Grupos do projeto</a>
+                                </li>
+								<li>
+                                    <a href="falta.php">Histórico dos projetos do aluno</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+						
                         <li>
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> Informações<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -192,9 +230,7 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                        
-                        
-                    </ul>
+                        </li>
                         
                         
                     </ul>
@@ -290,7 +326,8 @@
                                          
                                          <div class="container">
                                             <button type="submit" class="btn btn-default">Gravar</button>
-                                            <button type="reset" class="btn btn-default">Cancelar</button>
+                                            <button type="reset" class="btn btn-default">Limpar</button>
+					    <a href="listarAluno.php"><button class="btn btn-default">Cancelar</button>
                                     
                                          </div>
                                                                             

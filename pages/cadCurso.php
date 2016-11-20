@@ -142,9 +142,6 @@
             <ul class="nav navbar-top-links navbar-right">
                
                     <li>
-                        <a href="editarCurso.php"><i class="fa fa-edit fa-fw"></i> Editar</a>
-                    </li>
-                    <li>
                         <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </li>
                 <!-- /.dropdown -->
@@ -154,84 +151,69 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                    
-                 <ul class="nav" id="side-menu">
+<ul class="nav" id="side-menu">
                       
                         <li>
                             <a href="index.php"><i class="fa fa-home fa-fw"></i> Home</a>
                         </li>
                           
                           <li>
-                            <a href="#"><i class="fa fa-user fa-fw"></i> Menu de cadastro<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> Aluno<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="conCadUser.php">Novo usuario</a>
+                                    <a href="listarAluno.php">Listar </a>
                                 </li>
-                                <li>
-                                    <a href="cadAluno.php">Novo Aluno</a>
-                                </li>
-                                <li>
-                                    <a href="#">Remover cadastro <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="editUser.php">Usuario</a>
-                                        </li>
-                                        <li>
-                                            <a href="removeAluno.php">Aluno</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-third-level -->
-                                </li>
+						
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
 
                          <li>
-                            <a href="#"><i class="fa fa-wrench fa-fw"></i> Menu de opções<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-user fa-fw"></i> Usuário<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
-                               <li>
-                                    <a href="#">Novo curso</a>
-                                </li>
-                                <li>
-                                    <a href="dis.php">Nova Disciplina</a>
-                                </li>
-                                <li>
-                                    <a href="grupo.php">Novo Grupo</a>
-                                </li>
-                                <li>
-                                    <a href="modulo.php">Novo Modulo</a>
-                                </li>
-                                 <li>
-                                    <a href="projeto.php">Novo Projeto</a>
-                                </li>
-                                <li>
-                                    <a href="#">Remover cadastro <span class="fa arrow"></span></a>
-                                    <ul class="nav nav-third-level">
-                                        <li>
-                                            <a href="editUser.php">Usuario</a>
-                                        </li>
-                                        <li>
-                                            <a href="removeAluno.php">Aluno</a>
-                                        </li>
-                                        <li>
-                                            <a href="editarDis.php">Disciplina</a>
-                                        </li>
-                                        <li>
-                                            <a href="#">Third Level Item</a>
-                                        </li>
-                                    </ul>
-                                    <!-- /.nav-third-level -->
+								<li>
+                                    <a href="editUser.php">Listar </a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                       
-
+						<li>
+                            <a href="#"><i class="fa fa-book fa-fw"></i>Curso<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                               <li>
+                                    <a href="editarCurso.php">Listar </a>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+                       <li>
+                            <a href="#"><i class="fa fa-book fa-fw"></i>Disciplina<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                               <li>
+                                    <a href="editarDis.php">Listar </a>
+                                </li>
+				
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+						<li>
+                            <a href="#"><i class="fa fa-table fa-fw"></i>Relatórios<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                               <li>
+                                    <a href="falta">Alunos e notas</a>
+                                </li>
+								<li>
+                                    <a href="falta.php">Projetos </a>
+                                </li>
+								<li>
+                                    <a href="falta.php">Grupos do projeto</a>
+                                </li>
+								<li>
+                                    <a href="falta.php">Histórico dos projetos do aluno</a>
+                                </li>
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+						
                         <li>
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> Informações<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -243,6 +225,7 @@
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
+                        </li>
                         </li>
                         
                         
@@ -272,7 +255,7 @@
                                     <form method="POST" action="" role="form" id="frmCurso">
                                         <div class="form-group col-lg-5">
                                             <label>Nome curso</label>
-                                            <input class="form-control" placeholder="Seguraça da Informação" name="txtCurso" id="txtCurso">
+                                            <input class="form-control" placeholder="Segurança da Informação" name="txtCurso" id="txtCurso">
                                             
                                         </div>
                 
@@ -291,7 +274,8 @@
                                          <div class="clearfix"></div>
 
                                         <button type="submit" class="btn btn-default">Gravar</button>
-                                        <button type="reset" class="btn btn-default">Cancelar</button>
+                                        <button type="reset" class="btn btn-default">Limpar</button>
+					<button type="reset" class="btn btn-default" onClick="history.go(-1)">Cancelar</button>  
 
                                                                             
                                     </form>

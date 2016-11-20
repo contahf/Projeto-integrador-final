@@ -69,7 +69,9 @@ session_start();
 
             <ul class="nav navbar-top-links navbar-right">
                
-                    
+                    <li>
+                    	<a href="dis.php"><i class="fa fa-plus fa-fw"></i> Nova Disciplina</a>
+                    </li>                  
                     <li>
                         <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </li>

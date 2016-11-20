@@ -55,7 +55,7 @@ session_start();
     
 
     function acaoExcluir(login){
-        if(window.confirm('Deseja excluir o Aluno?')){
+        if(window.confirm('Deseja excluir o Usuário?')){
             dado = 'l=' + login;
             $.get('removeUser.php', dado, tratarExclusao)
             .fail( function(){
@@ -108,7 +108,9 @@ session_start();
 
             <ul class="nav navbar-top-links navbar-right">
                 <ul class="nav navbar-top-links navbar-right">
-            
+            	    <li>
+                    	<a href="cadUser.php"><i class="fa fa-plus fa-fw"></i> Novo Usuário</a>
+                    </li>
                     <li>
                         <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                     </li>
@@ -294,7 +296,6 @@ session_start();
                         </div>
                         <!-- /.panel-body -->
                     </div>
-                     <a href="cadUser.php"><button type="button" class="btn btn-link">Novo Usuário</button></a>
                     <!-- /.panel -->
                 </div>
    

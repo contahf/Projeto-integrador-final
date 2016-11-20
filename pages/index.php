@@ -173,7 +173,7 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-user fa-5x"></i>
+                                    <i class="fa fa-user fa-4x"></i>
                                 </div>
                                 
                                   <div class="col-xs-9 text-center">
@@ -197,7 +197,7 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-edit fa-5x"></i>
+                                    <i class="fa fa-users fa-4x"></i>
                                 </div>
                                 <div class="col-xs-9 text-center">
                                     <div class="h3">Usuário</div>
@@ -218,7 +218,7 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-users fa-5x"></i>
+                                    <i class="fa fa-book fa-4x"></i>
                                 </div>
                                 <div class="col-xs-9 text-center">
                                     <div class="h3">Curso</div>
@@ -239,7 +239,7 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-xs-3">
-                                    <i class="fa fa-times fa-4x"></i>
+                                    <i class="fa fa-edit fa-4x"></i>
                                 </div>
                                 <div class="col-xs-9 text-center">
                                     <div class="h3">Disciplina</div>
