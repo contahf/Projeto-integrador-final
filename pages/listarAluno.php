@@ -148,11 +148,14 @@ session_start();
 
                      var alerta = '<div class="alert alert-success fade in">' + 
                             '<a href="listarAluno.php" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
-                            '<strong>Success!</strong> Cadastrado com sucesso!' + 
+                            '<strong></strong> Atualizado com sucesso!' + 
                             '</div>'
 
                           
-                          $('#foot').before(alerta); 
+                          $('#foot').before(alerta);
+                          $( "input[type=text]" ).focus(function() {
+  $( this ).focus();
+});
                     
                 }
 
@@ -160,7 +163,7 @@ session_start();
 
                     var alerta = '<div class="alert alert-danger fade in">' + 
                             '<a href="listarAluno.php" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
-                            '<strong>Falhou!</strong> Falha ao atualizar o  cadastro!' + 
+                            '<strong></strong> Falha ao atualizar o  cadastro!' + 
                             '</div>'
                           
                           $('#foot').before(alerta);
@@ -372,7 +375,7 @@ session_start();
             </div>
             <div class="clearfix"></div>
                 <div id="foot" class="modal-footer">
-                    <a href="listarAluno.php"  ><button type="button" class="btn btn-default" data-dismiss="">Voltar</button></a>    
+                    <a href="listarAluno.php"  ><button type="button" class="btn btn-default" id="vol" data-dismiss="">Voltar</button></a>    
                     <button type="submit" class="btn btn-primary">Salvar</button>
                 </div>
             </div>
