@@ -143,7 +143,7 @@ session_start();
 
             .done(function(data){
                 
-                if(data == true){
+                if(data.success == "true"){
                      
 
                      var alerta = '<div class="alert alert-success fade in">' + 
@@ -151,10 +151,12 @@ session_start();
                             '<strong>Success!</strong> Cadastrado com sucesso!' + 
                             '</div>'
 
-                          $('#fNome').addClass("has-success")
+                          
                           $('#foot').before(alerta); 
                     
-                }else{
+                }
+
+                if(data.success == "false"){
 
                     var alerta = '<div class="alert alert-danger fade in">' + 
                             '<a href="listarAluno.php" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
@@ -164,7 +166,15 @@ session_start();
                           $('#foot').before(alerta);
 
                 }
-                
+
+                if(data.n == "10") {
+
+                    $('#fNome').addClass('has-error')
+                }
+                if(data.cid == "14") {
+
+                    $('#fCidade').addClass('has-error')
+                }
 
 
             }) 
@@ -285,7 +295,7 @@ session_start();
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+       <!-- <a href="listarAluno.php"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button></a> --> 
         <h4 class="modal-title" id="exampleModalLabel">Atualize seus dados</h4>
       </div>
       <div class="modal-body">
@@ -314,9 +324,9 @@ session_start();
                     </label>
             </div>
             <div class="clearfix"></div>
-            <div class="form-group col-lg-3" >
+            <div class="form-group col-lg-3" id="fCidade">
                 <label>Cidade</label>
-                <input type="numeric" class="form-control" name="txtCidade" id="txtCidade" required="">
+                <input type="numeric" class="form-control" name="txtCidade" id="txtCidade" >
                                             
             </div>
                                        
