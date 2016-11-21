@@ -1,12 +1,14 @@
 
 <?php
-	
+    
     session_start();
 
     $ret = "";
 
-    $login = $_POST['login'];
-    $senha = $_POST['senha'];
+    $login = addslashes($_POST['login']);
+    $aux = addslashes($_POST['senha']);
+
+    $senha = md5($aux);
 
         if(isset($login) && !empty($login) && isset($senha) && !empty($senha)) {
 
@@ -59,7 +61,6 @@
 echo (json_encode($ret));                     
         
 ?>
-
 
 
 
