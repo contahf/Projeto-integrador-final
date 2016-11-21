@@ -62,7 +62,7 @@
                 $.ajax({
                     type        : 'POST', 
                     url         : 'aluno.php',  
-                    data        :  $('form').serialize(), 
+                    data        :  $('frm-Aluno').serialize(), 
                     dataType    : 'json', 
                     encode      : true
                     
@@ -72,9 +72,9 @@
        
                 .done(function(data) {
             
-                    if (data != $("#txtMat").val()) {
+                    if (data.success != $("#txtMat").val()) {
                             
-                        if(data == "-1"){
+                        if(data.existe == "-1"){
                             
                             $('form').each (function(){
                                 this.reset();
@@ -85,11 +85,6 @@
                                 '<strong>Warning!</strong> Já cadastrado!' + 
                               '</div>'
                             $('#container').empty().append(alerta);
-
-                          
-
-                            
-                        
                         }
                         
                         if(data == "-2"){
@@ -100,7 +95,30 @@
                               '</div>'
                             $('#container').empty().append(alerta);  
                         }
-                                                
+                        
+                        if (data.n == "10") {
+                            
+                            $('#fNome').addClass("has-error")
+                        }
+                         
+                        if (data.nas == "12") {
+                            
+                            $('#fData').addClass("has-error")
+                            
+                        }
+
+                        if (data.cid == "14") {
+                            
+                            $('#fCidade').addClass("has-error")
+                            
+                        }
+
+                        if (data.mat == "11") {
+                            
+                            $('#fMat').addClass("has-error")
+                            
+                        }
+
                     } else {
                         
                         $('form').each (function(){
@@ -148,7 +166,7 @@
               
                 <li class="dropdown">
                
-                <li><a href="../../Projeto-integrador-final/projFinal/out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                <li><a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
 
             </ul>
             <!-- /.navbar-top-links -->
@@ -253,15 +271,15 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div class="">
-                                    <form action="aluno.php" method="post">
-                                        <div class="form-group col-lg-5">
+                                    <form action="aluno.php" method="post" id="frm-Aluno">
+                                        <div class="form-group col-lg-5" id="fNome">
                                             <label>Nome </label>
                                             <input class="form-control" name="txtNome" id="txtNome" >
                                             
                                         </div>
-                                        <div class="form-group col-lg-3" >
+                                        <div class="form-group col-lg-3" id="fData">
                                             <label>Data de nasc.</label>
-                                            <input type="date" name="txtNasc" class="form-control" id="txtNasc" required="">
+                                            <input type="date" name="txtNasc" value="" class="form-control" id="txtNasc" >
                                             
                                         </div>
                                         <div class="form-group col-lg-2" >
@@ -274,16 +292,15 @@
                                             </label>
                                         </div>
                                         <div class="clearfix"></div>
-                                         <div class="form-group col-lg-2" >
+                                         <div class="form-group col-lg-2" id="fCidade">
                                             <label>Cidade</label>
-                                            <input type="numeric" class="form-control" name="txtCidade" id="txtCidade" required="">
+                                            <input type="numeric" class="form-control" name="txtCidade" id="txtCidade" >
                                             
                                         </div>
                                        
-                                        <div class="form-group col-lg-1" >
+                                        <div class="form-group col-lg-1" id="fEstado">
                                             <label for="estado">UF:</label>
                                             <select class="form-control selectpicker" name="estado" id="txtEstado" id="estado">
-                                                <option value="">--</option>
                                                 <option value="AC">AC</option>
                                                 <option value="AL">AL</option>
                                                 <option value="AP">AP</option>
@@ -315,7 +332,7 @@
                                             
                                         </div>
                                         <div class="clearfix"></div>
-                                                    <div class="form-group col-lg-3">
+                                        <div class="form-group col-lg-3" id="fMat">
                                             <label>Matricula</label>
                                             <input type="text" name="txtMat" id="txtMat" class="form-control" minlength="15">
                                             
@@ -327,7 +344,7 @@
                                          <div class="container">
                                             <button type="submit" class="btn btn-default">Gravar</button>
                                             <button type="reset" class="btn btn-default">Limpar</button>
-					    <a href="listarAluno.php"><button class="btn btn-default">Cancelar</button>
+					                        <a href="listarAluno.php"><button type="button" class="btn btn-link">Cancelar</button></a>
                                     
                                          </div>
                                                                             
