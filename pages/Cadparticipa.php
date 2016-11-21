@@ -1,27 +1,3 @@
-<?php  
-  session_start();
-
-    if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
-    {
-        unset($_SESSION['login']);
-        unset($_SESSION['senha']);
-        session_destroy();
-        header('location:../index.html');
-    }
-
-    if ($_SESSION['tipo'] !='C') {
-         header('location:index.php');
-    }
-
-    $n =  $_GET['nome'];
-    $c = $_GET['ch'];
-    $cod =  $_GET['codigo'];
-    
-
-
- 
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -46,42 +22,37 @@
 
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+      
 
+        
 </head>
 
 <body>
 
     <div id="wrapper">
 
-       <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <!-- Navigation -->
+        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
             <div class="navbar-header">
                 
-                <a class="navbar-brand" href="index.html">T.I Resolve</a>
+                <a class="navbar-brand" href="#">TI resolve</a>
             </div>
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-right">
+              
+                <li class="dropdown">
                
-                    
-                    <li>
-                        <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                    </li>
-                <!-- /.dropdown -->
+                <li><a href="../../Projeto-integrador-final/projFinal/out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+
             </ul>
             <!-- /.navbar-top-links -->
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
-                   
-  		<?php   include "principal.html"; ?>
-                  
+                    <?php   include "principal.html"; ?>
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
@@ -92,48 +63,105 @@
            
             <br>
             <div class="row">
+            <div id="container"></div>
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            Dados da disciplina
+                            Dados do Grupo:
                         </div>
                         <div class="panel-body">
                             <div class="row">
                                 <div class="">
-                                    <form action="updateDis.php" method="post">
-                                        <div class="form-group col-lg-5">
-                                            <label>Nome </label>
-                                            <input type="text" name="txtDis" id="txtDis" class="form-control" required="" placeholder="Bando de dados" value="<?php echo $n; ?>" >
-                                            
-                                        </div>
-                                        <div class="form-group col-lg-3" >
-                                            <label>Ch</label>
-                                            <input type="numeric" placeholder="90" class="form-control" name="txtCh" required="" value="<?php echo $c; ?>" >
-                                            
-                                        </div>
-                                        <div class="form-group col-lg-3" >
-                                            <label>Codigo</label>
-                                            <input type="numeric" class="form-control" placeholder="1212" name="txtCod" value="<?php echo $cod; ?>" required="">
-                                            
-                                        </div>
+                                    <form action="participa.php" method="get">
+<div class="form-group col-lg-5" >
+
+						<label>ID do grupo </label> <br>
+						<select name="txtID">
+						<option value=""></option>
 
 
-                                         <div class="clearfix"></div>
+
+					       <?php
+						$strCon = "host=localhost dbname=projetointegrador user=senac password=senac123";
+						$con = pg_connect($strCon);
+
+						if($con){
+							$sql = "SELECT * from grupo";
+							$result = pg_query($con, $sql);
+							$linhas = pg_num_rows($result); 
+							for($i=0; $i<$linhas; $i++){  
+								$dados = pg_fetch_row($result); 
+								?>  
+								<option name="ativo" value="<?php echo $dados[0]; ?>" /><?php echo $dados[1]; ?>
+								<?php
+							}
+
+
+						}else{	
+							echo "Conexao falhou!";
+						}
+						pg_close($con);
+
+
+						?>
+                                    
+						</select>
+
+
+                                            
+                                        </div>
+                                        
+                                       <div class="form-group col-lg-5" >
+
+						<label>Selecione um aluno </label> <br>
+						<select name="matricula">
+						<option value=""></option>
+
+
+
+					       <?php
+						$strCon = "host=localhost dbname=projetointegrador user=senac password=senac123";
+						$con = pg_connect($strCon);
+
+						if($con){
+							$sql = "SELECT * from aluno";
+							$result = pg_query($con, $sql);
+							$linhas = pg_num_rows($result); 
+							for($i=0; $i<$linhas; $i++){  
+								$dados = pg_fetch_row($result); 
+								?>  
+								<option name="ativo" value="<?php echo $dados[0]; ?>" /><?php echo $dados[1]; ?>
+								<?php
+							}
+
+
+						}else{	
+							echo "Conexao falhou!";
+						}
+						pg_close($con);
+
+
+						?>
+                                    
+						</select>
+
+
+                                            
+                                        </div>
+					
+                          <div class="clearfix"></div>
                                          
                                          <div class="container">
                                             <button type="submit" class="btn btn-default">Gravar</button>
-				            <button type="reset" class="btn btn-default" onClick="history.go(-1)">Cancelar</button> 
+                                            <button type="reset" class="btn btn-default">Limpar</button>
+					    <a href="listarAluno.php"><button class="btn btn-default">Cancelar</button>
                                     
                                          </div>
-
-                                        
-
                                                                             
                                     </form>
+
                                 </div>
-                                <!-- /.col-lg-6 (nested) -->
-                           
-                                <!-- /.col-lg-6 (nested) -->
+                               
                             </div>
                             <!-- /.row (nested) -->
                         </div>
@@ -165,3 +193,7 @@
 </body>
 
 </html>
+
+
+
+
