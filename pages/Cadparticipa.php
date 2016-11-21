@@ -73,9 +73,9 @@
                             <div class="row">
                                 <div class="">
                                     <form action="participa.php" method="get">
-<div class="form-group col-lg-5" >
+<div class="form-group col-lg-2" >
 
-						<label>ID do grupo </label> <br>
+						<label>Nome do grupo </label> <br>
 						<select name="txtID">
 						<option value=""></option>
 
@@ -111,7 +111,7 @@
                                             
                                         </div>
                                         
-                                       <div class="form-group col-lg-5" >
+                                       <div class="form-group col-lg-3" >
 
 						<label>Selecione um aluno </label> <br>
 						<select name="matricula">
@@ -154,7 +154,7 @@
                                          <div class="container">
                                             <button type="submit" class="btn btn-default">Gravar</button>
                                             <button type="reset" class="btn btn-default">Limpar</button>
-					    <a href="listarAluno.php"><button class="btn btn-default">Cancelar</button>
+					    <a href="index.php"><button type="reset" class="btn btn-default">Cancelar</button></a>
                                     
                                          </div>
                                                                             

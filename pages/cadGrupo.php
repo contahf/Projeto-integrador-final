@@ -125,7 +125,7 @@
                                          <div class="container">
                                             <button type="submit" class="btn btn-default">Gravar</button>
                                             <button type="reset" class="btn btn-default">Limpar</button>
-					    <a href="listarAluno.php"><button class="btn btn-default">Cancelar</button>
+					    <a href="index.php"><button class="btn btn-default">Cancelar</button>
                                     
                                          </div>
                                                                             

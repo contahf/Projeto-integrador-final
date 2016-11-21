@@ -13,14 +13,13 @@ if($con){
 
 		$sql = "UPDATE participa SET nota = " . $_GET['txtNota'] . " where  matricula = '". $_GET['matricula'] ."'";
 		$result = pg_query($con, $sql);
-		echo "$sql";
 		if(pg_affected_rows($result) > 0){
 		
 			echo "
 	
         	        <script type='text/javascript'>                                          
 
-                        window.alert('Aluno cadastrado no grupo com sucesso!');
+                        window.alert('Nota cadastrada com sucesso!');
                         window.location.href = 'cadNota.php'; 
 
                                                                         

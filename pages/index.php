@@ -113,7 +113,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                        <li>
-                            <a href="#"><i class="fa fa-book fa-fw"></i>Disciplina<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-edit fa-fw"></i>Disciplina<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                <li>
                                     <a href="editarDis.php">Listar </a>
@@ -122,7 +122,30 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-						<li>
+			<li>
+                            <a href="#"><i class="fa fa-users fa-fw"></i>Grupo<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                               <li>
+                                    <a href="cadGrupo.php">Cadastrar grupo </a>
+                                </li>
+				<li>
+                                    <a href="Cadparticipa.php">Vincular aluno ao grupo </a>
+                                </li>
+				
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+			<li>
+                            <a href="#"><i class="fa fa-book fa-fw"></i>Notas<span class="fa arrow"></span></a>
+                            <ul class="nav nav-second-level">
+                               <li>
+                                    <a href="cadNota.php">Cadastrar nota aluno </a>
+                                </li>
+				
+                            </ul>
+                            <!-- /.nav-second-level -->
+                        </li>
+			<li>
                             <a href="#"><i class="fa fa-table fa-fw"></i>Relatórios<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                <li>
