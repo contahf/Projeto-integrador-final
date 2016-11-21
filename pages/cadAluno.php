@@ -62,7 +62,7 @@
                 $.ajax({
                     type        : 'POST', 
                     url         : 'aluno.php',  
-                    data        :  $('frm-Aluno').serialize(), 
+                    data        :  $('form').serialize(), 
                     dataType    : 'json', 
                     encode      : true
                     
@@ -121,7 +121,7 @@
 
                     } else {
                         
-                        $('form').each (function(){
+                        $('#frm-Aluno').each (function(){
                             this.reset();
                         });
  
