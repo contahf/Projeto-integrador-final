@@ -1,6 +1,5 @@
 <?php 
   
-
     session_start();
 
     if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
@@ -11,49 +10,81 @@
         header('location:../index.html');
     }
 
-     $Nome= $_POST["txtDis"];
-     $carga = $_POST['txtCh'];
-     $codigo = $_POST['txtCod'];
-    
-  
-    $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
-
-    $con = pg_connect($strCon);
+    $data = array();
     
 
-    if ($con) {
-                 
-    $sql = "UPDATE disciplina SET nome = '". $Nome ."', ch = '" . $carga . "' WHERE codigo = '" . $codigo . "';";
+    require_once 'conect.php';
+
+    $cod = $_POST['txtCod'];
+    $codId = $_POST['txtCodigo'];
+
+
+    if (isset($cod) && !empty($cod)) {
+
+        $nome = $_POST['txtNome'];
+        $carga = $_POST['txtCarga'];
+
+        if (empty($nome)) {
+            
+            $data['n'] = "-10"; 
+        }
+
+        if (empty($carga)) {
+            
+            $data['carga'] = "-11"; 
+        }
+
+        if(!empty($data)){
+
+            $arr = json_encode($data);
+        
+        }else{
+
+            $sql = "UPDATE disciplina SET nome = '". $nome ."', ch = '" . $carga . "' WHERE codigo = '" . $cod . "';";
    
+            $resultado = pg_query($sql);
+           
+            $teste = pg_affected_rows($resultado); 
 
+            if( $teste > 0){    
+                $arr = json_encode("ok");
+
+            }else{
+
+                $arr = json_encode("-1");
+            }
+
+
+        }
+       
     
-    $resultado = pg_query($sql);
-   
-    $teste = pg_affected_rows($resultado); 
+    }else {
 
-    if( $teste > 0){    
-                   
-         echo "
+        if (!empty($_POST['txtCodigo'])) {
+            
+            $sql = "SELECT * FROM disciplina WHERE codigo = '".$_POST['txtCodigo']."'";
 
-                    <script type='text/javascript'>                                          
+            $result = pg_query($sql);
 
-                        window.alert('Disciplina editada com sucesso!');
-                        window.location.href = 'editarDis.php'; 
-
-                                                                        
-                        
-                    </script>
-
-
-               ";
-                pg_close($con);
+             if (pg_num_rows($result) > 0) {
                 
+                $data = pg_fetch_assoc($result); 
+                $arr = json_encode($data);
+                $_POST['txtCodigo'] = "";
+            
+            }else{
 
-    }else{
+                $arr = json_encode("-2");
+            
+            }
 
-        echo "faiô";
+        }
+
+
+
     }
-}
+
+    echo $arr;
 
 
 ?>
