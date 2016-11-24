@@ -1,37 +1,64 @@
 
 <?php 
- 
-    $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
+    
+    session_start();
 
-    $con = pg_connect($strCon);
+        if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
+        {
+            unset($_SESSION['login']);
+            unset($_SESSION['senha']);
+            session_destroy();
+            header('location:../index.html');
+    }
     
 
-    if ($con) {
+    $tema= $_POST['txtTema'];
+    $desc = $_POST['txtDesc'];
+    $ano = $_POST['txtAno'];
+    $semestre = $_POST["txtSem"];
+    $mod = $_POST['txtMod'];
+    $curso = $_POST['curso'];
+    $data1 = $_POST['txtDtIni'];
+    $data2 = $_POST['txtDtFim'];
 
 
-        $tema= $_POST['txtTema'];
-        $desc = $_POST['txtDesc'];
-        $ano = $_POST['txtAno'];
-        $semestre = $_POST["txtSem"];
-        $mod = $_POST['txtMod'];
-        $curso = $_POST['txtNum'];
-        $data1 = $_POST['txtDtIni'];
-        $data2 = $_POST['txtDtFim'];
+    $errors = array();
+    $data = array();
 
-        if(strtotime($data1) > strtotime($data2)){
-               header("location:errorData.php"); 
-        }
+    if(strtotime($data1) > strtotime($data2)){
+       
+        $errors['d'] = '10';
+    
+    }
 
-      
+    if (empty($ano)){
+        $errors['a'] = '11';
+    }
+
+    if (empty($semestre)){
         
-        $sql = "select c.nome from curso c where  c.numero = '". $curso ."'";
+        $errors['s'] = '12';
+    }
 
-        $consulta = pg_query($con, $sql);
- 
-        $linhas = pg_num_rows($consulta);
+    if (empty($data1)){
 
-        if($linhas > 0 ){
-            $sql="";
+        $errors['d1'] = '13';
+    }
+
+    if (empty($data2)){
+
+        $errors['d2'] = '14';
+    }
+
+    if (!empty($errors)) {
+    
+        $b = $errors;
+        
+    }else{
+
+        require_once 'conect.php';
+
+            
             $sql = "INSERT INTO projeto (ano, semestre, modulo, dt_inicio, dt_termino, tema, descricao, num_curso) VALUES ('".$ano."', '".$semestre."', '".$mod."','".$data1."','".$data2."', '".$tema."' , '".$desc."' , '".$curso."');";
            
            
@@ -40,41 +67,20 @@
             $qtd_linhas = pg_affected_rows($res);
 
             if ($qtd_linhas > 0){
-               echo "
-
-                    <script type='text/javascript'>                                          
-
-                        window.alert('Cadastro realizado!');
-                        window.location.href = 'composto.php'; 
-
-                                                                        
-                        
-                    </script>
-
-
-               ";
-               pg_close($con);
+               
+               $data['success'] = "ok"; 
+               $b = $data;
         
             }else{
-                echo "falhou";
-                 echo $sql;
-
+                
+                $data['erros'] = "15";
+                $b = $data; 
+                 
             }
 
-            
-         
-         }else{
-            echo var_dump($curso);
-            die("erro");
-            //header("location:errorCurso.php");
-
-         }
-
-                
-
-    }else{
-         die("Impossivel conectar!");
     }
+
+    echo json_encode($b);
     pg_close($con);
 
 ?>
