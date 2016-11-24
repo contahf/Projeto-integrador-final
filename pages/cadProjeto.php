@@ -1,3 +1,17 @@
+<?php  
+
+    session_start();
+
+    if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
+    {
+        unset($_SESSION['login']);
+        unset($_SESSION['senha']);
+        session_destroy();
+        header('location:../index.html');
+    }
+    
+    
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,6 +40,7 @@
 
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
 
      <script type="text/javascript">
@@ -55,34 +70,124 @@
                                                          
             
         var cursos = { <?php
-            $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
+            
+            require_once 'conect.php';
 
-            $con = pg_connect($strCon);
-    
-
-            if ($con) {
-
-                $sql = "SELECT * from curso ORDER by numero";
-                $consulta = pg_query($con, $sql);
+            $sql = "SELECT * from curso ORDER by numero";
+            $consulta = pg_query($con, $sql);
         
-                $linhas = pg_num_rows($consulta); 
+            $linhas = pg_num_rows($consulta); 
                                 
-                for($i=0; $i<$linhas; $i++){  
-                    $dados = pg_fetch_row($consulta);       
-                    echo $i . ":'" . $dados[1] ."',";
+            for($i=0; $i<$linhas; $i++){  
+                $dados = pg_fetch_row($consulta);       
+                echo $i . ":'" . $dados[0] ."',";
 
-                }                                  
-            }
+            }                                  
+            
             ?> null:'' }
 
 
         var fillCurso = function(sel) {
             if(sel.selectedIndex >= 0) {
-                document.getElementById('proj').value = cursos[ sel.selectedIndex ]
+                document.getElementById('curso').value = cursos[ sel.selectedIndex ]
             }
 
 
         }
+
+
+        $(document).ready(function() {
+    
+             $('form').submit(function(event) {
+
+                event.preventDefault();
+
+       
+                $.ajax({
+                    type        : 'POST', 
+                    url         : 'p.php',  
+                    data        :  $('form').serialize(), 
+                    dataType    : 'json', 
+                    encode      : true
+                    
+                })
+
+                
+       
+                .done(function(data) {
+                    
+                    if (data.d == "10") {
+                         var alerta = '<div class="alert alert-warning fade in">' + 
+                            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                            '<strong>Datas não conferem!</strong>!' + 
+                            '</div>'
+                          $('#container').empty().append(alerta);
+                    }
+                    if(data.a == "11"){
+
+                        $('#an').addClass("has-error")
+
+                    }
+                    if (data.s == "12") {
+
+                        $('#semestre').addClass("has-error")
+                    }
+
+                    if (data.d1 == "13") {
+
+                        $('#dIni').addClass("has-error")
+                    }
+                    if (data.d2 == "14") {
+
+                        $('#dFim').addClass("has-error")
+                    }
+
+                    if(data.success == "ok"){
+
+                        var alerta = '<div class="alert alert-success fade in">' + 
+                            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                            '<strong>Success!</strong> Cadastrado com sucesso!' + 
+                            '</div>'
+                          $('#container').empty().append(alerta); 
+                    }
+
+                    if(data.erros == "15"){
+
+                        var alerta = '<div class="alert alert-danger fade in">' + 
+                            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                            '<strong>Falhou!</strong>!' + 
+                            '</div>'
+                          $('#container').empty().append(alerta); 
+                    }
+
+                    if(data.erros == "16"){
+
+                        var alerta = '<div class="alert alert-danger fade in">' + 
+                            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                            '<strong>Erro fatal!</strong>!' + 
+                            '</div>'
+                          $('#container').empty().append(alerta); 
+                    }
+                    
+                
+
+
+                })
+
+                .fail(function(){
+                    console.log(); 
+                });
+   
+    });
+
+});
+
+
+
+
+
+
+
     </script>
 
 </head>
@@ -121,6 +226,7 @@
         <div id="page-wrapper">
         <br>
             <div class="row">
+            <div id="container"></div>
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -145,25 +251,25 @@
                                     <div class="tab-pane fade in active" id="home">
                                         <h4>Tema</h4>
                                         <div class="form-group col-lg-6">
-                                            <textarea class="form-control" rows="1" placeholder="No maximo 100 caracteres" name="txtTema" id="txtTema" OnKeyUp="return verificachars()" required="" ></textarea>
+                                            <textarea class="form-control" rows="1" placeholder="No maximo 100 caracteres" name="txtTema" id="txtTema" OnKeyUp="return verificachars()" ></textarea>
                                         </div>
                                         <div class="clearfix"></div>
                                         <h4>Descrição</h4>
                                         <div class="form-group col-lg-6">
-                                            <textarea class="form-control" rows="3" name="txtDesc" id="txtDesc" required=""></textarea>
+                                            <textarea class="form-control" rows="3" name="txtDesc" id="txtDesc"></textarea>
                                         </div>
                                     </div>
                                     
                                     <div class="tab-pane fade" id="profile">
                                     <br>
-                                        <div class="form-group col-lg-2">
+                                        <div class="form-group col-lg-2" id="an">
                                             <label>Ano</label>
-                                            <input type="number" class="form-control" required="" max="2050" name="txtAno">
+                                            <input type="number" class="form-control" max="2050" name="txtAno">
                                                 
                                         </div>
-                                        <div class="form-group col-lg-2">
+                                        <div class="form-group col-lg-2" id="semestre">
                                             <label>Semestre</label>
-                                            <input type="number" class="form-control" required="" name="txtSem" min="1" max="2">
+                                            <input type="number" class="form-control" name="txtSem" min="1" max="2">
                                                 
                                         </div>
                                         <div class="form-group col-lg-2" >
@@ -177,46 +283,42 @@
                                             </select>
                                         </div>
                                           <div class="form-group col-lg-3" >
-                                            <label>Num. Curso</label>
+                                            <label>Curso</label>
                                             <select class="form-control selectpicker" id="txtNum" name="txtNum" onchange="fillCurso(this)">
-        <?php 
+<?php 
 
-            $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
-
-            $con = pg_connect($strCon);
+    require_once 'conect.php';
     
-
-            if ($con) {
-
-                $sql = "SELECT * from curso ORDER by numero";
-                $consulta = pg_query($con, $sql);
+        $sql = "SELECT * from curso ORDER by numero";
+        $consulta = pg_query($con, $sql);
         
-                $linhas = pg_num_rows($consulta); 
+        $linhas = pg_num_rows($consulta); 
                                 
-                for($i=0; $i<$linhas; $i++){  
-                    $dados = pg_fetch_row($consulta);       
-                    echo "<option>".$dados[0] . "</option>";
+        for($i=0; $i<$linhas; $i++){  
+            $dados = pg_fetch_row($consulta);       
+            echo "<option>".$dados[1] . "</option>";
 
-                }                                  
-            }
-        ?>
+        }                                  
+
+
+?>
                                             </select>
                                         </div>
                                        
                                         <div class="clearfix"></div>
-                                        <div class="form-group col-lg-3">
+                                        <div class="form-group col-lg-3" id="dIni">
                                             <label>Data Inicio</label>
-                                            <input type="date" class="form-control" name="txtDtIni" required="" OnKeyUp="return verificaData()">
+                                            <input type="date" class="form-control" name="txtDtIni" OnKeyUp="return verificaData()">
                                                 
                                         </div>
-                                        <div class="form-group col-lg-3">
+                                        <div class="form-group col-lg-3" id="dFim">
                                             <label>Data Fim</label>
-                                            <input type="date" class="form-control" name="txtDtFim" required="">
+                                            <input type="date" class="form-control" name="txtDtFim">
                                                 
                                         </div>
                                         <div class="form-group col-lg-3">
-                                            <label>Curso</label>
-                                            <input type="text" class="form-control" name="proj" id="proj" disabled="">
+                                           <!-- <label>Curso</label>-->
+                                            <input type="hidden" class="form-control" name="curso" id="curso">
                                                 
                                         </div>
                                         <div class="clearfix"></div>
