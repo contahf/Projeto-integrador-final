@@ -10,55 +10,56 @@ if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == tru
     header('location:../index.html');
 }
 
-if ($_SESSION['tipo'] !='C') {
-    header('location:index.php');;
-}
+
 
 $numProj = $_POST['p'];
 $codDis = $_POST['d'];
 $desc = $_POST['txtDesc'];
 
-if(isset($numProj) && isset($codDis) && isset($desc)){
-    if(!empty($numProj) && !empty($codDis) && !empty($desc)){
 
-        include 'conect.php';
-        
-        if($con){
-    
-            $sql = "INSERT INTO composto (num_proj, cod_disc, desc_atividade) VALUES ('".$numProj."', '".$codDis."', '".$desc."')";
+if (empty($numProj)) {
+    $data['proj'] = "10";
 
-            $result = pg_query($con, $sql);
-            $uol = pg_affected_rows($result);
-        
-        
-                if($uol > 0){
-                   
-                    echo "Inserido<br>";
+}
+if (empty($codDis)) {
+    $data['dis'] = "11";
 
-               
-                }else{
-           
-                    echo "ja Inserido";
-                    
-                }
+}
+if (empty($desc)) {
+    $data['desc'] = "12";
 
-        }
+}
 
-    }else{
-
-        return false;
-    }
-
+if (!empty($data)) {
+   
+    $b = $data;
 
 }else{
 
-    echo "Não pode ser null";
+    require_once 'conect.php';
+   
+    $sql = "INSERT INTO composto (num_proj, cod_disc, desc_atividade) VALUES ('".$numProj."', '".$codDis."', '".$desc."')";
+
+        $result = pg_query($con, $sql);
+        $uol = pg_affected_rows($result);
+        
+        if($uol > 0){
+                   
+            $data['success'] = "ok";
+            $b = $data;
+
+        }else{
+           
+            $data['success'] = "-1";
+            $b = $data;
+                    
+        }
+
 
 }
-    
-    
 
-    
+echo json_encode($b);
+
 
 pg_close($con);
     
