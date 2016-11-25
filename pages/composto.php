@@ -1,4 +1,17 @@
+<?php  
 
+    session_start();
+
+    if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
+    {
+        unset($_SESSION['login']);
+        unset($_SESSION['senha']);
+        session_destroy();
+        header('location:../index.html');
+    }
+    
+    
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,13 +39,14 @@
 
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
     <script type="text/javascript">
 
                                       
         var ds = { <?php
             
-            include 'conect.php';
+           require_once 'conect.php';
 
             if ($con) {
 
@@ -60,18 +74,18 @@
 
         var projeto = { <?php
            
-            include 'conect.php';
+            require_once 'conect.php';
            
             if ($con) {
 
-                $sql = "select * from curso c, projeto p where p.num_curso = c.numero";
+                $sql = "SELECT * from projeto";
                 $consulta = pg_query($con, $sql);
         
                 $linhas = pg_num_rows($consulta); 
                                 
                 for($i=0; $i<$linhas; $i++){  
                     $dados = pg_fetch_row($consulta);       
-                    echo $i . ":'" . $dados[3] ."',";
+                    echo $i . ":'" . $dados[0] ."',";
 
                 }                                  
             }
@@ -87,6 +101,81 @@
 
 
             }
+
+
+            $(document).ready(function() {
+    
+             $('form').submit(function(event) {
+
+                event.preventDefault();
+       
+                $.ajax({
+                    type        : 'POST', 
+                    url         : 'cadComposto.php',  
+                    data        :  $('form').serialize(), 
+                    dataType    : 'json', 
+                    encode      : true
+                    
+                })
+
+                
+       
+                .done(function(data) {
+                    
+                  
+                    if (data.proj == "10") {
+
+                        $('#fProj').addClass("has-error")
+
+
+                    }
+                    if (data.dis == "11") {
+
+                        $('#fDis').addClass("has-error")
+
+
+                    }
+                    if (data.desc == "12") {
+
+                        $('#fDesc').addClass("has-error")
+
+
+                    }
+
+                    if (data.success == "ok") {
+
+                        $('form').each (function(){
+                            this.reset();
+                        });
+                         
+                         var alerta = '<div class="alert alert-success fade in">' + 
+                            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                            '<strong>Success!</strong> Cadastrado com sucesso!' + 
+                            '</div>'
+                          $('#container').empty().append(alerta); 
+
+                        
+                    }else if (data.success == "-1") {
+
+                        var alerta = '<div class="alert alert-danger fade in">' + 
+                            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                            '<strong></strong> Falha ao cadastrar!' + 
+                            '</div>'
+                          $('#container').empty().append(alerta); 
+
+                    }
+
+                
+                })
+
+                .fail(function(){
+                    console.log() 
+                });
+   
+    });
+
+});
+
 
             
 
@@ -128,6 +217,7 @@
         <div id="page-wrapper">
         <br>
             <div class="row">
+            <div id="container"></div>
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -146,64 +236,61 @@
 
                                     <div>
                                         
-                                                   <div class="form-group col-lg-3" >
-                                            <label>Tema</label>
+                                                   <div class="form-group col-lg-3" id="fProj">
+                                            <label>Tema do projeto</label>
                                             <select class="form-control selectpicker"  onchange="fillProjeto(this)" id="txtSel">
 <?php 
 
-    include 'conect.php';
-    
-
-        if ($con) {
-
-            $sql = "select * from curso c, projeto p where p.num_curso = c.numero";
-            $consulta = pg_query($con, $sql);
+    require_once 'conect.php';
+     //$sql = "select * from curso c, projeto p where p.num_curso = c.numero";
+    $sql = "select * from projeto";
+    $consulta = pg_query($con, $sql);
         
-            $linhas = pg_num_rows($consulta); 
-
-                                
-            for($i=0; $i<$linhas; $i++){  
-                $dados = pg_fetch_row($consulta);       
-                echo "<option>".$dados[9]."</option>
+    $linhas = pg_num_rows($consulta); 
+                             
+    for($i=0; $i<$linhas; $i++){  
+        
+      
+        $dados = pg_fetch_row($consulta); 
+              
+        echo "<option>".$dados[6]."</option>
                         ";
-            }                                  
-        }
+    } 
+    echo "<option selected>---</option>";                                 
+        
 ?>
        
                                             </select>
-<div class="">    
+<div>    
     <input type="hidden" class="form-control" id="id_proj" name="p">
 </div>
 
                                         </div>
 
-                                               <div class="form-group col-lg-3" >
+                                               <div class="form-group col-lg-3" id="fDis">
                                             <label>Disciplina</label>
-                                            <select class="form-control selectpicker" onchange="fillDisciplina(this)" >
+                                            <select class="form-control selectpicker"  onchange="fillDisciplina(this)" >
 <?php 
 
-    include 'conect.php';
+    require_once 'conect.php';
     
-    if ($con) {
-
-        $sql = "SELECT * from disciplina ORDER by codigo";
-        $consulta = pg_query($con, $sql);
-        
-        $linhas = pg_num_rows($consulta); 
+    $sql = "SELECT * from disciplina ORDER by codigo";
+    $consulta = pg_query($con, $sql);    
+    $linhas = pg_num_rows($consulta); 
                                 
-            
-        for($i=0; $i<$linhas; $i++){  
-            $dados = pg_fetch_row($consulta);
+    for($i=0; $i<$linhas; $i++){  
+        $dados = pg_fetch_row($consulta);
 
-                echo "<option>".$dados[1]."</option>
+            echo "<option>".$dados[1]."</option>
                         ";
-        }                                  
-    }
+    } 
+    echo "<option selected>---</option>";                                 
+    
 ?>
                                             </select>
 
 <div class="clearfix"></div>   
-<div class="">    
+<div >    
     <input type="hidden" class="form-control" id="teste" name="d">
 </div>
   
@@ -216,8 +303,8 @@
                                                 </div>
                                         </div>
                                         <h4>Descrição</h4>
-                                        <div class="form-group col-lg-6">
-                                            <textarea class="form-control" rows="3" name="txtDesc" id="txtDesc" required=""></textarea>
+                                        <div class="form-group col-lg-6" id="fDesc">
+                                            <textarea class="form-control" rows="3" name="txtDesc" id="txtDesc"></textarea>
 
                                         </div><br>
                                         
