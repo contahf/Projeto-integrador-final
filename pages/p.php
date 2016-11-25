@@ -30,6 +30,9 @@
         $errors['d'] = '10';
     
     }
+    if (empty($curso)){
+        $errors['c'] = '9';
+    }
 
     if (empty($ano)){
         $errors['a'] = '11';
