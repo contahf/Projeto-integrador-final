@@ -88,7 +88,7 @@
 
 
         var fillCurso = function(sel) {
-            if(sel.selectedIndex >= 0) {
+            if(sel.selectedIndex) {
                 document.getElementById('curso').value = cursos[ sel.selectedIndex ]
             }
 
@@ -122,6 +122,12 @@
                             '<strong>Datas não conferem!</strong>!' + 
                             '</div>'
                           $('#container').empty().append(alerta);
+                    }
+
+                    if(data.c == "9"){
+
+                        $('#fCurso').addClass("has-error")
+
                     }
                     if(data.a == "11"){
 
@@ -282,7 +288,7 @@
                                                 <option>V</option>    
                                             </select>
                                         </div>
-                                          <div class="form-group col-lg-3" >
+                                          <div class="form-group col-lg-3" id="fCurso">
                                             <label>Curso</label>
                                             <select class="form-control selectpicker" id="txtNum" name="txtNum" onchange="fillCurso(this)">
 <?php 
@@ -298,7 +304,8 @@
             $dados = pg_fetch_row($consulta);       
             echo "<option>".$dados[1] . "</option>";
 
-        }                                  
+        } 
+        echo "<option selected>Opção de curso</option>";                                 
 
 
 ?>
@@ -318,7 +325,7 @@
                                         </div>
                                         <div class="form-group col-lg-3">
                                            <!-- <label>Curso</label>-->
-                                            <input type="hidden" class="form-control" name="curso" id="curso">
+                                            <input type="text" class="form-control" name="curso" id="curso">
                                                 
                                         </div>
                                         <div class="clearfix"></div>
