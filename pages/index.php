@@ -9,7 +9,6 @@
         session_destroy();
         header('location:../index.html');
     }
-
     
     
 ?>
@@ -41,13 +40,23 @@
 
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script type="text/javascript">
+        
+        var l = '<?php echo $_SESSION['tipo']; ?>';
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+        
+        $(function() {
+            
+            if (l != 'C') {
+            
+
+                document.getElementById('disp').style.visibility = "hidden"; 
+            
+        }    
+        });
+        
+    </script>
 
 </head>
 
@@ -257,7 +266,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-md-6" id="disp" >
                     <div class="panel panel-red">
                         <div class="panel-heading">
                             <div class="row">
@@ -270,7 +279,7 @@
                             </div>
                         </div>
                         <a href="editarDis.php">
-                            <div class="panel-footer">
+                            <div class="panel-footer" >
                                 <span class="pull-left">Listar Disciplinas</span>
                                 <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
                                 <div class="clearfix"></div>
