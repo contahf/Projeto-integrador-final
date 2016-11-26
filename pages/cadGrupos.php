@@ -1,12 +1,11 @@
 <?php
 
-$strCon = "host=localhost dbname=projetointegrador user=senac password=senac123";
-$con = pg_connect($strCon);
-if($con){
+require_once 'conect.php';
+
 	$sql = "INSERT INTO grupo (id, nome,num_proj) VALUES " 
 		. "('" . $_GET['txtID'] . "',"
 		. "'" . $_GET['txtNome'] . "',"
-		. $_GET['Nome'] . ")"
+		. $_GET['projNum'] . ")"
 		;
 	$result = pg_query($con, $sql);
 	
@@ -30,15 +29,6 @@ if($con){
 		die("Erro ao cadastrar o aluno!");
 	}
 	
-	
-	
-}else{
-
-	echo "Conexao falhou!";
-
-}
-
-echo "</br></br><a href='index.html'>Voltar</a>";
 pg_close($con);
 
 ?>
