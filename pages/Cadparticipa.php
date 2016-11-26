@@ -76,7 +76,7 @@
 <div class="form-group col-lg-2" >
 
 						<label>Nome do grupo </label> <br>
-						<select name="txtID">
+						<select class="form-control selectpicker" name="txtID">
 						<option value=""></option>
 
 
@@ -114,7 +114,7 @@
                                        <div class="form-group col-lg-3" >
 
 						<label>Selecione um aluno </label> <br>
-						<select name="matricula">
+						<select name="matricula" class="form-control selectpicker">
 						<option value=""></option>
 
 

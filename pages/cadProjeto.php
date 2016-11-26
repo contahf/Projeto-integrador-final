@@ -88,7 +88,7 @@
 
 
         var fillCurso = function(sel) {
-            if(sel.selectedIndex) {
+            if(sel.selectedIndex >= 0) {
                 document.getElementById('curso').value = cursos[ sel.selectedIndex ]
             }
 
@@ -291,6 +291,7 @@
                                           <div class="form-group col-lg-3" id="fCurso">
                                             <label>Curso</label>
                                             <select class="form-control selectpicker" id="txtNum" name="txtNum" onchange="fillCurso(this)">
+
 <?php 
 
     require_once 'conect.php';
@@ -302,13 +303,15 @@
                                 
         for($i=0; $i<$linhas; $i++){  
             $dados = pg_fetch_row($consulta);       
-            echo "<option>".$dados[1] . "</option>";
+            echo "<option>".$dados[1]."</option>";
 
         } 
-        echo "<option selected>Opção de curso</option>";                                 
+        echo "<option selected>Opção de curso</option>";
+                                        
 
 
 ?>
+
                                             </select>
                                         </div>
                                        
@@ -325,7 +328,7 @@
                                         </div>
                                         <div class="form-group col-lg-3">
                                            <!-- <label>Curso</label>-->
-                                            <input type="text" class="form-control" name="curso" id="curso">
+                                            <input type="hidden" class="form-control" name="curso" id="curso">
                                                 
                                         </div>
                                         <div class="clearfix"></div>
