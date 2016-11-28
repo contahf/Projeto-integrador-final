@@ -51,7 +51,7 @@
             if (l != 'C') {
             
 
-                document.getElementById('disp').style.visibility = "hidden"; 
+                document.getElementById('disp').style.display = "none"; 
             
         }    
         });
@@ -158,7 +158,7 @@
                             <a href="#"><i class="fa fa-table fa-fw"></i>Relatórios<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                <li>
-                                    <a href="falta">Alunos e notas</a>
+                                    <a href="relAluno.php">Alunos e notas</a>
                                 </li>
 								<li>
                                     <a href="falta.php">Projetos </a>
