@@ -1,7 +1,14 @@
 <?php
+    session_start();
 
-$strCon = "host=localhost dbname=projetointegrador user=senac password=senac123";
-$con = pg_connect($strCon);
+    if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
+    {
+        unset($_SESSION['login']);
+        unset($_SESSION['senha']);
+        session_destroy();
+        header('location:../index.html');
+    }
+include 'conect.php';
 if($con){
 	$sql = "select * from participa where  matricula = '". $_GET['matricula'] ."'";
 

@@ -1,3 +1,20 @@
+<?php
+session_start();
+
+    if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
+    {
+        unset($_SESSION['login']);
+        unset($_SESSION['senha']);
+        session_destroy();
+        header('location:../index.html');
+    }
+    if ($_SESSION['tipo'] !='C') {
+         header('location:index.php');
+    }
+
+   
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,40 +39,7 @@
 
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
-    <script type="text/javascript">
-        
-        var ds = { <?php
-            
-        require_once 'conect.php';
-
-        if ($con) {
-
-            $sql = "SELECT * from projeto ORDER by numero";
-            $consulta = pg_query($con, $sql);
-        
-            $linhas = pg_num_rows($consulta); 
-                                
-            for($i=0; $i<$linhas; $i++){  
-                $dados = pg_fetch_row($consulta);       
-                echo $i . ":'" . $dados[0] ."',";
-
-            }                                  
-        }
-            ?> null:'' }
-
-
-        var fillProjeto = function(sel) {
-            if(sel.selectedIndex >= 0) {
-                document.getElementById('projNum').value = ds[ sel.selectedIndex ]
-            }
-
-
-        }
-
-
-
-    </script>
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
       
 
@@ -108,51 +92,57 @@
                                     <form action="cadGrupos.php" method="get">
                                         <div class="form-group col-lg-5">
                                             <label>Nome do Grupo </label>
-                                            <input class="form-control" name="txtNome" id="txtNome" >
+                                            <input class="form-control" name="txtNome" id="txtNome" required>
                                             
                                         </div>
-					                   <div class="form-group col-lg-2">
-                                            
+					<div class="form-group col-lg-2">
                                             <label>ID do Grupo </label>
-                                            <input class="form-control" name="txtID" id="txtID" >
+                                            <input class="form-control" name="txtID" id="txtID" required>
                                             
                                         </div>
-                                        
-                                        <div class="form-group col-lg-3" >
+                                        <div class="form-group col-lg-5" >
 
-						<label>Projeto Integrador do Grupo </label>
-                        <select class="form-control selectpicker" id="txtNum" name="txtNum" onchange="fillProjeto(this)">
+						<label>Projeto Integrador do Grupo </label> <br>
+						<select name="Nome" required>
+						<option value="">Selecione um Projeto:</option>
 
-<?php 
 
-    require_once 'conect.php';
-    
-    $sql = "SELECT * from projeto ORDER by numero";
-    $consulta = pg_query($con, $sql);
-        
-    $linhas = pg_num_rows($consulta); 
-                                
-    for($i=0; $i<$linhas; $i++){  
-        $dados = pg_fetch_row($consulta);       
-        echo "<option>".$dados[6]."</option>";
 
-    } 
-    echo "<option selected>---</option>";
-                                        
-?>
+					       <?php
+						$strCon = "host=localhost dbname=projetointegrador user=senac password=senac123";
+						$con = pg_connect($strCon);
 
-                                            </select>
+						if($con){
+							$sql = "SELECT * from projeto";
+							$result = pg_query($con, $sql);
+							$linhas = pg_num_rows($result); 
+							for($i=0; $i<$linhas; $i++){  
+								$dados = pg_fetch_row($result); 
+								?>  
+								<option name="ativo" value="<?php echo $dados[0]; ?>" /><?php echo $dados[6]; ?>
+								<?php
+							}
+
+
+						}else{	
+							echo "Conexao falhou!";
+						}
+						pg_close($con);
+
+
+						?>
+                                    
+						</select>
 
 
                                             
                                         </div>
                           <div class="clearfix"></div>
-                          <input type="hidden" class="form-control" name="projNum" id="projNum">
                                          
                                          <div class="container">
                                             <button type="submit" class="btn btn-default">Gravar</button>
                                             <button type="reset" class="btn btn-default">Limpar</button>
-					    <a href="index.php"><button class="btn btn-default">Cancelar</button>
+					    <a href="index.php"><button type="button" class="btn btn-default">Cancelar</button>
                                     
                                          </div>
                                                                             

@@ -1,5 +1,22 @@
+<?php
+session_start();
+
+    if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
+    {
+        unset($_SESSION['login']);
+        unset($_SESSION['senha']);
+        session_destroy();
+        header('location:../index.html');
+    }
+    if ($_SESSION['tipo'] !='C') {
+         header('location:index.php');
+    }
+
+   
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
 
@@ -77,7 +94,7 @@
                                        <div class="form-group col-lg-2" >
 
 						<label>Selecione um aluno </label> <br>
-						<select name="matricula" class="form-control selectpicker">
+						<select name="matricula" required>
 						<option value=""></option>
 
 
@@ -113,7 +130,7 @@
                                         </div>
 					<div class="form-group col-lg-2">
                                             <label>Nota</label>
-                                            <input class="form-control" name="txtNota" id="txtNota" required="">
+                                            <input class="form-control" name="txtNota" id="txtNota" required>
                                             
                                         </div>
 					
@@ -122,7 +139,7 @@
                                          <div class="container">
                                             <button type="submit" class="btn btn-default">Gravar</button>
                                             <button type="reset" class="btn btn-default">Limpar</button>
-					    <a href="listarAluno.php"><button class="btn btn-default">Cancelar</button>
+					    <a href="index.php"><button type="button" class="btn btn-default">Cancelar</button>
                                     
                                          </div>
                                                                             

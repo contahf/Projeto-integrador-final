@@ -1,11 +1,20 @@
 <?php
+session_start();
 
-require_once 'conect.php';
+    if((!isset ($_SESSION['login']) == true) and (!isset ($_SESSION['senha']) == true)) 
+    {
+        unset($_SESSION['login']);
+        unset($_SESSION['senha']);
+        session_destroy();
+        header('location:../index.html');
+    }
 
+include 'conect.php';
+if($con){
 	$sql = "INSERT INTO grupo (id, nome,num_proj) VALUES " 
 		. "('" . $_GET['txtID'] . "',"
 		. "'" . $_GET['txtNome'] . "',"
-		. $_GET['projNum'] . ")"
+		. $_GET['Nome'] . ")"
 		;
 	$result = pg_query($con, $sql);
 	
@@ -26,9 +35,18 @@ require_once 'conect.php';
                ";
 		
 	}else{
-		die("Erro ao cadastrar o aluno!");
+		die("Erro ao cadastrar o grupo!");
 	}
 	
+	
+	
+}else{
+
+	echo "Conexao falhou!";
+
+}
+
+echo "</br></br><a href='index.html'>Voltar</a>";
 pg_close($con);
 
 ?>
