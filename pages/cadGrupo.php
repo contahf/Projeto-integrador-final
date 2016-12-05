@@ -100,10 +100,10 @@ session_start();
                                             <input class="form-control" name="txtID" id="txtID" required>
                                             
                                         </div>
-                                        <div class="form-group col-lg-5" >
+                                        <div class="form-group col-lg-3" >
 
 						<label>Projeto Integrador do Grupo </label> <br>
-						<select name="Nome" required>
+						<select name="Nome" required class="form-control selectpicker" >
 						<option value="">Selecione um Projeto:</option>
 
 

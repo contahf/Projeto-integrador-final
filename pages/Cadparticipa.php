@@ -93,7 +93,7 @@ session_start();
 <div class="form-group col-lg-3" >
 
 						<label>Nome do grupo </label> <br>
-						<select name="txtID" required>
+						<select name="txtID" required class="form-control selectpicker" >
 						<option value=""></option>
 
 
@@ -131,7 +131,7 @@ session_start();
                                        <div class="form-group col-lg-3" >
 
 						<label>Selecione um aluno </label> <br>
-						<select name="matricula" required>
+						<select name="matricula" required class="form-control selectpicker" >
 						<option value=""></option>
 
 
