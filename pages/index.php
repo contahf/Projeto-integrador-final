@@ -45,16 +45,21 @@
         
         var l = '<?php echo $_SESSION['tipo']; ?>';
 
-        
         $(function() {
             
-            if (l != 'C') {
+            if (l == 'C') {
             
+                document.getElementById('disp').style.display = "block"; 
+                document.getElementById('us').style.display = "block"; 
+            
+            }
+            if (l == 'P') {
 
-                document.getElementById('disp').style.display = "none"; 
-            
-        }    
+                document.getElementById('al').style.display = "block";
+                
+            }    
         });
+
         
     </script>
 
@@ -94,17 +99,21 @@
                         </li>
                           
                           <li>
-                            <a href="#"><i class="fa fa-user fa-fw"></i> Aluno<span class="fa arrow"></span></a>
+                            <a href="#"><i class="fa fa-user fa-fw "></i> Aluno<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
+                                <?php if ($_SESSION['tipo'] == 'C') { ?>
                                     <a href="listarAluno.php">Listar </a>
+                                <?php } else { ?>
+                                     <a href="#?"><i class="text-muted"></i>Listar </a>
+                                <?php } ?>    
                                 </li>
 						
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
 
-                         <li>
+                         <li style="display: none;" id="us">
                             <a href="#"><i class="fa fa-user fa-fw"></i> Usuário<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
 								<li>
@@ -113,7 +122,7 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-						<li>
+						<li style="display: none;" id="li">
                             <a href="#"><i class="fa fa-book fa-fw"></i>Curso<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                <li>
@@ -121,7 +130,7 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-                       <li>
+                       <li style="display: none;" id="di">
                             <a href="#"><i class="fa fa-edit fa-fw"></i>Disciplina<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                <li>
@@ -131,49 +140,50 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-			<li>
+			             <li style="display: none;" id="gr">
                             <a href="#"><i class="fa fa-users fa-fw"></i>Grupo<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                <li>
                                     <a href="cadGrupo.php">Cadastrar grupo </a>
                                 </li>
-				<li>
+				            <li style="display: none;" id="pa">
                                     <a href="Cadparticipa.php">Vincular aluno ao grupo </a>
                                 </li>
 				
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-			<li>
+			             <li>
                             <a href="#"><i class="fa fa-book fa-fw"></i>Notas<span class="fa arrow"></span></a>
-                            <ul class="nav nav-second-level">
-                               <li>
+                    
+                            <ul class="nav nav-second-level" id="nota">
+                                <li style="display: none;" id="al">
                                     <a href="cadNota.php">Cadastrar nota aluno </a>
-                                </li>
-				
+                                </li>    
                             </ul>
+                          
                             <!-- /.nav-second-level -->
                         </li>
-			<li>
+			             <li style="display: none;" id="re">
                             <a href="#"><i class="fa fa-table fa-fw"></i>Relatórios<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                <li>
                                     <a href="relAluno.php">Alunos e notas</a>
                                 </li>
-								<li>
+								<li style="display: none;" id="pr">
                                     <a href="falta.php">Projetos </a>
                                 </li>
-								<li>
+								<li style="display: none;" id="grp">
                                     <a href="falta.php">Grupos do projeto</a>
                                 </li>
-								<li>
+								<li style="display: none;" id="hi">
                                     <a href="falta.php">Histórico dos projetos do aluno</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
 						
-                        <li>
+                        <li >
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> Informações<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
@@ -266,7 +276,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6" id="disp" >
+                <div class="col-lg-3 col-md-6" id="disp" style="display: none;">
                     <div class="panel panel-red">
                         <div class="panel-heading">
                             <div class="row">
