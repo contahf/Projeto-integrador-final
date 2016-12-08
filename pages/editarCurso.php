@@ -9,10 +9,11 @@ session_start();
         session_destroy();
         header('location:../index.html');
     }
-    if ($_SESSION['tipo'] !='C') {
-         header('location:index.php');
+
+    if ($_SESSION['tipo'] == 'P') {
+        header('location:index.php');
     }
-   
+
 ?>
 
 <!DOCTYPE html>
@@ -50,13 +51,26 @@ session_start();
 
 
     <script type="text/javascript">
+
+    var l = '<?php echo $_SESSION['tipo']; ?>';
+
+        
+        $(function() {
+            
+            if (l != 'C') {
+
+               $('button').prop('disabled', true);
+               
+               
+
+            }    
+        });
        
         function acaoExcluir(numero){
            
             if(window.confirm('Deseja mesmo excluir este curso?')){
 
                 dado = 'num=' + numero;
-                //$.post('removeCurso.php', dado, tratarExclusao)
                 $.ajax({
                     
                     type        : 'POST', 
@@ -274,8 +288,11 @@ session_start();
                         <td>".$dados[0] . "</td>
                         <td>".$dados[1] . "</td>
                         <td >".$dados[2] . "</td>
-                        <td><a href='#?'onclick='acaoEditar(\"".trim($dados[0])."\")'><i class='fa fa-edit fa-fw'></i></a></td>
-                        <td><a href='#?' onclick='acaoExcluir(\"".trim($dados[0])."\")'><i class='fa fa-times fa-fw'></i></a></td>
+                        <td>
+                        <button type='button' class='btn-link fa fa-edit fa-fw' onclick='acaoEditar(\"".trim($dados[0])."\")'></button></td>
+                        <td>
+                        <button type='button' class='btn-link fa fa-trash fa-fw' onclick='acaoExcluir(\"".trim($dados[0])."\")'></button>
+                        </td>
                         <td><a href='cadProjeto.php'><i class='fa fa-wrench   fa-fw'></i></a></td>
                     </tr>";
             }                                  
