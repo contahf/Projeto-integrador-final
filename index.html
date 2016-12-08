@@ -50,14 +50,14 @@
                                 
                                 var alerta = '<div class="alert alert-danger fade in">' + 
                                     '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
-                                    '<strong>Warning!</strong> Não cadastrado!' + 
+                                    '<strong>Warning!</strong> Usuario ou senha invalido!' + 
                                   '</div>'
                                 $('#avi').before(alerta);  
                             }
 
                             if(data == "-3"){
                                 
-                               alert("Campos em branco")                    
+                               console.log(data)                   
                             }
                                                     
                         } else {
@@ -74,6 +74,17 @@
             });
 
         });
+              
+        $(function() {
+            
+            var alerta =  '<div class="">' + 
+                '<strong></strong><a href="/pages/lista.php" class="alert-link">Ir para lista de alunos</a>' + 
+                '</div>';
+
+            $('#teste').after(alerta);
+            
+        });
+
     </script>
 	
 </head>
@@ -84,24 +95,27 @@
 			<a href="#"><img class="img-circle" src="assets/images/logo1.png" alt="" /></a>
 		</section>
 	
-			<form method="post" name="frm1"  action="/pages/info.php" role="login">
+			<form method="post" id="frm1" name="frm1"  action="/pages/info.php" role="login">
 			    
                 <div class="form-group" id="avi">
 					<input type="text" name="login" id="login" placeholder="Usuario"  class="form-control" />
 					<span class="glyphicon glyphicon-user"></span>
 				</div>
 				
-				<div class="form-group">
+				<div class="form-group" id="avi2">
 					<input type="password" name="senha" id="senha" placeholder="Senha"  class="form-control" />
 					<span class="glyphicon glyphicon-lock"></span>
 				</div>
-				<button type="submit" class="btn btn-block btn-primary" >Login</button>
+				
+                <button type="submit" class="btn btn-block btn-primary" >Login</button>
+                <div id="teste"></div>
 				
 			</form>
 
+            
+        
 	</section>
-</section>
-	
+</section>	
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 </body>
