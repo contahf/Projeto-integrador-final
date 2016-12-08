@@ -94,7 +94,7 @@ session_start();
                <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <?php echo "Relatorio dos alunos do curso de ".$_POST['txtNum']. " do ano de ".$_POST['txtAno']."/".$_POST['txtSem']; ?>
+                                        <?php echo "Relatorio dos projetos do ano de ".$_POST['txtAno']."/".$_POST['txtSem']; ?>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -102,11 +102,17 @@ session_start();
                                 <table class="table table-hover">
                                     <thead>
                                         <tr>
-                                            <th>Matricula</th>
-                                            <th>Nome</th>
-                                            <th>Nota</th>
+                                            <th>Nome do curso</th>
+	        			    <th>Modulo</th>
+                                            <th>Disciplina</th>
+                                            <th>Tema do Projeto</th>
+                                            <th>Descricao do projeto</th>
+                                            <th>Descricao da atividade</th>
+                                            <th>Inicio do Projeto</th>
+                                            <th>Fim do Projeto</th>
                                            
                                         </tr>
+					
                                     </thead>
                                  
 <?php 
@@ -114,13 +120,10 @@ session_start();
 require_once 'conect.php';    
 
 
-        $sql = "SELECT a.matricula, a.nome, c.nota 
-                from aluno a
-                join participa c on a.matricula = c.matricula 
-                join grupo g on c.id_grupo= g.id
-                join projeto e on g.num_proj = e.numero
-                where e.semestre = '".$_POST['txtSem']."' and e.ano = '".$_POST['txtAno']."' and e.num_curso = '".$_POST['txtNumCurso']."' order by a.nome";
-
+       $sql = "SELECT c.nome, modulo, d.nome, tema, descricao, t.desc_atividade,dt_inicio,dt_termino
+	from projeto p, curso c, composto t, disciplina d where p.num_curso = c.numero and p.numero = t.num_proj and t.cod_disc = d.codigo  and
+         p.semestre = '".$_POST['txtSem']."' and p.ano = '".$_POST['txtAno']."' ";
+	
         $consulta = pg_query($con, $sql);
         
         $linhas = pg_num_rows($consulta); 
@@ -131,7 +134,11 @@ require_once 'conect.php';
                         <td>".$dados[0] . "</td>
                         <td>".$dados[1] . "</td>
                         <td >".$dados[2] . "</td>
-                   
+                        <td>".$dados[3] . "</td>
+                        <td>".$dados[4] . "</td>
+                        <td >".$dados[5] . "</td>
+                        <td>".$dados[6] . "</td>
+                        <td>".$dados[7] . "</td>                   
                     </tr>";
         }
                                         
