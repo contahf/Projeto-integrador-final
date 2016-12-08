@@ -197,7 +197,7 @@
                                     <a href="relatorioGrupo.php">Grupos do projeto</a>
                                 </li>
 								<li >
-                                    <a href="falta.php">Histórico dos projetos do aluno</a>
+                                    <a href="relatorioProjAluno.php">Histórico dos projetos do aluno</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
