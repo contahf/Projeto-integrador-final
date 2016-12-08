@@ -256,7 +256,7 @@
                                         <div class="clearfix"></div>
                                         <div class="form-group col-lg-3" id="fMat">
                                             <label>Matricula</label>
-                                            <input type="text" name="txtMat" id="txtMat" class="form-control" minlength="15">
+                                            <input type="text" name="txtMat" id="txtMat" class="form-control" minlength="13">
                                             
                                         </div>
 
