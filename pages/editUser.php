@@ -46,6 +46,16 @@ session_start();
     <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
     <script type="text/javascript">
+     var l = '<?php echo $_SESSION['tipo']; ?>';
+
+        
+        $(function() {
+            
+            if (l != 'C') {
+
+               $('button').prop('disabled', true);
+            }    
+        });
     
 
         function acaoExcluir(login){
@@ -237,57 +247,33 @@ session_start();
 <?php 
                                   
     
-    
-    try {
+    include 'conect.php';
+
+
+    $sql = "SELECT  login, nome, categoria, situacao  from usuario";
+
+    $consulta = pg_query($con, $sql);
         
-        include 'conect.php';
-
-        if($_SESSION['tipo'] != 'C'){
-
-            pg_close($con);
-         }
-
-         if (!$con) {
-             throw new Exception("Error ao resgatar Informações", 1);
-             
-         }
-
-        $sql = "SELECT  login, nome, categoria, situacao  from usuario";
-
-        $consulta = pg_query($con, $sql);
-        
-        $linhas = pg_num_rows($consulta); 
+    $linhas = pg_num_rows($consulta); 
 
                                 
-            for($i=0; $i<$linhas; $i++){  
-                $dados = pg_fetch_array($consulta);       
-                echo "
-                    <tr id='$dados[0]'>
-                        <td >".$dados[0] . "</td>
-                        <td>".$dados[1] . "</td>
-                        <td >".$dados[2] . "</td>
-                        <td >".$dados[3] . "</td>
-                        <td><a href='#?' onclick='return acaoEditar(\"".$dados[0] . "\")'><i class='fa fa-edit fa-fw'></i></a></td>
-                        <td><a href='#' onclick='return acaoExcluir(\"".$dados[0] . "\")'> <i class='fa fa-trash fa-fw'></i></a></td>
-                    </tr>";
+    for($i=0; $i<$linhas; $i++){  
+        $dados = pg_fetch_array($consulta);       
+        echo "
+            <tr id='$dados[0]'>
+                <td >".$dados[0] . "</td>
+                <td>".$dados[1] . "</td>
+                <td >".$dados[2] . "</td>
+                <td >".$dados[3] . "</td>
+                <td>
+                    <button type='button' class='btn-link fa fa-edit fa-fw' onclick='acaoEditar(\"".trim($dados[0])."\")'></button></td>
+                <td>
+                    <button type='button' class='btn-link fa fa-trash fa-fw' onclick='acaoExcluir(\"".trim($dados[0])."\")'></button>
+                </td>
+            </tr>";
                                                             
-
-                pg_close($con);
-                
-
-            } 
-
-
-
-
-
-    } catch (Exception $e) {
-
-        echo $e->getMessage(), "\n";
-    }
-
-                                        
-
+    } 
+    pg_close($con);
 
 ?>
                             
