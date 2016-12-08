@@ -10,7 +10,7 @@
         header('location:../index.html');
     }
     
-    if ($_SESSION['tipo'] !='C') {
+    if ($_SESSION['tipo'] =='P') {
          header('location:index.php');
     }
 
