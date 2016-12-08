@@ -47,9 +47,14 @@
 
         $(function() {
             
-            if (l == 'C') {
+            if (l == 'C' || l == 'G') {
             
+                document.getElementById('p1').style.display = "block";
+                document.getElementById('p2').style.display = "block";
+                document.getElementById('p3').style.display = "block"; 
                 document.getElementById('disp').style.display = "block"; 
+                document.getElementById('re').style.display = "block"; 
+                document.getElementById('no').style.display = "block";
                 document.getElementById('us').style.display = "block"; 
                 document.getElementById('li').style.display = "block";
                 document.getElementById('di').style.display = "block";
@@ -58,9 +63,9 @@
                 document.getElementById('grp').style.display = "block";     
                 document.getElementById('nota').style.display = "block";
                 document.getElementById('pr').style.display = "block";
-                document.getElementById('hi').style.display = "block";
-                document.getElementById('no').style.display = "block"; 
-                 document.getElementById('alu').style.display = "block";   
+                document.getElementById('hi').style.display = "block"; 
+                document.getElementById('alu').style.display = "block"; 
+                
             
             }
             if (l == 'P') {
@@ -162,7 +167,7 @@
                                <li>
                                     <a href="cadGrupo.php">Cadastrar grupo </a>
                                 </li>
-				            <li style="display: none;" id="pa">
+				            <li>
                                     <a href="Cadparticipa.php">Vincular aluno ao grupo </a>
                                 </li>
 				
@@ -185,13 +190,13 @@
                                <li>
                                     <a href="relAluno.php">Alunos e notas</a>
                                 </li>
-								<li style="display: none;" id="pr">
+								<li>
                                     <a href="falta.php">Projetos </a>
                                 </li>
-								<li style="display: none;" id="grp">
+								<li>
                                     <a href="falta.php">Grupos do projeto</a>
                                 </li>
-								<li style="display: none;" id="hi">
+								<li >
                                     <a href="falta.php">Histórico dos projetos do aluno</a>
                                 </li>
                             </ul>
@@ -249,7 +254,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6" style="display: none;">
+                <div class="col-lg-3 col-md-6" style="display: none;" id="p2">
                     <div class="panel panel-green">
                         <div class="panel-heading">
                             <div class="row">
@@ -270,7 +275,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6" style="display: none;">
+                <div class="col-lg-3 col-md-6" style="display: none;" id="p3">
                     <div class="panel panel-yellow">
                         <div class="panel-heading">
                             <div class="row">
