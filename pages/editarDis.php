@@ -8,7 +8,7 @@ session_start();
         session_destroy();
         header('location:../index.html');
     }
-    if ($_SESSION['tipo'] !='C') {
+    if ($_SESSION['tipo'] =='P') {
          header('location:index.php');
     }
 
@@ -49,6 +49,16 @@ session_start();
 
      <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
     <script type="text/javascript">
+      var l = '<?php echo $_SESSION['tipo']; ?>';
+
+        
+        $(function() {
+            
+            if (l != 'C') {
+
+               $('button').prop('disabled', true);
+            }    
+        });
 
 
         function acaoExcluir(num){
@@ -272,8 +282,11 @@ require_once 'conect.php';
                         <td>".$dados[0] . "</td>
                         <td>".$dados[1] . "</td>
                         <td >".$dados[2] . "</td>
-                        <td><a href='#?' onClick='acaoEditar(\"".trim($dados[0])."\")'><i class='fa fa-edit fa-fw'></i></a></td>
-                        <td><a href='#?' onClick='acaoExcluir(\"".trim($dados[0])."\")'><i class='fa fa-times fa-fw'></i></a></td>
+                      <td>
+                    <button type='button' class='btn-link fa fa-edit fa-fw' onclick='acaoEditar(\"".trim($dados[0])."\")'></button></td>
+                <td>
+                    <button type='button' class='btn-link fa fa-trash fa-fw' onclick='acaoExcluir(\"".trim($dados[0])."\")'></button>
+                </td>
                     </tr>";
         } 
                                         

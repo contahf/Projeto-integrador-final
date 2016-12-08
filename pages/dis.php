@@ -1,78 +1,4 @@
-<?php  
 
-    
-    $strCon = "host=localhost dbname=projetointegrador port=5432 user=senac password=senac123";
-
-    $con = pg_connect($strCon);
-    
-
-    if ($con) {
-
-
-        $Nome= $_POST["txtDis"];
-        $carga = $_POST['txtCh'];
-        $codigo = $_POST['txtCod'];
-        
-   
-        
-        $sql = "select * from disciplina where codigo = '". $codigo ."'";
-
-        $consulta = pg_query($con, $sql);
- 
-        $linhas = pg_num_rows($consulta);
-
-        if($linhas > 0 ){
-     
-             echo "
-
-                    <script type='text/javascript'>                                          
-
-                        window.alert('Ja cadastrado!');
-                        window.location.href = 'editarDis.php'; 
-
-                                                                        
-                        
-                    </script>
-
-
-               ";
-            
-         
-         }elseif ($linhas==0) {
-            
-            $sql = "INSERT INTO disciplina (codigo, nome, ch) VALUES ('".$codigo."', '".$Nome."', '".$carga."');";
-           
-            $res = pg_query($con, $sql);
-
-            $qtd_linhas = pg_affected_rows($res);
-
-            if ($qtd_linhas > 0){
-                 echo "
-
-                    <script type='text/javascript'>                                          
-
-                        window.alert('Cadastro realizado!');
-                        window.location.href = 'editarDis.php'; 
-
-                                                                        
-                        
-                    </script>
-
-
-               ";
-        
-            }
-
-        
-
-         }
-
-                
-
-    }
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -97,13 +23,81 @@
 
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+  <script type="text/javascript">
+      
+
+        $(document).ready(function() {
+    
+             $('form').submit(function(event) {
+
+                event.preventDefault();
+
+                $.ajax({
+                    type        : 'POST', 
+                    url         : 'cadDis.php',  
+                    data        :  $('form').serialize(), 
+                    dataType    : 'json', 
+                    encode      : true
+                    
+                })
+
+                
+       
+                .done(function(data) {
+            
+                    if (data.success != "1") {
+                            
+                        if(data.nome == "-1"){
+                            $('#fNome').addClass("has-error")
+                        }
+                        
+                        if(data.carga == "-2"){
+                            $('#fCh').addClass("has-error")
+                        }
+
+                        if(data.codigo == "-3"){
+                            $('#fCod').addClass("has-error")
+                        }
+                        if (data.contem == "-4") {
+                            var alerta = '<div class="alert alert-warning fade in">' + 
+                            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                            '<strong></strong> Já cadastrado!' + 
+                            '</div>'
+                          $('#container').empty().append(alerta); 
+                        }
+                   
+
+                    } else if (data.success == "1") {
+                        
+                        $('form').each (function(){
+                            this.reset();
+                        });
+ 
+                        var alerta = '<div class="alert alert-success fade in">' + 
+                            '<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>' + 
+                            '<strong></strong> Cadastrado com sucesso!' + 
+                            '</div>'
+                          $('#container').empty().append(alerta); 
+                        }
+
+                })
+
+                .fail(function(){
+                    console.log(); 
+                });
+   
+    });
+
+});
+
+
+
+
+  </script>
+
+
 
 </head>
 
@@ -139,9 +133,9 @@
         </nav>
 
         <div id="page-wrapper">
-           
             <br>
             <div class="row">
+            <div id="container"></div>
                 <div class="col-lg-12">
                     <div class="panel panel-default">
                         <div class="panel-heading">
@@ -151,19 +145,19 @@
                             <div class="row">
                                 <div class="">
                                     <form action="" method="post">
-                                        <div class="form-group col-lg-5">
+                                        <div class="form-group col-lg-5" id="fNome">
                                             <label>Nome </label>
-                                            <input type="text" name="txtDis" id="txtDis" class="form-control" required="" placeholder="Banco de dados" >
+                                            <input type="text" name="txtDis" id="txtDis" class="form-control" placeholder="Banco de dados" >
                                             
                                         </div>
-                                        <div class="form-group col-lg-3" >
+                                        <div class="form-group col-lg-3" id="fCh">
                                             <label>Ch</label>
-                                            <input type="numeric" placeholder="90" class="form-control" name="txtCh" required="">
+                                            <input type="numeric" placeholder="90" class="form-control" name="txtCh">
                                             
                                         </div>
-                                        <div class="form-group col-lg-3" >
+                                        <div class="form-group col-lg-3" id="fCod">
                                             <label>Codigo</label>
-                                            <input type="numeric" class="form-control" placeholder="1212" name="txtCod" required="">
+                                            <input type="numeric" class="form-control" placeholder="1212" name="txtCod" >
                                             
                                         </div>
 
