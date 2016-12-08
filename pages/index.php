@@ -51,14 +51,32 @@
             
                 document.getElementById('disp').style.display = "block"; 
                 document.getElementById('us').style.display = "block"; 
+                document.getElementById('li').style.display = "block";
+                document.getElementById('di').style.display = "block";
+                document.getElementById('gr').style.display = "block";
+                document.getElementById('pa').style.display = "block";
+                document.getElementById('grp').style.display = "block";     
+                document.getElementById('nota').style.display = "block";
+                document.getElementById('pr').style.display = "block";
+                document.getElementById('hi').style.display = "block";
+                document.getElementById('no').style.display = "block"; 
+                 document.getElementById('alu').style.display = "block";   
             
             }
             if (l == 'P') {
 
-                document.getElementById('al').style.display = "block";
+                        var alerta =  '<div class="alert alert-info">' + 
+    '<strong></strong> Clique em Notas para cadastrar.<a href="#" class="alert-link"></a>' + 
+  '</div>';
+
+                          
+                          $('#p1').before(alerta);
+                document.getElementById('no').style.display = "block";
+
                 
             }    
         });
+
 
         
     </script>
@@ -98,15 +116,13 @@
     ?></a>
                         </li>
                           
-                          <li>
+                          <li style="display: none;" id="alu">
                             <a href="#"><i class="fa fa-user fa-fw "></i> Aluno<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                <?php if ($_SESSION['tipo'] == 'C') { ?>
+                        
                                     <a href="listarAluno.php">Listar </a>
-                                <?php } else { ?>
-                                     <a href="#?"><i class="text-muted"></i>Listar </a>
-                                <?php } ?>    
+                              
                                 </li>
 						
                             </ul>
@@ -153,16 +169,15 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
-			             <li>
+			             <li style="display: none;" id="no">
                             <a href="#"><i class="fa fa-book fa-fw"></i>Notas<span class="fa arrow"></span></a>
                     
-                            <ul class="nav nav-second-level" id="nota">
-                                <li style="display: none;" id="al">
+                            <ul class="nav nav-second-level">
+                                <li >
                                     <a href="cadNota.php">Cadastrar nota aluno </a>
                                 </li>    
                             </ul>
-                          
-                            <!-- /.nav-second-level -->
+
                         </li>
 			             <li style="display: none;" id="re">
                             <a href="#"><i class="fa fa-table fa-fw"></i>Relatórios<span class="fa arrow"></span></a>
@@ -210,7 +225,7 @@
             <br>
             <div class="row">
                 
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-md-6" style="display: none;" id="p1">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <div class="row">
@@ -234,7 +249,7 @@
                     </div>
                 </div>
 
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-md-6" style="display: none;">
                     <div class="panel panel-green">
                         <div class="panel-heading">
                             <div class="row">
@@ -255,7 +270,7 @@
                         </a>
                     </div>
                 </div>
-                <div class="col-lg-3 col-md-6">
+                <div class="col-lg-3 col-md-6" style="display: none;">
                     <div class="panel panel-yellow">
                         <div class="panel-heading">
                             <div class="row">
