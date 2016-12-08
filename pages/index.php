@@ -186,7 +186,7 @@
                                     <a href="relAluno.php">Alunos e notas</a>
                                 </li>
 								<li style="display: none;" id="pr">
-                                    <a href="falta.php">Projetos </a>
+                                    <a href="relatorioProj.php">Projetos </a>
                                 </li>
 								<li style="display: none;" id="grp">
                                     <a href="falta.php">Grupos do projeto</a>
