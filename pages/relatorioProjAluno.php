@@ -134,7 +134,7 @@
                                                <div class="form-group col-lg-2" >
 
 						<label>Selecione um aluno </label> <br>
-						<select name="matricula" required>
+						<select name="matricula" class="form-control selectpicker">
 						<option value=""></option>
 
 
