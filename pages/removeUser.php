@@ -9,6 +9,7 @@
         header('location:../index.html');
     }
     
+    
     $Login = $_GET['l']; 
     
     include 'conect.php';
