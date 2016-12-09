@@ -56,6 +56,7 @@
                 document.getElementById('re').style.display = "block"; 
                 document.getElementById('no').style.display = "block";
                 document.getElementById('alu').style.display = "block";
+                document.getElementById('pro').style.display = "block";
                 document.getElementById('us').style.display = "block"; 
                 document.getElementById('li').style.display = "block";
                 document.getElementById('di').style.display = "block";
@@ -174,6 +175,16 @@
 				
                             </ul>
                             <!-- /.nav-second-level -->
+                        </li>
+                          <li style="display: none;" id="pro">
+                            <a href="#"><i class="fa fa-book fa-fw"></i>Projeto<span class="fa arrow"></span></a>
+                    
+                            <ul class="nav nav-second-level">
+                                <li >
+                                    <a href="cadProjeto.php">Novo </a>
+                                </li>    
+                            </ul>
+
                         </li>
 			             <li style="display: none;" id="no">
                             <a href="#"><i class="fa fa-book fa-fw"></i>Notas<span class="fa arrow"></span></a>
