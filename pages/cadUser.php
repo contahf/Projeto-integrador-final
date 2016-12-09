@@ -10,9 +10,9 @@
         header('location:../index.html');
     }
 
-    if($_SESSION['tipo'] != 'C'){
+    if($_SESSION['tipo'] == 'P'){
         
-        die("Entre em contato com o Cordenador");
+        header('location:index.php');
     }
     
 
