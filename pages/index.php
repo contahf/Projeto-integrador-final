@@ -208,10 +208,10 @@
                             <a href="#"><i class="fa fa-files-o fa-fw"></i> Informações<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="removeDis.php">Sobre o projeto</a>
+                                    <a href="sobre.php">Sobre o projeto</a>
                                 </li>
                                 <li>
-                                    <a href="dis.php">Autores</a>
+                                    <a href="autores.php">Autores</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
