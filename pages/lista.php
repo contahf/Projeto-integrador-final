@@ -52,7 +52,7 @@
 
             <ul class="nav navbar-top-links navbar-right">
                <li>
-                    <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                    <a href="../index.html"><i class="fa fa-sign-out fa-fw"></i> Login</a>
                 </li>
                 <!-- /.dropdown -->
             </ul>
