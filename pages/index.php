@@ -55,6 +55,7 @@
                 document.getElementById('disp').style.display = "block"; 
                 document.getElementById('re').style.display = "block"; 
                 document.getElementById('no').style.display = "block";
+                document.getElementById('alu').style.display = "block";
                 document.getElementById('us').style.display = "block"; 
                 document.getElementById('li').style.display = "block";
                 document.getElementById('di').style.display = "block";
@@ -64,7 +65,7 @@
                 document.getElementById('nota').style.display = "block";
                 document.getElementById('pr').style.display = "block";
                 document.getElementById('hi').style.display = "block"; 
-                document.getElementById('alu').style.display = "block"; 
+                 
                 
             
             }
@@ -126,7 +127,7 @@
                             <ul class="nav nav-second-level">
                                 <li>
                         
-                                    <a href="listarAluno.php">Listar </a>
+                                    <a href="cadAluno.php">Novo </a>
                               
                                 </li>
 						
@@ -138,7 +139,7 @@
                             <a href="#"><i class="fa fa-user fa-fw"></i> Usuário<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
 								<li>
-                                    <a href="editUser.php">Listar </a>
+                                    <a href="cadUser.php">Novo </a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -147,7 +148,7 @@
                             <a href="#"><i class="fa fa-book fa-fw"></i>Curso<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                <li>
-                                    <a href="editarCurso.php">Listar </a>
+                                    <a href="cadCurso.php">Novo </a>
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
@@ -155,7 +156,7 @@
                             <a href="#"><i class="fa fa-edit fa-fw"></i>Disciplina<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                <li>
-                                    <a href="editarDis.php">Listar </a>
+                                    <a href="dis.php">Novo </a>
                                 </li>
 				
                             </ul>
