@@ -8,9 +8,6 @@ session_start();
         session_destroy();
         header('location:../index.html');
     }
-    if ($_SESSION['tipo'] !='C') {
-         header('location:index.php');
-    }
 
    
 ?>
@@ -49,7 +46,19 @@ session_start();
 
 
     <script type="text/javascript">
-    
+        var l = '<?php echo $_SESSION['tipo']; ?>';
+
+        
+        $(function() {
+            
+            if (l != 'C') {
+
+               $('button').prop('disabled', true);
+               
+               
+
+            }    
+        });
 
         function acaoExcluir(matricula){
             var t = matricula.trim();
@@ -201,9 +210,11 @@ session_start();
 
             <ul class="nav navbar-top-links navbar-right">
                
+                
                 <li>
                     <a href="cadAluno.php"><i class="fa fa-plus fa-fw"></i> Novo Aluno</a>
                 </li>
+                
                 <li>
                     <a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
                 </li>
@@ -258,31 +269,30 @@ session_start();
  
  require_once 'conect.php';   
 
-    if ($con) {
 
-        $sql = "SELECT * from aluno ORDER BY matricula ";
+    $sql = "SELECT * from aluno ORDER BY matricula ";
 
-        $consulta = pg_query($con, $sql);
+    $consulta = pg_query($con, $sql);
         
-        $linhas = pg_num_rows($consulta); 
+    $linhas = pg_num_rows($consulta); 
                                 
-            for($i=0; $i<$linhas; $i++){  
-                $dados = pg_fetch_row($consulta);
+        for($i=0; $i<$linhas; $i++){  
+            
+            $dados = pg_fetch_row($consulta);
 
-                  echo "<tr id='".trim($dados[0])."'> 
-                        <td>".trim($dados[0])."</td>
-                        <td>".$dados[1]."</td>
-                        <td>".$dados[2]."</td>
-                        <td>".$dados[3]."</td>
-                        <td>".$dados[4]."</td>
-                        <td>".$dados[5]."</td>
-                        <td><a href='#?' onclick='acaoEditar(\"".trim($dados[0])."\")'><i class='fa fa-edit fa-fw'></i></a></td>
-                        <td><a href='#?' onclick='acaoExcluir(\"".trim($dados[0])."\")'><i class='fa fa-trash fa-fw'></i></a></td>
-                    </tr>";
-            } 
-    }else{
-        echo "Verifique sua conexão com o banco";
-    }
+            echo "<tr id='".trim($dados[0])."'> 
+                    <td>".trim($dados[0])."</td>
+                    <td>".$dados[1]."</td>
+                    <td>".$dados[2]."</td>
+                    <td>".$dados[3]."</td>
+                    <td>".$dados[4]."</td>
+                    <td>".$dados[5]."</td>
+                    <td><button type='button' class='btn-link fa fa-edit fa-fw' onclick='acaoEditar(\"".trim($dados[0])."\")'></button></td>
+                    <td>
+                        <button type='button' class='btn-link fa fa-trash fa-fw' onclick='acaoExcluir(\"".trim($dados[0])."\")'></button>
+                    </td>
+                </tr>";
+        } 
 ?>
  
                                 </table>
