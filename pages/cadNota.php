@@ -8,11 +8,7 @@ session_start();
         session_destroy();
         header('location:../index.html');
     }
-    if ($_SESSION['tipo'] !='C') {
-         header('location:index.php');
-    }
 
-   
 ?>
 
 <!DOCTYPE html>
@@ -94,7 +90,7 @@ session_start();
                                        <div class="form-group col-lg-2" >
 
 						<label>Selecione um aluno </label> <br>
-						<select name="matricula" required>
+						<select name="matricula" class="form-control selectpicker">
 						<option value=""></option>
 
 
