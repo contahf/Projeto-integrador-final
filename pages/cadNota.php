@@ -58,7 +58,7 @@ session_start();
               
                 <li class="dropdown">
                
-                <li><a href="../../Projeto-integrador-final/projFinal/out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
+                <li><a href="out.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
 
             </ul>
             <!-- /.navbar-top-links -->
