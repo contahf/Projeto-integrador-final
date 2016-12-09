@@ -8,7 +8,7 @@ session_start();
         session_destroy();
         header('location:../index.html');
     }
-    if ($_SESSION['tipo'] !='C') {
+    if ($_SESSION['tipo'] =='P') {
          header('location:index.php');
     }
 
@@ -39,7 +39,7 @@ session_start();
 
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
       
 
@@ -168,11 +168,14 @@ session_start();
 					
                           <div class="clearfix"></div>
                                     
-                                         
-                                            <button type="submit" class="btn btn-default">Gravar</button>
-                                            <button type="reset" class="btn btn-default">Limpar</button>
+                            <div class="container">
+                                <button type="submit" class="btn btn-default">Gravar</button>
+                                <button type="reset" class="btn btn-default">Limpar</button> 
+                                 <a href="index.php"><button type="button" class="btn btn-default">Cancelar</button></a>   
+                            </div>             
+                            
 
-					    <a href="index.php"><button type="button" class="btn btn-default">Cancelar</button></a>
+					   
                                     
                                          </div>
                                                                             
