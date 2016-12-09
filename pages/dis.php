@@ -143,7 +143,8 @@ session_start();
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                    
-                 <?php   include "principal.html"; ?>
+                    <?php   include "principal.html"; ?>
+                
                 </div>
                 <!-- /.sidebar-collapse -->
             </div>
